@@ -1,0 +1,623 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/*This is Eric Meyer's Reset CSS, which he has made available for free at http://meyerweb.com/eric/tools/css/reset/index.html.*/
+/* v1.0 | 20080212 */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/*End of Reset*/
+
+
+img, object, embed, video {
+	max-width: 100%;
+}
+
+/* IE 6 does not support max-width so default to width 100% */
+.ie6 img {
+	width:100%;
+}
+
+/* For older browsers*/
+header, section, footer, aside, nav, main, article, figure {
+    display: block; 
+}
+
+.glyphicon {
+  font-family: 'Glyphicons Halflings';
+  font-size:1rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-menu-hamburger:before {
+  content: "\e236";
+}
+
+@font-face {
+  font-family: 'ls-icon';
+  src:  url('fonts/ls-icon.eot?an0mxr');
+  src:  url('fonts/ls-icon.eot?an0mxr#iefix') format('embedded-opentype'),
+    url('fonts/ls-icon.ttf?an0mxr') format('truetype'),
+    url('fonts/ls-icon.woff?an0mxr') format('woff'),
+    url('fonts/ls-icon.svg?an0mxr#ls-icon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'ls-icon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-filter:before {
+  content: "\e900";
+}
+
+.icon-filter{
+	color:black;
+	font-size: 10px;
+}
+.icon-filter:hover{
+	color:green;
+}
+.isFiltered{
+	color:green;
+}
+.darken {
+    filter: brightness(.5);
+    -webkit-filter: brightness(.5);
+}
+.white{
+	color:white;
+}
+.st-sort-ascent:before {
+    content: '\25B2';
+  }
+.st-sort-descent:before {
+    content: '\25BC';
+  }
+.edit{
+	color:green; 
+	font-size:12px;
+}
+button{
+	background-color: #222;
+	color:green;
+	border-radius: none;
+	border: none;	
+}
+#calculateButton{
+	padding-left:7px;
+	padding-right:7px;
+	padding-top:3px;
+	padding-bottom: 3px;
+}
+button:hover{
+	color:white;
+}
+.actionButtons{
+	width: 84%;
+	margin: auto;
+	text-align: left;
+}
+body {
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+	width:100%;
+	/*overflow: hidden;*/
+	color:#fff;
+}
+
+
+/* Mobile Layout: 480px and below. */
+main{
+	width:100%;
+}
+
+
+
+
+/* Desktop Layout: 769px to a max of 1232px.  Inherits styles from: Mobile Layout and Tablet Layout. */
+/*@media only screen and (min-width: 769px){ */ /*just for now*/
+	
+	main{
+		min-height:100vh; /*test this*/
+		background-image: url(images/loansumBackground.jpg);
+		background-size: cover;
+		overflow: hidden;
+	}		
+		
+	#logo{
+		padding-left:10%;
+		padding-top:8vh;
+	}
+	nav{
+		position: relative;
+		float: right;
+		color:#fff;
+		font-size: 12px;
+		padding-top:9.4vh;
+		padding-right:10%;
+	}
+nav li{
+		display:inline;
+		font-family: Verdana, Geneva, sans-serif;
+		padding-right: 20px;
+}
+nav li a{
+	text-decoration:none;
+	color:#fff;
+}
+nav a:hover{
+	color:#0675c2;
+}
+/*.scrollx{
+	overflow-x: scroll;
+}*/
+
+#loanIdFilter, #borrowerFilter, #agentFilter, #facilityTypeFilter,
+#originalCommitmentAmountFilter, #startDateFilter, #maturityDateFilter, #currencyFilter,
+#contractIdFilter, #contractStartDateFilter, #endDateFilter, #paymentDateFilter, #amountFilter, #typeFilter, #indexFilter, #spreadFilter, #allInRateFilter, #dayCountFilter, #contractCurrencyFilter {
+	display: none;
+	background-color: #222;
+	border: solid green .5px;
+	border-radius: 0;
+	padding-left:1px;
+	width:122px;
+	height:26px;
+	z-index: 5;
+	position: absolute;
+}
+#loanIdHead, #currencyHead, #contractIdHead{
+	width:10%;
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#agentHead, #facilityTypeHead{
+	width:11%;
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#startDateHead{
+	width:12%;
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#maturityDateHead{
+	width:14%;
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#originalCommitmentAmountHead{
+	width:19%;
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+} 
+#borrowerHead{
+	width:13%;
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#calculator{
+		-webkit-box-sizing: border-box;
+    	-moz-box-sizing: border-box;
+    	-ms-box-sizing: border-box;
+    	box-sizing: border-box;
+		position: relative;
+		top:30px;
+		height: 600px;/*680px; testing from height:680px*/
+	
+		margin-top:20px;
+		padding:20px;
+		padding-bottom: 60px; /*testing*/
+		text-align: center;
+		width: 100%;
+		background-color: black;
+		opacity:.7;
+		color:green;
+		display:none;
+		font-family: Verdana, Geneva, sans-serif;
+		overflow-y: auto;
+		overflow-x:auto; /*testing*/
+	}
+
+#displaySelectedLoan{
+	width: 84%;
+	margin: auto;
+	text-align: left;
+	font-size: 10px;
+	line-height: 2;
+	padding-left: 10px;
+}
+	
+/*from smart table flex-fixed header*/
+table {   
+    -moz-box-sizing: border-box;
+	box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 108px; /* this can vary */	
+	/*overflow: scroll;/*mine*/
+	resize:vertical;/*mine*/	
+}
+
+#loanTable, #contractTable, #eventTable, #tradeTable, #calculateTradeTable{		
+	width:84%;
+	margin:auto;
+	border: 1px solid green;
+	min-width: 863px;
+	/*overflow-x: scroll;*/
+}
+#eventTable{	
+	height: 65px;
+	margin-top: 10px;
+}
+#calculateTradeTable{		
+	margin-top: 20px;
+	height:44px;
+}
+/*#calculateTradeTable tr{
+	height: 20px;
+}*/
+#editEvents{
+	width: 84%;
+	margin: auto;
+	margin-top: 35px;
+	text-align: left;
+}
+table, th , td  { /*mine*/
+  	border-collapse: collapse;
+}
+th , td { /*mine*/
+ 	padding: 5px;
+	padding-left:0;
+	padding-right:0;
+	font-size: 10px; 	
+}
+#eventTable td{
+	padding-top:2px;
+	padding-bottom:2px;
+}
+th{/*mine*/
+	border-bottom: solid 1px green;
+	border-right: solid 1px green;
+		
+}
+th:last-child{/*mine*/
+	border-right: none;
+}
+
+table * {
+    -moz-box-sizing: inherit; 
+	box-sizing: inherit;
+}
+
+thead {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+tbody {
+    overflow-y: auto;
+    display: inline-block;
+}
+
+thead > tr, tbody > tr, tfoot > tr {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+tr{
+	color: gold;
+}
+tr.st-selected {
+	color:white;
+}
+th{	/*mine*/
+	font-weight: normal;
+	color: green;
+/*	height: 26px;*/
+	padding-bottom: 6px;
+	max-height: 26px;
+	overflow-x:visible;
+}
+td{ /*mine*/
+	border-left: 0px;
+	border-right: 0px;
+	border-bottom: 1px solid #000;
+	background-color: #222;
+}
+	
+	
+thead, tfoot {
+    flex-shrink: 0;
+}
+
+th, tbody td {
+    width: 20%; /* this can vary */
+   /* overflow-x: scroll;*/
+   /* text-overflow: ellipsis; /*look at overflow-y for header?*/
+    display: inline-block;
+}
+	
+tfoot {
+    display: inline-block;
+}
+
+tfoot td {
+    width: 100%;
+    display: inline-block;
+}
+	
+
+/*style the tabs*/
+div.tab{
+	width:84%;
+	margin:auto;
+	margin-bottom:5px;
+	overflow: hidden;
+}
+ul.nav-tabs{
+}
+ul.nav-tabs li{
+	float:left;
+	margin-left:1px;
+	margin-right: 1px;
+	padding-left: 10px;
+	padding-right: 10px;
+	line-height: 1.42857143;
+	
+	
+}
+ul.nav-tabs li:first-child{
+	padding-left: 5px;
+	margin-left: 0;
+}
+ul.nav-tabs li.active{
+	border-bottom-color: black;
+}
+ul.nav-tabs a{
+	color: rgb(42, 100, 150);
+	font-size:14px;
+	text-decoration: none;	
+}
+ul.nav-tabs a:hover{
+	color: white;
+}
+ul.nav-tabs li.active a{
+	color:white;
+	/*border-bottom-color: transparent;*/
+}
+
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity .15s linear;
+       -o-transition: opacity .15s linear;
+          transition: opacity .15s linear;
+}
+.fade.in {
+  opacity: 1;
+}
+	form{
+		-webkit-box-sizing: border-box;
+    	-moz-box-sizing: border-box;
+    	-ms-box-sizing: border-box;
+    	box-sizing: border-box;			
+		width: 84%;
+		margin:auto;
+		margin-top: 20px;	
+		border-style: solid;
+		border-width: 1px;
+		border-color: green;
+		font-size: 12px;
+		color:green;
+		min-width: 863px;
+		/*overflow-x: scroll;*/
+		/*display:table;*/
+	}
+	
+	
+	
+	#loanStaticInfo, #contractDetail, #tradeDetail{
+		padding:5px;
+	}
+	.alignleft{
+		text-align: left;
+	}
+.inTableDelete{
+	float: left;
+	line-height: 14px;
+}
+.column1, .column2, .column3{
+	width:30%;
+	display:inline-block;
+}
+.column2{
+	padding-left: 5%;
+}
+.column3{
+	float: right;
+}
+	label {
+    display: inline-block;
+    width:120px;
+    text-align: left;
+	letter-spacing:-1px;
+	}
+.labelLong{	
+	width: 130px;
+}
+	input.formInput{
+		-webkit-box-sizing: border-box;
+    	-moz-box-sizing: border-box;
+    	-ms-box-sizing: border-box;
+    	box-sizing: border-box;	
+		border-color:green;
+		border-style:solid;
+		border-width: 1px; 
+		margin-bottom: 5px;
+	
+		margin-right: 10px;
+		background-color:#222;
+		border: none;
+		color: gold;
+		padding-left:4px;
+		width: 200px;
+	}
+input:disabled, select:disabled{
+	background-color: #111;
+}
+input.tableInput{
+	padding:0;
+	border:none;
+	margin: 0;
+	background-color:#222;
+	color:gold;
+}
+tr.st-selected input, tr.st-selected select{
+	color:white;
+}
+
+
+select{
+	background-color:#222;
+	margin-right: 10px;
+	color:gold;
+	border:none;
+	width:200px;
+	padding-left:1px;
+	margin-bottom: 5px;
+	/*outline: 1px inset black; outline-offset:-1px;/*?*/
+	/*-webkit-appearance: none;*/
+}
+.tableSelect{
+	margin: 0;
+	padding: 0;
+	border: none;
+	width: auto;
+}
+.tableInput{
+	text-align: center;
+}
+input:disabled.tableInput{
+	width:90%;
+	text-align: center;
+	background-color: #111;
+}
+select:disabled.tableSelect{
+	width:90%;
+	text-align: center;
+	background-color: #111;
+}
+td#eventTable{
+	padding-bottom: 0;
+	padding-top: 0;
+}
+	select::-ms-expand { display: none; }
+	select:not([multiple]) {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-position: right 50%;
+    background-repeat: no-repeat;
+    background-image: url(images/selectArrow.png);
+}
+/*.number{
+		text-align: right;		
+	}*/
+.gold{
+	color:gold;
+}
+.mySelect {
+    border-radius: 0
+}
+/*select:focus{background-color: green;}*/
+option{
+		color: green;
+	}
+input.ng-invalid {
+	color:#D51B1B;
+}	
+
+	/*} for desktop*/
+@-webkit-keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}

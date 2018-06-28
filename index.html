@@ -1,0 +1,1133 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<html lang="en-US">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>loansum</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content=" ">
+
+	<link href="loansum.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	<!--[if lt IE 8]><!-->
+		<link rel="stylesheet" href="ie7/ie7.css">
+	<!--<![endif]-->
+</head>
+
+
+<body>
+
+	<main>
+		<img id="logo" src="images/loansumLogo.png" width="125px">
+
+		<nav>
+			<ul>
+		    	<li><a href="#">Introduction</a></li>
+					<li><a id="calculator-button" href="#">Loan Calculator</a></li>
+		    	<li><a href="#">Community</a></li>
+		      <li><a href="#">GITHUB</a></li>
+			</ul>
+		</nav>
+
+		<div id="calculator" ng-app="calculator" ng-controller="calculatorCtrl">
+
+		  <div class="tab">
+			<ul class="nav nav-tabs">
+		       	<li ng-class="{ active: tabIsSet(1) }">
+		          	<a href ng-click="setTab(1)">loans</a>
+		       	</li>
+		       	<li ng-class="{ active: tabIsSet(2) }">
+		          	<a href ng-click="setTab(2)">contracts</a>
+		       	</li>
+		       	<li ng-class="{ active: tabIsSet(3) }">
+		          	<a href ng-click="setTab(3)">trades</a>
+		       	</li>
+		       	<li ng-class="{ active: tabIsSet(4) }">
+		          	<a href ng-click="calculateCashFlows(); setTab(4);">cashflows</a>
+		       	</li>
+		     </ul>
+		  </div>
+
+		  <div id="displaySelectedLoan">
+			{{(lastSelectedLoan ? 'selected loan: ' : ' ')}}
+			<span class="white">{{(lastSelectedLoan ? loans[selectedLoanIndex].loanId : ' ')}}</span>
+			&nbsp;&nbsp;&nbsp;
+			{{(lastSelectedLoan ? 'borrower: ' : ' ')}}
+			<span class="white">{{(lastSelectedLoan ? loans[selectedLoanIndex].borrower : ' ')}}</span>
+		  </div>
+
+		  <div class="scrollx" ng-show="tabIsSet(1)">
+
+		   <table id="loanTable" st-safe-src="loans" st-table="displayedCollection" class="table" st-set-filter="customFilter">
+			<thead>
+			<tr>
+				<th id="loanIdHead" st-ratio="8"><span st-sort="loanId"> LOAN ID</span>
+					<span id="filterLoanId" ng-class="(selectedLoanId==null || selectedLoanId=='') ? 'icon-filter' : 'icon-filter isFiltered'"></span>
+					<select ng-model="selectedLoanId" id="loanIdFilter" ng-options ="x.loanId for x in (loans | unique:'loanId') track by x.loanId" st-search="loanId">
+		            	<option value="">All</option>
+		            </select>
+		      	</th>
+				<th id="borrowerHead" st-ratio="14"><span st-sort="borrower"> BORROWER</span>
+		            <span id="filterBorrower" ng-class="(selectedBorrower==null || selectedBorrower=='') ? 'icon-filter' : 'icon-filter isFiltered'"></span>
+		            <select ng-model="selectedBorrower" id="borrowerFilter" ng-options ="x.borrower for x in (loans | unique:'borrower') track by x.borrower" st-search="borrower">
+		              	<option value="">All</option>
+		            </select>
+		        </th>
+				<th id="agentHead" st-ratio="14"><span st-sort="agent"> AGENT</span>
+					<span id="filterAgent"  ng-class="(selectedAgent==null || selectedAgent=='') ? 'icon-filter' : 'icon-filter isFiltered'"></span>
+						<select ng-model="selectedAgent" id="agentFilter" ng-options ="x.agent for x in (loans | unique:'agent') track by x.agent" st-search="agent">
+		               		<option value="">All</option>
+		            	</select>
+		        </th>
+		        <th id="facilityTypeHead" st-ratio="10"><span st-sort="facilityType"> LOAN TYPE</span>
+					<span id="filterFacilityType" ng-class="(selectedFacilityType==null || selectedFacilityType=='') ? 'icon-filter' : 'icon-filter isFiltered'"></span>
+					<select ng-model="selectedFacilityType" id="facilityTypeFilter" ng-options ="x.facilityType for x in (loans | unique:'facilityType') track by x.facilityType" st-search="facilityType">
+		            	<option value="">All</option>
+		            </select>
+				</th>
+				<th id="originalCommitmentAmountHead" st-ratio="18"><span st-sort="originalCommitmentAmount"> ORIG COMMITMENT (M)</span>
+					<span id="filterOriginalCommitmentAmount"  ng-class="(selectedOriginalCommitmentAmount==null || selectedOriginalCommitmentAmount=='') ? 'icon-filter' : 'icon-filter isFiltered'"></span>
+					<select ng-model="selectedOriginalCommitmentAmount" id="originalCommitmentAmountFilter" ng-options ="(x.originalCommitmentAmount|currency : '' : 2) for x in (loans | unique:'originalCommitmentAmount' ) track by x.originalCommitmentAmount" st-search="originalCommitmentAmount">
+		               	<option value="">All</option>
+		            </select>
+				</th>
+				<th id="startDateHead" st-ratio="13"><span st-sort="startDate"> START DATE</span>
+					<span id="filterStartDate"  ng-class="(selectedStartDate==null || selectedStartDate=='') ? 'icon-filter' : 'icon-filter isFiltered'"></span>
+		  			<select ng-model="selectedStartDate" id="startDateFilter" ng-options ="(x.startDate|date:'M/d/yy') for x in (loans | unique:'startDate' ) track by x.startDate" st-search="startDate" >
+		                <option value="">All</option>
+		            </select>
+				</th>
+				<th id="maturityDateHead" st-ratio="13"><span st-sort="maturityDate"> MATURITY DATE</span>
+					<span id="filterMaturityDate"  ng-class="(selectedMaturityDate==null || selectedMaturityDate=='') ? 'icon-filter' : 'icon-filter isFiltered'"></span>
+					<select ng-model="selectedMaturityDate" id="maturityDateFilter" ng-options ="(x.maturityDate|date:'M/d/yy') for x in (loans | unique:'maturityDate' ) track by x.maturityDate"  st-search="maturityDate">
+		               	<option value="">All</option>
+		            </select>
+				</th>
+				<th id="currencyHead" st-ratio="10"><span st-sort="currency"> CURRENCY</span>
+					<span id="filterCurrency"  ng-class="(selectedCurrency==null || selectedCurrency=='') ? 'icon-filter' : 'icon-filter isFiltered'"></span>
+					<select ng-model="selectedCurrency" id="currencyFilter" ng-options ="x.currency for x in (loans | unique:'currency') track by x.currency" st-search="currency">
+		               	<option value="">All</option>
+		            </select>
+				</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-click="selectLoan(row)" st-select-row="row" ng-repeat="row in displayedCollection" >
+				<td st-ratio="8">{{row.loanId}}</td>
+				<td st-ratio="14">{{row.borrower}}</td>
+				<td st-ratio="14">{{row.agent}}</td>
+				<td st-ratio="10">{{row.facilityType}}</td>
+				<td st-ratio="18">{{row.originalCommitmentAmount | currency : "" : 2}}</td>
+				<td st-ratio="13">{{row.startDate | date : "M/d/yy" }}</td>
+				<td st-ratio="13">{{row.maturityDate | date : "M/d/yy"}}</td>
+				<td st-ratio="10">{{row.currency}}</td>
+			</tr>
+			</tbody>
+		   </table>
+		   <section class="actionButtons">
+			<button type="button" ng-mousedown="addLoan()" ng-mouseup="scrollLoan()" class="btn btn-sm btn-success">
+				<i class="glyphicon glyphicon-plus"></i>+
+			</button>
+			<button type="button" ng-click="removeLoan(selectedLoan)" class="btn btn-sm btn-danger">
+				<i class="glyphicon glyphicon-remove-circle"></i>-
+			</button>
+		   </section>
+
+		   <!--The ng-model directive can provide type validation for application data (number, e-mail, required) and use ng-show to display error msg-->
+
+		   <form novalidate>
+		   	<div id="loanStaticInfo" class="alignleft">
+		  			<div class="edit"> &#x270e;</div><br>
+		  			<section class="column1">
+		   			<label>Loan ID</label>
+						<input class="formInput" type="text" ng-model="selectedLoan.loanId" size="30">	<br>
+					<label>Borrower</label>
+						<input class="formInput" type="text" ng-model="selectedLoan.borrower" size="30"><br>
+					<label>Agent</label>
+						<input class="formInput" type="text" ng-model="selectedLoan.agent" size="30"><br>
+					</section>
+					<section class="column2">
+					<label>Loan Type</label>
+						<select ng-model="selectedLoan.facilityType" class="mySelect">
+							<option value="TERM">TERM</option>
+							<option value="REVOLVING">REVOLVING</option>
+							<option value="DELAYED DRAW">DELAYED DRAW</option>
+							<option value="LETTER OF CREDIT">LETTER OF CREDIT</option>
+						</select><br>
+					<label>Orig Commitment (M)</label>
+						<input class="formInput number" type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
+						ng-model="selectedLoan.originalCommitmentAmount" size="30"><br>
+					<label>Currency</label>
+							<select ng-model="selectedLoan.currency" class="mySelect">
+		    				<option value="USD">USD</option>
+		    				<option value="AUD">AUD</option>
+		    				<option value="CAD">CAD</option>
+		    				<option value="CHF">CHF</option>
+		    				<option value="EUR">EUR</option>
+		    				<option value="GBP">GBP</option>
+		    				<option value="JPY">JPY</option>
+						</select>
+					</section>
+					<section class="column3">
+					<label>Start Date</label>
+						<input class="formInput" type="date"  ng-model="selectedLoan.startDate"><br>
+					<label>Maturity Date</label>
+						<input class="formInput" type="date" ng-model="selectedLoan.maturityDate"><br>
+					</section>
+					<!-- ?add LXID, CUSIP, and Bloomberg ID-->
+			</div>
+		    <!-- <input type="reset">-->
+		    <!--  <button ng-click="reset()">RESET</button>-->
+		   </form>
+
+		  </div> <!--ng-show="tabIsSet(1)"-->
+
+
+		  <div class="scrollx" ng-show="tabIsSet(2)">
+		   <table id="contractTable" st-safe-src="loans[selectedLoanIndex].contracts" st-table="displayedContracts" class="table" st-set-filter="customFilter">
+			<thead>
+			<tr>
+				<th id="contractIdHead" st-ratio="10"><span st-sort="id"> CONTRACT ID</span></th>
+		   		<th id="contractStartDateHead" st-ratio="10"><span st-sort="accrual.startDate"> START DATE</span></th>
+		        <th id="endDateHead" st-ratio="10"><span st-sort="accrual.endDate"> END DATE</span></th>
+		       	<th id="paymentDateHead" st-ratio="10"><span st-sort="paymentDate"> PAYMENT DATE</span></th>
+				<th id="contractAmountHead" st-ratio="11"><span st-sort="accrual.accrualAmount"> AMOUNT (M)</span></th>
+				<th id="typeHead" st-ratio="8"><span st-sort="type"> TYPE</span></th>
+				<th id="indexHead" st-ratio="8"><span st-sort="index"> INDEX</span></th>
+		      	<th id="spreadHead" st-ratio="8"><span st-sort="accrual.spread"> SPREAD</span></th>
+				<th id="allInRateHead" st-ratio="9"><span st-sort="accrual.allInRate"> ALL IN RATE</span></th>
+				<th id="dayCountHead" st-ratio="8"><span st-sort="accrual.dayCount"> DAY COUNT</span></th>
+				<th id="contractCurrencyHead" st-ratio="8"><span st-sort="currency"> CURRENCY</span></th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-click="selectContract(contract)" st-select-row="contract" ng-repeat="contract in displayedContracts">
+				<td st-ratio="10">{{contract.id}}</td>
+				<td st-ratio="10">{{contract.accrual.startDate | date : "M/d/yy"}}</td>
+				<td st-ratio="10">{{contract.accrual.endDate | date : "M/d/yy"}}</td>
+				<td st-ratio="10">{{contract.paymentDate  | date : "M/d/yy"}}</td>
+				<td st-ratio="11">{{contract.accrual.accrualAmount | currency : "" : 2}}</td>
+				<td st-ratio="8">{{contract.type}}</td>
+				<td st-ratio="8">{{contract.index}}</td>
+				<td st-ratio="8">{{contract.accrual.spread}}</td>
+				<td st-ratio="9">{{contract.accrual.allInRate}}</td>
+				<td st-ratio="8">{{contract.accrual.dayCount}}</td>
+				<td st-ratio="8">{{contract.currency}}</td>
+			</tr>
+			</tbody>
+		   </table>
+		   <section class="actionButtons">
+			<button type="button" ng-mousedown="addContract()" ng-mouseup="scrollContract()" class="btn btn-sm btn-success">
+				<i class="glyphicon glyphicon-plus"></i>+
+			</button>
+			<button type="button" ng-click="removeContract(selectedContract)" class="btn btn-sm btn-danger">
+				<i class="glyphicon glyphicon-remove-circle"></i>-
+			</button>
+		   </section>
+
+		   <form novalidate>
+
+		   	<div id="contractDetail" class="alignleft">
+		  			<div class="edit"> &#x270e;</div><br>
+		  			<section class="column1">
+		   			<label>Contract ID</label>
+						<input class="formInput" type="text" ng-model="selectedContract.id" size="30"><br>
+					<label>Start Date</label>
+						<input class="formInput" type="date" ng-model="selectedContract.accrual.startDate"><br>
+					<label>End Date</label>
+						<input class="formInput" type="date" ng-model="selectedContract.accrual.endDate" ><br>
+					<label>Payment Date</label>
+						<input class="formInput" type="date" ng-model="selectedContract.paymentDate" ><br>
+					<label>Amount (M)</label>
+						<input class="formInput number" type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/" ng-model="selectedContract.accrual.accrualAmount" size="30"><br>
+			  		</section>
+			  		<section class="column2">
+					<label>Type</label>
+						<select ng-model="selectedContract.type" class="mySelect">
+							<option value="FIXED">FIXED</option>
+							<option value="FLOATING">FLOATING</option>
+						</select><br>
+					<label>Index</label>
+						<select ng-model="selectedContract.index" class="mySelect" ng-disabled = "selectedContract.type=='FIXED'">
+							<option value="LIBOR">LIBOR</option>
+							<option value="PRIME">PRIME</option>
+						</select><br>
+					<label>Spread</label>
+						<input class="formInput number" type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/" ng-model="selectedContract.accrual.spread" size="30" ng-disabled = "selectedContract.type=='FIXED'"><br>
+					<label>All In Rate</label>
+						<input class="formInput number" type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/" ng-model="selectedContract.accrual.allInRate" size="30"><br>
+					<label>Day Count</label>
+						<select ng-model="selectedContract.accrual.dayCount" class="mySelect">
+							<option value="ACT/360">ACT/360</option>
+						</select><br>
+			 		</section>
+			 		<section class="column3">
+					<label>Currency</label>
+						<select ng-model="selectedContract.currency" class="mySelect">
+		    				<option value="USD">USD</option>
+		    				<option value="AUD">AUD</option>
+		    				<option value="CAD">CAD</option>
+		    				<option value="CHF">CHF</option>
+		    				<option value="EUR">EUR</option>
+		    				<option value="GBP">GBP</option>
+		    				<option value="JPY">JPY</option>
+						</select><br>
+					<label>Payment Frequency</label>
+						<select ng-model="selectedContract.accrual.paymentFrequency" class="mySelect">
+							<option value="MONTHLY">MONTHLY</option>
+						    <option value="QUARTERLY">QUARTERLY</option>
+						</select><br>
+					<label>Base Rate</label>
+						<input class="formInput number" type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/" ng-model="selectedContract.accrual.baseRate" size="30" ng-disabled = "selectedContract.type=='FIXED'"><br>
+					<label>Pik Spread</label>
+						<input class="formInput number" type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/" ng-model="selectedContract.accrual.pikSpread" size="30"><br>
+			 		</section>
+			</div>
+		   </form>
+
+		   <div id="editEvents" class="edit"> &#x270e;</div>
+		   <table id="eventTable" st-safe-src="loans[selectedLoanIndex].contracts[selectedContractIndex].events" st-table="displayedEvents" class="table" st-set-filter="customFilter">
+			<thead>
+			<tr>
+				<th id="eventTypeHead" st-ratio="20"><span st-sort="type"> EVENT TYPE</span></th>
+		   		<th id="effectiveDateHead" st-ratio="20"><span st-sort="effectiveDate"> EFFECTIVE DATE</span></th>
+		       	<th id="eventAmountHead" st-ratio="20"><span st-sort="amount"> AMOUNT (M)</span></th>
+		        <th id="interestOnPayDownHead" st-ratio="20"><span st-sort="interestOnPayDown"> PAYDOWN INTEREST</span></th>
+		       	<th id="eventPriceHead" st-ratio="20"><span st-sort="price"> PRICE</span></th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat="event in displayedEvents">
+				<td st-ratio="20">
+					<button type="button" ng-click="removeEvent(event)" class="btn btn-sm btn-danger inTableDelete">
+						<i class="glyphicon glyphicon-remove-circle"></i>-
+					</button>
+					<select ng-model="event.type" class="mySelect tableSelect">
+					    <option value="Borrow">Borrow</option>
+						<option value="Repayment">Repayment</option>
+					</select>
+				</td>
+				<td st-ratio="20"><input class="tableInput" type="date" ng-model="event.effectiveDate"></td>
+				<td st-ratio="20"><input class="tableInput number" type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/" ng-model="event.amount"></td>
+				<td st-ratio="20">
+						<select class="tableSelect" ng-model="event.interestOnPaydown" ng-options="(item?'Yes':'No') for item in [true, false]" ng-disabled = "event.type=='Borrow'">
+							<option value=""> </option>
+						</select>
+				</td>
+				<td st-ratio="20"><input class="tableInput number" type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/" ng-model="event.price" ng-disabled = "event.type=='Borrow'"></td>
+			</tr>
+			</tbody>
+		   </table>
+
+		   <section class="actionButtons">
+			<button type="button" ng-mousedown="addEvent()" ng-mouseup="scrollEvent()" class="btn btn-sm btn-success">
+				<i class="glyphicon glyphicon-plus"></i>+
+			</button>
+		   </section>
+		  <!--?Do I want to use selectedContract.events instead?-->
+
+		  </div> <!--ng-show="tabIsSet(2)"-->
+
+
+		  <div class="scrollx" ng-show="tabIsSet(3)">
+
+		   <table id="tradeTable" st-safe-src="loans[selectedLoanIndex].trades" st-table="displayedTrades" class="table" st-set-filter="customFilter">
+			<thead>
+			<tr>
+				<th id="tradeIdHead" st-ratio="8"><span st-sort="tradeId"> TRADE ID</span></th>
+				<th id="buySellHead" st-ratio="10"><span st-sort="buySell"> BUY/SELL</span></th>
+				<th id="buyerHead" st-ratio="12"><span st-sort="buyer"> BUYER</span></th>
+				<th id="sellerHead" st-ratio="12"><span st-sort="seller"> SELLER</span></th>
+				<th id="tradeAmountHead" st-ratio="16"><span st-sort="amount"> AMOUNT</span></th>
+				<th id="tradeCurrencyHead" st-ratio="10"><span st-sort="currency"> CURRENCY</span></th>
+				<th id="tradePriceHead" st-ratio="16"><span st-sort="price"> PRICE</span></th>
+				<th id="expectedSettelementDateHead" st-ratio="16"><span st-sort="expectedSettlementDate"> EXPECTED SETTLEMENT DATE</span></th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-click="selectTrade(trade)" st-select-row="trade" ng-repeat="trade in displayedTrades" >
+				<td st-ratio="8">{{trade.tradeId}}</td>
+				<td st-ratio="10">{{trade.buySell}}</td>
+				<td st-ratio="12">{{trade.buyer}}</td>
+				<td st-ratio="12">{{trade.seller}}</td>
+				<td st-ratio="16">{{trade.amount | currency : "" : 2}}</td>
+				<td st-ratio="10">{{trade.currency}}</td>
+				<td st-ratio="16">{{trade.price | currency : "" : 2}}</td>
+				<td st-ratio="16">{{trade.expectedSettlementDate | date : "M/d/yy" }}</td>
+			</tr>
+			</tbody>
+		   </table>
+		   <section class="actionButtons">
+			<button type="button" ng-mousedown="addTrade()" ng-mouseup="scrollTrade()" class="btn btn-sm btn-success">
+				<i class="glyphicon glyphicon-plus"></i>+
+			</button>
+			<button type="button" ng-click="removeTrade(selectedTrade)" class="btn btn-sm btn-danger">
+				<i class="glyphicon glyphicon-remove-circle"></i>-
+			</button>
+		   </section>
+
+		   <form novalidate>
+		  	<div id="tradeDetail" class="alignleft">
+		  			<div class="edit"> &#x270e;</div><br>
+		  			<section class="column1">
+		   			<label>Trade ID</label>
+						<input class="formInput" type="text" ng-model="selectedTrade.tradeId" size="30"><br>
+					<label>Buy/Sell</label>
+						<select ng-model="selectedTrade.buySell" class="mySelect">
+							<option value="BUY">BUY</option>
+							<option value="SELL">SELL</option>
+						</select><br>
+					<label>Buyer</label>
+						<input class="formInput" type="text" ng-model="selectedTrade.buyer" size="30"><br>
+					<label>Seller</label>
+						<input class="formInput" type="text" ng-model="selectedTrade.seller" size="30"><br>
+					<label>Amount</label>
+						<input class="formInput number" type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/" ng-model="selectedTrade.amount" size="30"><br>
+					<label>Currency</label>
+						<select ng-model="selectedTrade.currency" class="mySelect">
+		    				<option value="USD">USD</option>
+		    				<option value="AUD">AUD</option>
+		    				<option value="CAD">CAD</option>
+		    				<option value="CHF">CHF</option>
+		    				<option value="EUR">EUR</option>
+		    				<option value="GBP">GBP</option>
+		    				<option value="JPY">JPY</option>
+						</select><br>
+					<label>Price</label>
+						<input class="formInput number" type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/" ng-model="selectedTrade.price" size="30"><br>
+				</section>
+				<section class="column2">
+
+					<label>Association</label>
+						<select ng-model="selectedTrade.association" class="mySelect">
+							<option value="LSTA">LSTA</option>
+							<option value="LMA">LMA</option>
+						</select><br>
+					<label>Form Of Purchase</label>
+						<select ng-model="selectedTrade.formOfPurchase" class="mySelect">
+							<option value="ASSIGNMENT">ASSIGNMENT</option>
+							<option value="PARTICIPATION">PARTICIPATION</option>
+						</select><br>
+					<label>Documentation Type</label>
+						<select ng-model="selectedTrade.documentationType" class="mySelect">
+							<option value="PAR">PAR</option>
+							<option value="DISTRESSED">DISTRESSED</option>
+						</select><br>
+					<label>Delayed Comp Waived</label>
+						<select ng-model="selectedTrade.delayedCompensationFlag" class="mySelect" ng-options="(item?'YES':'NO') for item in [true, false]">
+						</select><br>
+					<label>Trade Date</label>
+						<input class="formInput" type="date" ng-model="selectedTrade.info.tradeDate" ><br>
+					<label>Exp Settlement Date</label>
+						<input class="formInput" type="date" ng-model="selectedTrade.expectedSettlementDate"><br>
+					<label>Act Settlement Date</label>
+						<input class="formInput" type="date" ng-model="selectedTrade.info.settlementDate" ><br>
+				</section>
+		  		<section class="column3">
+		  			<label class="labelLong">Trade Type</label>
+						<select ng-model="selectedTrade.tradeType" class="mySelect">
+							<option value="PRIMARY">PRIMARY</option>
+							<option value="SECONDARY">SECONDARY</option>
+						</select><br>
+		  			<label class="labelLong">When Issued</label>
+						<select ng-model="selectedTrade.whenIssuedFlag" class="mySelect" ng-options="(item?'YES':'NO') for item in [true, false]">
+						</select><br>
+					<label class="labelLong">Commitment Reduction</label>
+						<select ng-model="selectedTrade.commitmentReductionCreditFlag" class="mySelect" ng-options="(item?'YES':'NO') for item in [true, false]">
+						</select><br>
+					<label class="labelLong">Accrual Settlement Type</label>
+						<select ng-model="selectedTrade.accrualSettlementType" class="mySelect">
+							<option value="SETTLEDWITHOUTACCRUED">SETTLED WITHOUT ACCRUED</option>
+							<option value="SETTLEDWITHACCRUED">SETTLED WITH ACCRUED</option>
+							<option value="FLAT">FLAT</option>
+						</select><br>
+					<label class="labelLong">Average Libor</label>
+						<input class="formInput number" type="text" ng-pattern="/^-?[0-9]+(\.{1}[0-9]*)?$/" ng-model="selectedTrade.averageLibor" size="30"><br>
+					<label class="labelLong">Paydown Trade Date</label>
+						<select ng-model="selectedTrade.paydownOnTradeDate" class="mySelect" ng-options="(item?'YES':'NO') for item in [true, false]">
+						</select><br>
+					<label class="labelLong">Adjustment Trade Date</label>
+						<select ng-model="selectedTrade.adjustmentOnTradeDate" class="mySelect" ng-options="(item?'YES':'NO') for item in [true, false]">
+						</select><br>
+				</section>
+			</div>
+		   </form>
+		   <section class="actionButtons">
+			<button type="button" ng-mousedown="addTrade()" ng-mouseup="scrollTrade()" class="btn btn-sm btn-success">
+				<i class="glyphicon glyphicon-plus"></i>+
+			</button>
+			<button id ="calculateButton" type="button" ng-mousedown="calculateProceeds()" ng-mouseup="" class="btn btn-sm btn-success">
+				<i class="fa fa-calculator"></i>
+			</button>
+		   </section>
+
+		   <table id="calculateTradeTable" st-safe-src="loans[selectedLoanIndex].trades" st-table="displayedTrades" class="table" st-set-filter="customFilter">
+			<thead>
+			<tr>
+				<th id="costofFundedHead" st-ratio="17"><span st-sort=""> COST OF FUNDED</span></th>
+		        <th id="benefitOfUnfundedHead" st-ratio="17"><span st-sort=""> BENEFIT OF UNFUNDED</span></th>
+				<th id="delayedCompensationHead" st-ratio="16"><span st-sort=""> DELAYED COMPENSATION</span></th>
+				<th id="costOfCarryHead" st-ratio="16"><span st-sort=""> COST OF CARRY</span></th>
+				<th id="economicBenefitHead" st-ratio="17"><span st-sort=""> ECONOMIC BENEFIT</span></th>
+				<th id="totalRemittanceHead" st-ratio="17"><span st-sort=""> TOTAL REMITTANCE</span></th>
+			</tr>
+			</thead>
+			<tbody><!--if trade proceeds exist, display them-->
+			<tr>
+				<td st-ratio="17">{{selectedTrade.tradeProceeds.costOfFunded | currency : "" : 2}}</td>
+				<td st-ratio="17">{{selectedTrade.tradeProceeds.benefitOfUnfunded | currency : "" : 2}}</td>
+				<td st-ratio="16">{{selectedTrade.tradeProceeds.delayedCompensation | currency : "" : 2}}</td>
+				<td st-ratio="16">{{selectedTrade.tradeProceeds.costOfCarry | currency : "" : 2}}</td>
+				<td st-ratio="17">{{selectedTrade.tradeProceeds.economicBenefit | currency : "" : 2}}</td>
+				<td st-ratio="17">{{selectedTrade.tradeProceeds.totalRemittance | currency : "" : 2}}</td>
+			</tr>
+			</tbody>
+		   </table>
+
+		  </div> <!--ng-show="tabIsSet(3)"-->
+
+
+		  <div class="scrollx" ng-show="tabIsSet(4)">
+
+		  </div> <!--ng-show="tabIsSet(4)"-->
+
+		</div>  <!--calculator-->
+
+
+
+		<script>
+
+		var app = angular.module('calculator', ['smart-table']);
+		app.controller('calculatorCtrl', function ($scope){
+
+			//To do: initialize table with the loans, create init and look at ng-init
+
+		    $scope.loans = [
+		      {loanId: "LOAN1",
+			   borrower: "BORROWER",
+			   agent: "AGENT",
+			   facilityType: "TERM",
+			   identifiers: ["LXID~LX123456", "CUSIP~012345678", "BLOOMBERGID~BB12345678"],
+			   originalCommitmentAmount: 441000000.00,
+			   startDate: new Date(2017,0,24),
+			   maturityDate: new Date(2022,08,14),
+			   currency: 'USD',
+			   contracts: [{
+				  "id": "contract~1a",
+				  "accrual": {
+					  "@bean": "FloatingRateAccrual",
+					  "startDate": new Date(2017,0,24),
+					  "endDate": new Date(2017,02,16),
+					  "allInRate": 4.25,
+					  "pikSpread": 0.0,
+					  "accrualAmount": 1598500000,
+					  "dayCount": "ACT/360",
+					  "paymentFrequency": "QUARTERLY",
+					  "baseRate": 0.012583,
+					  "spread": 3.25
+				  },
+				  "paymentDate": new Date(2017,2,16),
+			   	  "type": 'FLOATING',
+				  "index": 'LIBOR',
+				  "currency": 'USD',
+			  	  "events": [
+					  {"type": 'Repayment', "effectiveDate": new Date(2017,05,30), "amount": 4558012.17,"interestOnPaydown": false, "price": 1.0},
+					  {"type": 'Repayment', "effectiveDate": new Date(2017,05,30), "amount": 3508012.17,"interestOnPaydown": true,
+					  "price": 1.0}
+				  ]
+				},
+				{
+				  "id": "contract~2a",
+				  "accrual": {
+					  "@bean": "FloatingRateAccrual",
+					  "startDate": new Date(2017,02,16),
+					  "endDate": new Date(2017,03,20),
+					  "allInRate": 4.25,
+					  "pikSpread": 0.0,
+					  "accrualAmount": 1600000,
+					  "dayCount": "ACT/360",
+					  "baseRate": 0.012583,
+					  "spread": 3.25
+				  },
+				  "paymentDate": new Date(2017,04,26),
+			   	  "type": 'FLOATING',
+				  "index": 'LIBOR',
+				  "currency": 'USD',
+			  	  "events": [
+					  {"type": 'Repayment', "effectiveDate": new Date(2017,05,30), "amount": 4558012.17,"interestOnPaydown": false, "price": 1.0},
+					  {"type": 'Repayment', "effectiveDate": new Date(2017,05,30), "amount": 3508012.17,"interestOnPaydown": true,
+					  "price": 1.0}
+				  ]
+				},
+				{
+				  "id": "contract~3a",
+				  "accrual": {
+					  "@bean": "FloatingRateAccrual",
+					  "startDate": new Date(2017,03,26),
+					  "endDate": new Date(2017,06,26),
+					  "allInRate": 4.25,
+					  "pikSpread": 0.0,
+					  "accrualAmount": 19850000.00,
+					  "dayCount": "ACT/360",
+					  "baseRate": 0.012583,
+					  "spread": 3.25
+				  },
+				  "paymentDate": new Date(2017,07,26),
+			   	  "type": 'FLOATING',
+				  "index": 'LIBOR',
+				  "currency": 'USD',
+			  	  "events": [
+					  {"type": 'Repayment', "effectiveDate": new Date(2017,05,30), "amount": 4558012.17,"interestOnPaydown": false, "price": 1.0},
+					  {"type": 'Repayment', "effectiveDate": new Date(2017,05,30), "amount": 3508012.17,"interestOnPaydown": true,
+					  "price": 1.0}
+				  ]
+				}
+			  ],
+			  trades: [
+				  {	tradeId: "16602",
+		 			"buySell": "BUY",
+				   	"buyer": "cpty~BUYER",
+				    "seller": "cpty~SELLER",
+		 			"amount": 3000000.0,
+		 			"currency": "USD",
+				   	"price": 1.01125,
+				   	"expectedSettlementDate": new Date(2017,02,30),
+		 			"delayedCompensationFlag": true,
+		 			"association": "LSTA",
+		 			"formOfPurchase": "ASSIGNMENT",
+		 			"documentationType": "PAR",
+		 			"tradeType": "SECONDARY",
+		 			"whenIssuedFlag": false,
+				   	"commitmentReductionCreditFlag": true,
+		 			"paydownOnTradeDate": false,
+		 			"adjustmentOnTradeDate": false,
+		 			"accrualSettlementType": "SETTLEDWITHOUTACCRUED",
+		 			"averageLibor": 0.009834,
+				   	"info": {
+		  				"tradeDate": new Date(2017,02,21),
+		  				"settlementDate": new Date (2017,03,10),
+						"attributes": {}
+		 			},
+				   tradeProceeds: {
+					 // "costOfFunded": 0,
+					 // "benefitOfUnfunded": 0,
+					 // "delayedCompensation": 0,
+					 // "costOfCarry": 0,
+					 // "economicBenefit": 0,
+					 // "totalRemittance": 0,
+				   }
+				  }
+			  ]
+			  },
+		      {"loanId": 'UI202', borrower: 'ANCESTRY.COM', agent: 'CHASE NY', facilityType: 'TERM', originalCommitmentAmount: 1386000000.00, startDate: new Date(2017,0,19), maturityDate: new Date(2021,01,01), currency: 'USD',
+			  },
+			  {loanId: 'UI203', borrower: 'ANCESTRY.COM', agent: 'CHASE NY', facilityType: 'TERM', originalCommitmentAmount: 5450000000.00, startDate: new Date(2017,0,19), maturityDate: new Date(2021,01,01), currency: 'USD'},
+		      {loanId: 'UI304', borrower: 'ACCESS CIG', agent: 'DEUTSCHE NY', facilityType: 'TERM', originalCommitmentAmount: 732448600.00, startDate: new Date(2016,9,14), maturityDate: new Date(2023,9,14), currency: 'USD',
+				}
+		      ];
+
+			$scope.JSONfacilityType = {
+				"TERM":"Term",
+				"REVOLVING":"Revolving",
+				"DELAYED DRAW":"DelayedDraw",
+				"LETTER OF CREDIT":"LetterOfCredit"
+			};
+			$scope.JSONcontractAccrualType = {
+				"FIXED":"FixedRateAccrual",
+				"FLOATING":"FloatingRateAccrual"
+			};
+			$scope.JSONcontractIndex = {
+				"LIBOR":"USD-LIBOR-3M",
+				"PRIME":"USD-LIBOR-3M" /*update this when get info from John*/
+			};
+			$scope.JSONcontractFrequency = {
+				"MONTHLY":"P1M",
+				"QUARTERLY":"P3M"
+			};
+			$scope.JSONformOfPurchase = {
+				"ASSIGNMENT":"Assignment",
+				"PARTICIPATION":"Participation"
+			};
+			$scope.JSONdocumentationType = {
+				"PAR":"Par",
+				"DISTRESSED":"Distressed"
+			};
+			$scope.JSONtradeType = {
+				"PRIMARY":"Primary",
+				"SECONDARY":"Secondary"
+			};
+			$scope.JSONaccrualSettlementType = {
+				"SETTLEDWITHOUTACCRUED":"SettledWithoutAccrued",
+				"SETTLEDWITHACCRUED":"SettledWithAccrued",
+				"FLAT":"Flat"
+			};
+
+			$scope.Contract = function Contract(){
+				this.id = "";
+				this.accrual = {
+					"@bean": "",
+					"startDate": "",
+					"endDate": "",
+					"allInRate": 0,
+					"pikSpread": 0,
+					"accrualAmount": "",
+					"dayCount": "",
+				  	//"paymentFrequency": "",
+					//"paymentProjection": "",
+					//"pikProjection": "",
+					"index": {
+					 "@type": "com.opengamma.strata.basics.index.IborIndex",
+					 "value": ""
+					},
+					"baseRate": 0,
+					"spread": 0
+				   };
+			   this.paymentDate = "";
+			   this.events = [];
+			};
+
+
+			$scope.createTradeJSON = function createTradeJSON(){
+				$scope.tradeJSON = {
+		 			"@bean": "com.syndloanhub.loansum.product.facility.LoanTrade",
+					"buySell": $scope.selectedTrade.buySell,
+					"buyer": $scope.selectedTrade.buyer,
+		 			"seller": $scope.selectedTrade.seller,
+		  			"amount":  $scope.selectedTrade.amount,
+					"currency":  $scope.selectedTrade.currency,
+				 	"price": $scope.selectedTrade.price,
+					"expectedSettlementDate":  $scope.selectedTrade.expectedSettlementDate.toJSON().slice(0,10),
+				 	"delayedCompensationFlag": $scope.selectedTrade.delayedCompensationFlag,
+					"association": $scope.selectedTrade.association,
+					"formOfPurchase": $scope.JSONformOfPurchase[$scope.selectedTrade.formOfPurchase],
+				 	"documentationType": $scope.JSONdocumentationType[$scope.selectedTrade.documentationType],
+				 	"tradeType": $scope.JSONtradeType[$scope.selectedTrade.tradeType],
+				 	"whenIssuedFlag": $scope.selectedTrade.whenIssuedFlag,
+				 	"commitmentReductionCreditFlag": $scope.selectedTrade.commitmentReductionCreditFlag,
+					"paydownOnTradeDate": $scope.selectedTrade.paydownOnTradeDate,
+					"adjustmentOnTradeDate": $scope.selectedTrade.adjustmentOnTradeDate,
+					"accrualSettlementType": $scope.JSONaccrualSettlementType[$scope.selectedTrade.accrualSettlementType],
+				 	"averageLibor": $scope.selectedTrade.averageLibor,
+		 			"info": {
+						"id": "user~" + $scope.selectedTrade.tradeId,
+						"tradeDate": $scope.selectedTrade.info.tradeDate.toJSON().slice(0,10),
+		  				"settlementDate": $scope.selectedTrade.info.settlementDate.toJSON().slice(0,10),
+		  				"attributes":  $scope.selectedTrade.info.attributes
+		 			},
+		 			"product": {
+					"id": "user~" + $scope.selectedLoan.loanId,
+					"borrower": "user~" + $scope.selectedLoan.borrower,
+					"agent": "user~" + $scope.selectedLoan.agent,
+					"facilityType": $scope.JSONfacilityType[$scope.selectedLoan.facilityType],
+					"identifiers": $scope.selectedLoan.identifiers,
+					"originalCommitmentAmount":  $scope.selectedLoan.currency + " " + $scope.selectedLoan.originalCommitmentAmount,
+					"startDate": $scope.selectedLoan.startDate.toJSON().slice(0,10),
+					"maturityDate": $scope.selectedLoan.maturityDate.toJSON().slice(0,10),
+				  	"contracts": [],
+				  	"fees": [],
+				  	"totalCommitmentSchedule": {
+				  	"@bean": "com.opengamma.strata.collect.timeseries.SparseLocalDateDoubleTimeSeries",
+				  	"dates": {
+						"@meta": "java.time.LocalDate[]",
+						"value": []
+				  	},
+				  	"values": ""
+				  	},
+				  	"events": []
+				 	} //product
+				};
+
+
+				for (i in $scope.selectedLoan.contracts){ //or switch to a for loop, not for in
+
+					$scope.tradeJSON.product.contracts[i] = new $scope.Contract();
+
+					$scope.tradeJSON.product.contracts[i].id = $scope.selectedLoan.contracts[i].id;
+					$scope.tradeJSON.product.contracts[i].accrual["@bean"] =
+						$scope.JSONcontractAccrualType[$scope.selectedLoan.contracts[i].type];
+					$scope.tradeJSON.product.contracts[i].accrual.startDate =
+						$scope.selectedLoan.contracts[i].accrual.startDate.toJSON().slice(0,10);
+					$scope.tradeJSON.product.contracts[i].accrual.endDate =
+						$scope.selectedLoan.contracts[i].accrual.endDate.toJSON().slice(0,10);
+					$scope.tradeJSON.product.contracts[i].accrual.allInRate = $scope.selectedLoan.contracts[i].accrual.allInRate;
+					$scope.tradeJSON.product.contracts[i].accrual.pikSpread = $scope.selectedLoan.contracts[i].accrual.pikSpread;
+					$scope.tradeJSON.product.contracts[i].accrual.accrualAmount =
+						$scope.selectedLoan.contracts[i].currency + " " + $scope.selectedLoan.contracts[i].accrual.accrualAmount;
+					$scope.tradeJSON.product.contracts[i].accrual.dayCount = $scope.selectedLoan.contracts[i].accrual.dayCount;
+					$scope.tradeJSON.product.contracts[i].accrual.paymentFrequency =
+						$scope.JSONcontractFrequency[$scope.selectedLoan.contracts[i].accrual.paymentFrequency];
+					$scope.tradeJSON.product.contracts[i].accrual.index.value =
+						$scope.JSONcontractIndex[$scope.selectedLoan.contracts[i].index];
+					$scope.tradeJSON.product.contracts[i].accrual.baseRate = $scope.selectedLoan.contracts[i].accrual.baseRate;
+					$scope.tradeJSON.product.contracts[i].accrual.spread = $scope.selectedLoan.contracts[i].accrual.spread;
+					$scope.tradeJSON.product.contracts[i].paymentDate = $scope.selectedLoan.contracts[i].paymentDate.toJSON().slice(0,10);
+					//$scope.tradeJSON.product.contracts[i].type =
+						//$scope.JSONcontractAccrualType[$scope.selectedLoan.contracts[i].type];
+					/*do these events next
+					$scope.tradeJSON.product.contracts[i].events[] = $scope.selectedLoan.contracts[i].events;
+					*/
+				}
+			};
+
+			$scope.calculateProceeds = function calculateProceeds(){
+
+				$scope.createTradeJSON();
+
+				var xhr = new XMLHttpRequest();
+				//var url = "http://localhost:8080/loansum-service/loansum/calculateProceeds";
+				var url = "loansum/calculateProceeds";
+
+				xhr.open("POST", url, true);
+				xhr.setRequestHeader("Content-type", "application/json");
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState === 4 && xhr.status === 200) {
+						$scope.data = JSON.parse(xhr.responseText);
+						if ($scope.data.message) {
+							alert($scope.data.message);
+						}
+						else {
+							$scope.selectedTrade.tradeProceeds.costOfFunded = 0;
+							$scope.selectedTrade.tradeProceeds.benefitOfUnfunded = 0;
+							$scope.selectedTrade.tradeProceeds.delayedCompensation = 0;
+							$scope.selectedTrade.tradeProceeds.costOfCarry = 0;
+							$scope.selectedTrade.tradeProceeds.economicBenefit = 0;
+							for (i in $scope.data.cashFlows){ //switch to for loop?
+								if ($scope.data.cashFlows[i].annotation.type == "CostOfFunded"){
+									$scope.selectedTrade.tradeProceeds.costOfFunded = numeral($scope.data.cashFlows[i].cashFlow.forecastValue).value();
+								}
+								else if ($scope.data.cashFlows[i].annotation.type == "BenefitOfUnfunded"){
+									$scope.selectedTrade.tradeProceeds.benefitOfUnfunded = numeral($scope.data.cashFlows[i].cashFlow.forecastValue).value();
+								}
+								else if ($scope.data.cashFlows[i].annotation.type == "DelayedCompensation"){
+									$scope.selectedTrade.tradeProceeds.delayedCompensation = numeral($scope.data.cashFlows[i].cashFlow.forecastValue).value();
+								}
+								else if ($scope.data.cashFlows[i].annotation.type == "CostOfCarry"){
+									$scope.selectedTrade.tradeProceeds.costOfCarry = numeral($scope.data.cashFlows[i].cashFlow.forecastValue).value();
+								}
+								else if ($scope.data.cashFlows[i].annotation.type == "EconomicBenefit"){
+									$scope.selectedTrade.tradeProceeds.economicBenefit = numeral($scope.data.cashFlows[i].cashFlow.forecastValue).value();
+								}
+
+							};
+							/*angular.forEach(data.cashFlows,){}
+							for (i=0, i < data.cashFlows.length, i++){
+								switch(data.cashFlows[i].annotation.type){
+									case "CostOfFunded":
+										$scope.selectedTrade.tradeProceeds.costOfFunded = data.cashFlows[i].cashFlow.forecastValue;
+										break;
+									case "benefitOfUnfunded":
+										$scope.selectedTrade.tradeProceeds.benefitOfUnfunded = data.cashFlows[i].cashFlow.forecastValue;
+										break;
+									case "delayedCompensation":
+										$scope.selectedTrade.tradeProceeds.delayedCompensation = data.cashFlows[i].cashFlow.forecastValue;
+										break;
+									case "CostOfCarry":
+										$scope.selectedTrade.tradeProceeds.costOfCarry = data.cashFlows[i].cashFlow.forecastValue;
+										break;
+									case "economicBenefit":
+										$scope.selectedTrade.tradeProceeds.economicBenefit = data.cashFlows[i].cashFlow.forecastValue;
+								}
+							}				*/
+							$scope.selectedTrade.tradeProceeds.totalRemittance =
+							$scope.selectedTrade.tradeProceeds.costOfFunded +
+							$scope.selectedTrade.tradeProceeds.benefitOfUnfunded +
+							$scope.selectedTrade.tradeProceeds.delayedCompensation +
+							$scope.selectedTrade.tradeProceeds.costOfCarry +
+							$scope.selectedTrade.tradeProceeds.economicBenefit;
+						}
+					}
+				};
+
+				xhr.send(JSON.stringify($scope.tradeJSON));
+
+				};
+
+
+			$scope.calculateCashFlows = function calculateCashFlows(){
+
+			};
+
+			$scope.selectLoan = function selectLoan(row){
+				 if ($scope.lastSelectedLoan){
+					  	if ($scope.lastSelectedContract){
+					  	$scope.loans[$scope.selectedLoanIndex].contracts[$scope.selectedContractIndex].isSelected = false;
+						$scope.selectedContract = "";
+						$scope.selectedContractIndex = -1;
+						$scope.lastSelectedContract = false;
+						}
+					 	if ($scope.lastSelectedTrade){
+							$scope.loans[$scope.selectedLoanIndex].trades[$scope.selectedTradeIndex].isSelected = false;
+							$scope.selectedTrade = "";
+							$scope.selectedTradeIndex = -1;
+							$scope.lastSelectedTrade = false;
+						}
+					  $scope.loans[$scope.selectedLoanIndex].isSelected = false;
+				  	}
+				index = $scope.loans.indexOf(row);
+				if ($scope.loans[index].isSelected){
+					$scope.selectedLoan = row;
+					$scope.selectedLoanIndex = index;
+					$scope.lastSelectedLoan = true;
+					//$scope.contracts = $scope.loans[$scope.selectedLoanIndex].contracts;
+					}
+				else{
+					$scope.selectedLoan = "";
+					$scope.selectedLoanIndex = -1;
+					$scope.lastSelectedLoan = false;
+					//$scope.contracts ="";
+					}
+
+			};
+
+			$scope.selectContract = function selectContract(contract){
+				 if ($scope.lastSelectedContract){
+					  $scope.loans[$scope.selectedLoanIndex].contracts[$scope.selectedContractIndex].isSelected = false;
+				  	}
+				index = $scope.loans[$scope.selectedLoanIndex].contracts.indexOf(contract);
+				if ($scope.loans[$scope.selectedLoanIndex].contracts[index].isSelected){
+					$scope.selectedContract = contract;
+					$scope.selectedContractIndex = index;
+					$scope.lastSelectedContract = true;
+					}
+				else{
+					$scope.selectedContract = "";
+					$scope.selectedContractIndex = -1;
+					$scope.lastSelectedContract = false;
+					}
+
+			};
+
+			$scope.selectTrade = function selectTrade(trade){
+				 if ($scope.lastSelectedTrade){
+					  $scope.loans[$scope.selectedLoanIndex].trades[$scope.selectedTradeIndex].isSelected = false;
+				  	}
+				index = $scope.loans[$scope.selectedLoanIndex].trades.indexOf(trade);
+				if ($scope.loans[$scope.selectedLoanIndex].trades[index].isSelected){
+					$scope.selectedTrade = trade;
+					$scope.selectedTradeIndex = index;
+					$scope.lastSelectedTrade = true;
+					}
+				else{
+					$scope.selectedTrade = "";
+					$scope.selectedTradeIndex = -1;
+					$scope.lastSelectedTrade = false;
+					}
+
+			};
+
+			$scope.scrollLoan = function(){
+				  index = $scope.loans.length - 1;
+				  $scope.loans[index].isSelected = true;
+				  $scope.selectLoan($scope.loans[index]);
+				  displayedIndex = $scope.displayedCollection.indexOf($scope.loans[index]) + 1;
+				$("#loanTable tr:eq("+displayedIndex+")").scrollintoview();
+			};
+			$scope.addLoan = function addLoan() {
+				  newLoan =   {loanId: 'LOAN1', borrower: 'BORROWER', agent: 'AGENT', facilityType: 'TERM', originalCommitmentAmount: 1000, startDate:null, maturityDate: '', currency: 'USD'}; //, isSelected: true};
+				  $scope.loans.push(newLoan);
+				  //index = $scope.loans.length - 1;
+				  //$scope.loans[index].isSelected = true;
+				  //$scope.selectRow($scope.loans[index],index);
+		    };
+			$scope.scrollContract = function(){
+				  index = $scope.loans[$scope.selectedLoanIndex].contracts.length - 1;
+				  $scope.loans[$scope.selectedLoanIndex].contracts[index].isSelected = true;
+				  $scope.selectContract($scope.loans[$scope.selectedLoanIndex].contracts[index]);
+				  displayedIndex = $scope.displayedContracts.indexOf($scope.loans[$scope.selectedLoanIndex].contracts[index]) + 1;
+				$("#contractTable tr:eq("+displayedIndex+")").scrollintoview();
+			};
+			$scope.addContract = function addContract() {
+				 newContract =   {id: 'Contract1', amount: 1000, currency: 'USD'}; //, isSelected: true};
+				 $scope.loans[$scope.selectedLoanIndex].contracts.push(newContract);
+		    };
+
+			$scope.scrollEvent = function(){
+				  index = $scope.loans[$scope.selectedLoanIndex].contracts[$scope.selectedContractIndex].events.length - 1;
+				  displayedIndex = $scope.displayedEvents.indexOf($scope.loans[$scope.selectedLoanIndex].contracts[$scope.selectedContractIndex].events[index]) + 3;
+				$("#eventTable tr:eq("+displayedIndex+")").scrollintoview();
+			};
+			$scope.addEvent = function addEvent() {
+				 newEvent =   {type:"",effectiveDate:"",amount:"",interestOnPaydown: "",price:""}; //, isSelected: true};
+				 $scope.selectedContract.events.push(newEvent);
+		    };
+
+			$scope.scrollTrade = function(){
+				  index = $scope.loans[$scope.selectedLoanIndex].trades.length - 1;
+				  $scope.loans[$scope.selectedLoanIndex].trades[index].isSelected = true;
+				  $scope.selectTrade($scope.loans[$scope.selectedLoanIndex].trades[index]);
+				  displayedIndex = $scope.displayedTrades.indexOf($scope.loans[$scope.selectedLoanIndex].trades[index]) + 1;
+				$("#tradeTable tr:eq("+displayedIndex+")").scrollintoview();
+			};
+			$scope.addTrade = function addTrade() {
+				 newTrade =   {tradeId: 'Trade1', currency: 'USD', delayedCompensationFlag:false}; //, isSelected: true};
+				 $scope.loans[$scope.selectedLoanIndex].trades.push(newTrade);
+		    };
+
+			$scope.removeLoan = function removeLoan(row){
+				if ($scope.lastSelectedContract){
+					//$scope.loans[$scope.selectedLoanIndex].contracts[$scope.selectedContractIndex].isSelected = false;
+					$scope.selectedContract = "";
+					$scope.selectedContractIndex = -1;
+					$scope.lastSelectedContract = false;
+					}
+				index = $scope.loans.indexOf(row);
+		        if (index !== -1) {
+		            $scope.loans.splice(index, 1);
+					$scope.selectedLoan="";
+					$scope.selectedLoanIndex= -1;
+					$scope.lastSelectedLoan = false;
+		        }
+		    };
+
+			$scope.removeContract = function removeContract(contract){
+				index = $scope.loans[$scope.selectedLoanIndex].contracts.indexOf(contract);
+		        if (index !== -1) {
+		            $scope.loans[$scope.selectedLoanIndex].contracts.splice(index, 1);
+					$scope.selectedContract="";
+					$scope.selectedContractIndex= -1;
+					$scope.lastSelectedContract = false;
+		        }
+		    };
+
+			$scope.removeEvent = function removeEvent(event){
+				index = $scope.loans[$scope.selectedLoanIndex].contracts[$scope.selectedContractIndex].events.indexOf(event);
+		        if (index !== -1) {
+		            $scope.loans[$scope.selectedLoanIndex].contracts[$scope.selectedContractIndex].events.splice(index, 1);
+		        }
+		    };
+
+			$scope.removeTrade = function removeTrade(trade){
+				index = $scope.loans[$scope.selectedLoanIndex].trades.indexOf(trade);
+		        if (index !== -1) {
+		            $scope.loans[$scope.selectedLoanIndex].trades.splice(index, 1);
+					$scope.selectedTrade="";
+					$scope.selectedTradeIndex= -1;
+					$scope.lastSelectedTrade = false;
+		        }
+		    };
+
+			$scope.tab = 1;
+
+		    $scope.setTab = function(newTab){
+		      $scope.tab = newTab;
+		    };
+
+		    $scope.tabIsSet = function(tabNum){
+		      return $scope.tab === tabNum;
+		    };
+
+
+			}); //controller calculatorCtrl
+
+			app.filter('unique', function() {
+		    return function (arr, field) {
+		        var o = {}, i, l = arr.length, r = [];
+		        for(i=0; i<l;i+=1) {
+		            o[arr[i][field]] = arr[i];
+		        }
+		        for(i in o) {
+		            r.push(o[i]);
+		        }
+		        return r;
+		    };
+		  })
+
+		.directive('stRatio',function(){
+			return {
+		         link:function(scope, element, attr){
+		           	var ratio=+(attr.stRatio);
+		           	element.css('width',ratio+'%');
+		       	}
+		    };
+		});
+
+
+
+		//.directive('allInRateCalc', function($scope) {
+		//	if ($scope.selectedContract.type = 'FLOATING') {
+		  //  $scope.selectedContract.allInRate = $scope.selectedContract.baseRate + $scope.selectedContract.spread;
+			//}
+		//});
+		</script>
+
+
+
+	</main>
+
+   	<script src="https://code.jquery.com/jquery-3.3.1.js"></script> <!--use min for production-->
+	<script src="jquery.scrollintoview.js"></script> <!--use min for production-->
+  	<script src="smart-table.js"></script>
+  	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+
+
+    <script>
+	$(document).ready(function(){
+    	$('#menu-button').click(function() {
+			$('#nav').slideToggle(500);
+		});
+		$('#calculator-button').click(function() {
+			$('#calculator').slideToggle(500);
+		});
+		$('#filterLoanId').click(function() {
+			$('#loanIdFilter').toggle(500);
+		});
+		$('#loanIdFilter').blur(function(){
+			$('#loanIdFilter').toggle(500);
+		});
+		$('#filterBorrower').click(function() {
+			$('#borrowerFilter').toggle(500);
+		});
+		$('#borrowerFilter').blur(function(){
+			$('#borrowerFilter').toggle(500);
+		});
+		$('#filterAgent').click(function() {
+			$('#agentFilter').toggle(500);
+		});
+		$('#agentFilter').blur(function(){
+			$('#agentFilter').toggle(500);
+		});
+		$('#filterFacilityType').click(function() {
+			$('#facilityTypeFilter').toggle(500);
+		});
+		$('#facilityTypeFilter').blur(function(){
+			$('#facilityTypeFilter').toggle(500);
+		});
+		$('#filterOriginalCommitmentAmount').click(function() {
+			$('#originalCommitmentAmountFilter').toggle(500);
+		});
+		$('#originalCommitmentAmountFilter').blur(function(){
+			$('#originalCommitmentAmountFilter').toggle(500);
+		});
+		$('#filterStartDate').click(function() {
+			$('#startDateFilter').toggle(500);
+		});
+		$('#startDateFilter').blur(function(){
+			$('#startDateFilter').toggle(500);
+		});
+		$('#filterMaturityDate').click(function() {
+			$('#maturityDateFilter').toggle(500);
+		});
+		$('#maturityDateFilter').blur(function(){
+			$('#maturityDateFilter').toggle(500);
+		});
+		$('#filterCurrency').click(function() {
+			$('#currencyFilter').toggle(500);
+		});
+		$('#currencyFilter').blur(function(){
+			$('#currencyFilter').toggle(500);
+		});
+	});
+	</script>
+
+</body>
+</html>
