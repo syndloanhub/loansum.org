@@ -209,9 +209,7 @@ nav li a{
 nav a:hover{
 	color:#0675c2;
 }
-/*.scrollx{
-	overflow-x: scroll;
-}*/
+
 
 #loanIdFilter, #borrowerFilter, #agentFilter, #facilityTypeFilter,
 #originalCommitmentAmountFilter, #startDateFilter, #maturityDateFilter, #currencyFilter,
