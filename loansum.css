@@ -73,9 +73,7 @@ header, section, footer, aside, nav, main, article, figure {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.glyphicon-menu-hamburger:before {
-  content: "\e236";
-}
+
 
 @font-face {
   font-family: 'ls-icon';
@@ -106,7 +104,6 @@ header, section, footer, aside, nav, main, article, figure {
 .icon-filter:before {
   content: "\e900";
 }
-
 .icon-filter{
 	color:black;
 	font-size: 10px;
@@ -134,6 +131,81 @@ header, section, footer, aside, nav, main, article, figure {
 	color:green; 
 	font-size:12px;
 }
+
+body {
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+	width:100%;
+	/*overflow: hidden;*/
+	color:#fff;
+	font-family: Verdana, Geneva, sans-serif;
+}
+
+main{
+	width:100%;
+	min-height:100vh; /*test this*/
+	background-image: url(images/loansumBackground.jpg);
+	background-size: cover;
+	overflow: hidden;
+}		
+		
+#logo{
+	padding-left:10%;
+	padding-top:8vh;
+}
+
+.topnav {
+  position: relative;
+  float: right;
+  padding-top:9.4vh;
+  padding-right:10%;
+}
+.topnav a {
+  float: left;
+  display:inline;
+  padding-right: 20px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+}
+.topnav a:hover {
+  color:#0675c2;
+}
+.topnav .icon {
+  display: none;
+}
+
+/*navigation for mobile and tablet*/
+@media screen and (max-width: 769px) {	
+  .topnav a {
+	  display: none;
+  }	
+  .topnav a.icon {
+    float: right;
+    display: block;
+	font-size: 16px;
+  }	
+  .topnav.responsive .icon {
+	  float: right; 
+  }
+  .topnav.responsive a:not(:first-child) {
+	padding-top:4px;
+	padding-bottom:8px;
+	clear: both;
+	width:100;	
+	text-align: right;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;   
+  }
+} 
+/*end for mobile and tablet*/
+
 button{
 	background-color: #222;
 	color:green;
@@ -154,61 +226,18 @@ button:hover{
 	margin: auto;
 	text-align: left;
 }
-body, textarea {
+textarea {
 	-webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-	width:100%;
-	/*overflow: hidden;*/
-	color:#fff;
+    box-sizing: border-box;	 
+    padding: 5px;
+	width: 84%;  
+	margin: auto;
+	color: #fff;
+	border: solid 1px green;
 }
 
-
-/* Mobile Layout: 480px and below. */
-main{
-	width:100%;
-}
-
-
-
-
-/* Desktop Layout: 769px to a max of 1232px.  Inherits styles from: Mobile Layout and Tablet Layout. */
-/*@media only screen and (min-width: 769px){ */ /*just for now*/
-	
-	main{
-		min-height:100vh; /*test this*/
-		background-image: url(images/loansumBackground.jpg);
-		background-size: cover;
-		overflow: hidden;
-	}		
-		
-	#logo{
-		padding-left:10%;
-		padding-top:8vh;
-	}
-	nav{
-		position: relative;
-		float: right;
-		color:#fff;
-		font-size: 12px;
-		padding-top:9.4vh;
-		padding-right:10%;
-	}
-nav li{
-		display:inline;
-		font-family: Verdana, Geneva, sans-serif;
-		padding-right: 20px;
-}
-nav li a{
-	text-decoration:none;
-	color:#fff;
-}
-nav a:hover{
-	color:#0675c2;
-}
 
 
 #loanIdFilter, #borrowerFilter, #agentFilter, #facilityTypeFilter,
@@ -274,8 +303,7 @@ nav a:hover{
     	box-sizing: border-box;
 		position: relative;
 		top:30px;
-		height: 600px;/*680px; testing from height:680px*/
-	
+		height: 600px;/*680px; testing from height:680px*/	
 		margin-top:20px;
 		padding:20px;
 		padding-bottom: 60px; /*testing*/
@@ -285,7 +313,6 @@ nav a:hover{
 		opacity:.7;
 		color:green;
 		display:none;
-		font-family: Verdana, Geneva, sans-serif;
 		overflow-y: auto;
 		overflow-x:auto; /*testing*/
 	}
@@ -401,7 +428,7 @@ tr.st-selected {
 th{	/*mine*/
 	font-weight: normal;
 	color: green;
-/*	height: 26px;*/
+	/*height: 26px;*/
 	padding-bottom: 6px;
 	max-height: 26px;
 	overflow-x:visible;
@@ -627,7 +654,7 @@ input.ng-invalid {
 	color:#D51B1B;
 }	
 
-	/*} for desktop*/
+/* for desktop*/
 @-webkit-keyframes fadeEffect {
     from {opacity: 0;}
     to {opacity: 1;}
