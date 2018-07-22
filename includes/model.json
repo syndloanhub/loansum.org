@@ -1,0 +1,367 @@
+{
+	"@bean": "com.syndloanhub.loansum.product.facility.LoanTradeList",
+	"trades": [
+		{
+			"buySell": "Buy",
+			"buyer": "cpty~BUYER",
+			"seller": "cpty~SELLER",
+			"amount": 500000.0,
+			"currency": "USD",
+			"price": 1.0,
+			"expectedSettlementDate": "2017-05-01",
+			"delayedCompensationFlag": true,
+			"association": "LSTA",
+			"formOfPurchase": "Assignment",
+			"documentationType": "Par",
+			"tradeType": "Primary",
+			"whenIssuedFlag": false,
+			"commitmentReductionCreditFlag": false,
+			"paydownOnTradeDate": false,
+			"adjustmentOnTradeDate": true,
+			"accrualSettlementType": "SettledWithoutAccrued",
+			"averageLibor": 0.0,
+			"info": {
+				"id": "trade~BUY",
+				"tradeDate": "2017-04-20",
+				"settlementDate": "2017-05-11",
+				"attributes": {
+					
+				}
+			},
+			"product": {
+				"id": "lid~LOAN1",
+				"borrower": "cpty~BORROWER",
+				"agent": "cpty~AGENT",
+				"facilityType": "Term",
+				"identifiers": [
+					"LXID~LX123456",
+					"CUSIP~012345678",
+					"BLOOMBERGID~BB12345678"
+				],
+				"originalCommitmentAmount": "USD 1598500000",
+				"startDate": "2017-01-24",
+				"maturityDate": "2022-08-14",
+				"contracts": [
+					{
+						"id": "contract~1",
+						"accrual": {
+							"@bean": "FloatingRateAccrual",
+							"startDate": "2017-01-24",
+							"endDate": "2017-03-16",
+							"allInRate": 0.0450283,
+							"pikSpread": 0.0,
+							"accrualAmount": "USD 1598500000",
+							"dayCount": "Act/360",
+							"paymentFrequency": "P3M",
+							"paymentProjection": "USD 1.0196846152916666E7",
+							"pikProjection": "USD 0",
+							"index": {
+								"@type": "com.opengamma.strata.basics.index.IborIndex",
+								"value": "USD-LIBOR-3M"
+							},
+							"baseRate": 0.012583,
+							"spread": 0.0325
+						},
+						"paymentDate": "2017-03-16",
+						"events": []
+					},
+					{
+						"id": "contract~2",
+						"accrual": {
+							"@bean": "FloatingRateAccrual",
+							"startDate": "2017-03-16",
+							"endDate": "2017-04-20",
+							"allInRate": 0.043873300000000004,
+							"pikSpread": 0.0,
+							"accrualAmount": "USD 1598500000",
+							"dayCount": "Act/360",
+							"paymentFrequency": "P3M",
+							"paymentProjection": "USD 6818337.365972224",
+							"pikProjection": "USD 0",
+							"index": {
+								"@type": "IborIndex",
+								"value": "USD-LIBOR-3M"
+							},
+							"baseRate": 0.0113733,
+							"spread": 0.0325
+						},
+						"paymentDate": "2017-04-26",
+						"events": [
+							{
+								"@bean": "Repayment",
+								"effectiveDate": "2017-03-31",
+								"amount": "USD 4050000",
+								"interestOnPaydown": false,
+								"price": 1.0
+							}
+						]
+					},
+					{
+						"id": "contract~3",
+						"accrual": {
+							"@bean": "FloatingRateAccrual",
+							"startDate": "2017-04-20",
+							"endDate": "2017-04-26",
+							"allInRate": 0.043873300000000004,
+							"pikSpread": 0.0,
+							"accrualAmount": "USD 1794450000",
+							"dayCount": "Act/360",
+							"paymentFrequency": "P3M",
+							"paymentProjection": "USD 1312140.71975",
+							"pikProjection": "USD 0",
+							"index": {
+								"@type": "IborIndex",
+								"value": "USD-LIBOR-3M"
+							},
+							"baseRate": 0.0113733,
+							"spread": 0.0325
+						},
+						"paymentDate": "2017-04-26",
+						"events": []
+					},
+					{
+						"id": "contract~4",
+						"accrual": {
+							"@bean": "FloatingRateAccrual",
+							"startDate": "2017-04-26",
+							"endDate": "2017-07-26",
+							"allInRate": 0.044165,
+							"pikSpread": 0.0,
+							"accrualAmount": "USD 1794450000",
+							"dayCount": "Act/360",
+							"paymentFrequency": "P3M",
+							"paymentProjection": "USD 2.0033115185416665E7",
+							"pikProjection": "USD 0",
+							"index": {
+								"@type": "IborIndex",
+								"value": "USD-LIBOR-3M"
+							},
+							"baseRate": 0.011665000000000002,
+							"spread": 0.0325
+						},
+						"paymentDate": "2017-07-26",
+						"events": [
+							{
+								"@bean": "Repayment",
+								"effectiveDate": "2017-06-30",
+								"amount": "USD 4558012.17",
+								"interestOnPaydown": false,
+								"price": 1.0
+							}
+						]
+					}
+				],
+				"fees": [],
+				"totalCommitmentSchedule": {
+					"@bean": "com.opengamma.strata.collect.timeseries.SparseLocalDateDoubleTimeSeries",
+					"dates": {
+						"@meta": "java.time.LocalDate[]",
+						"value": [
+							"2017-01-24",
+							"2017-03-31",
+							"2017-04-20",
+							"2017-06-30"
+						]
+					},
+					"values": "1.5985E9,1.59445E9,1.79445E9,1.78989198783E9"
+				},
+				"events": [
+					{
+						"@bean": "CommitmentAdjustment",
+						"effectiveDate": "2017-04-20",
+						"amount": "USD 200000000",
+						"pik": false,
+						"refusalAllowed": true
+					}
+				]
+			},
+			"pctShare": {
+				"@bean": "com.opengamma.strata.collect.timeseries.DenseLocalDateDoubleTimeSeries",
+				"startDate": "2017-04-20",
+				"points": "2.4758149759036293E-4",
+				"dateCalculation": "SKIP_WEEKENDS"
+			}
+		},
+		{
+			"buySell": "Sell",
+			"buyer": "cpty~SELLER",
+			"seller": "cpty~BUYER",
+			"amount": 500000.0,
+			"currency": "USD",
+			"price": 1.00375,
+			"expectedSettlementDate": "2017-06-08",
+			"delayedCompensationFlag": true,
+			"association": "LSTA",
+			"formOfPurchase": "Assignment",
+			"documentationType": "Par",
+			"tradeType": "Secondary",
+			"whenIssuedFlag": false,
+			"commitmentReductionCreditFlag": false,
+			"paydownOnTradeDate": false,
+			"adjustmentOnTradeDate": false,
+			"accrualSettlementType": "SettledWithoutAccrued",
+			"averageLibor": 0.010886700000000001,
+			"info": {
+				"id": "trade~SELL",
+				"tradeDate": "2017-05-30",
+				"settlementDate": "2017-06-09",
+				"attributes": {
+					
+				}
+			},
+			"product": {
+				"id": "lid~LOAN1",
+				"borrower": "cpty~BORROWER",
+				"agent": "cpty~AGENT",
+				"facilityType": "Term",
+				"identifiers": [
+					"LXID~LX123456",
+					"CUSIP~012345678",
+					"BLOOMBERGID~BB12345678"
+				],
+				"originalCommitmentAmount": "USD 1598500000",
+				"startDate": "2017-01-24",
+				"maturityDate": "2022-08-14",
+				"contracts": [
+					{
+						"id": "contract~1",
+						"accrual": {
+							"@bean": "FloatingRateAccrual",
+							"startDate": "2017-01-24",
+							"endDate": "2017-03-16",
+							"allInRate": 0.0450283,
+							"pikSpread": 0.0,
+							"accrualAmount": "USD 1598500000",
+							"dayCount": "Act/360",
+							"paymentFrequency": "P3M",
+							"paymentProjection": "USD 1.0196846152916666E7",
+							"pikProjection": "USD 0",
+							"index": {
+								"@type": "IborIndex",
+								"value": "USD-LIBOR-3M"
+							},
+							"baseRate": 0.012583,
+							"spread": 0.0325
+						},
+						"paymentDate": "2017-03-16",
+						"events": []
+					},
+					{
+						"id": "contract~2",
+						"accrual": {
+							"@bean": "FloatingRateAccrual",
+							"startDate": "2017-03-16",
+							"endDate": "2017-04-20",
+							"allInRate": 0.043873300000000004,
+							"pikSpread": 0.0,
+							"accrualAmount": "USD 1598500000",
+							"dayCount": "Act/360",
+							"paymentFrequency": "P3M",
+							"paymentProjection": "USD 6818337.365972224",
+							"pikProjection": "USD 0",
+							"index": {
+								"@type": "IborIndex",
+								"value": "USD-LIBOR-3M"
+							},
+							"baseRate": 0.0113733,
+							"spread": 0.0325
+						},
+						"paymentDate": "2017-04-26",
+						"events": [
+							{
+								"@bean": "Repayment",
+								"effectiveDate": "2017-03-31",
+								"amount": "USD 4050000",
+								"interestOnPaydown": false,
+								"price": 1.0
+							}
+						]
+					},
+					{
+						"id": "contract~3",
+						"accrual": {
+							"@bean": "FloatingRateAccrual",
+							"startDate": "2017-04-20",
+							"endDate": "2017-04-26",
+							"allInRate": 0.043873300000000004,
+							"pikSpread": 0.0,
+							"accrualAmount": "USD 1794450000",
+							"dayCount": "Act/360",
+							"paymentFrequency": "P3M",
+							"paymentProjection": "USD 1312140.71975",
+							"pikProjection": "USD 0",
+							"index": {
+								"@type": "IborIndex",
+								"value": "USD-LIBOR-3M"
+							},
+							"baseRate": 0.0113733,
+							"spread": 0.0325
+						},
+						"paymentDate": "2017-04-26",
+						"events": []
+					},
+					{
+						"id": "contract~4",
+						"accrual": {
+							"@bean": "FloatingRateAccrual",
+							"startDate": "2017-04-26",
+							"endDate": "2017-07-26",
+							"allInRate": 0.044165,
+							"pikSpread": 0.0,
+							"accrualAmount": "USD 1794450000",
+							"dayCount": "Act/360",
+							"paymentFrequency": "P3M",
+							"paymentProjection": "USD 2.0033115185416665E7",
+							"pikProjection": "USD 0",
+							"index": {
+								"@type": "IborIndex",
+								"value": "USD-LIBOR-3M"
+							},
+							"baseRate": 0.011665000000000002,
+							"spread": 0.0325
+						},
+						"paymentDate": "2017-07-26",
+						"events": [
+							{
+								"@bean": "Repayment",
+								"effectiveDate": "2017-06-30",
+								"amount": "USD 4558012.17",
+								"interestOnPaydown": false,
+								"price": 1.0
+							}
+						]
+					}
+				],
+				"fees": [],
+				"totalCommitmentSchedule": {
+					"@bean": "SparseLocalDateDoubleTimeSeries",
+					"dates": {
+						"@meta": "java.time.LocalDate[]",
+						"value": [
+							"2017-01-24",
+							"2017-03-31",
+							"2017-04-20",
+							"2017-06-30"
+						]
+					},
+					"values": "1.5985E9,1.59445E9,1.79445E9,1.78989198783E9"
+				},
+				"events": [
+					{
+						"@bean": "CommitmentAdjustment",
+						"effectiveDate": "2017-04-20",
+						"amount": "USD 200000000",
+						"pik": false,
+						"refusalAllowed": true
+					}
+				]
+			},
+			"pctShare": {
+				"@bean": "DenseLocalDateDoubleTimeSeries",
+				"startDate": "2017-05-30",
+				"points": "2.786369082448661E-4",
+				"dateCalculation": "SKIP_WEEKENDS"
+			}
+		}
+	]
+}
