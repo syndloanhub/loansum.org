@@ -41,10 +41,7 @@
    
     <script>
 	$(document).ready(function(){
-    	$('#menu-button').click(function() {
-			$('#nav').slideToggle(500);
-		});
-		$('#calculator-button').click(function() {
+		$('#calculatorButton').click(function() {
 			$('#calculator').slideToggle(500);
 		});
 		$('#filterLoanId').click(function() {

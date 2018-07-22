@@ -1,10 +1,24 @@
-<nav>
-	<ul>
-		<li><a href="#">Introduction</a></li>
-		<li><a id="calculator-button" href="#">Loan Calculator</a></li>
-		<li><a href="#">Community</a></li>
-		<li><a href="https://github.com/syndloanhub/loansum"
+<nav class="topnav" id="myTopnav">	 
+	
+    <a class="icon" href="javascript:void(0);" onclick="myFunction()">
+      <i class="fa fa-bars"></i><br>
+    </a>
+    <a href="#">Introduction</a>
+	<a id="calculatorButton" href="#">Loan Calculator</a>
+	<a href="#">Community</a>
+	<a href="https://github.com/syndloanhub/loansum"
 			title="GitHub"><span><i class="fa fa-github fa-fw"></i>
-					GitHub</span></a></li>
-	</ul>
+					GitHub</span></a>
 </nav>
+
+
+<script>
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+</script>
