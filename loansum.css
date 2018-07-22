@@ -11,7 +11,7 @@ small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td {
+table, caption, tbody, tfoot, thead, tr, th, td, textarea {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -226,6 +226,18 @@ button:hover{
 	margin: auto;
 	text-align: left;
 }
+textarea {
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;	 
+    padding: 5px;
+	width: 84%;  
+	margin: auto;
+	color: #fff;
+	border: solid 1px green;
+}
+
 
 
 #loanIdFilter, #borrowerFilter, #agentFilter, #facilityTypeFilter,
@@ -326,7 +338,7 @@ table {
 	resize:vertical;/*mine*/	
 }
 
-#loanTable, #contractTable, #eventTable, #tradeTable, #calculateTradeTable{		
+#loanTable, #contractTable, #eventTable, #facilityEventTable, #tradeTable, #calculateTradeTable{		
 	width:84%;
 	margin:auto;
 	border: 1px solid green;
@@ -335,6 +347,10 @@ table {
 }
 #eventTable{	
 	height: 65px;
+	margin-top: 10px;
+}
+#facilityEventTable{	
+	height: 70px;
 	margin-top: 10px;
 }
 #calculateTradeTable{		
@@ -350,6 +366,12 @@ table {
 	margin-top: 35px;
 	text-align: left;
 }
+#facilityEditEvents{
+	width: 84%;
+	margin: auto;
+	margin-top: 35px;
+	text-align: left;
+}
 table, th , td  { /*mine*/
   	border-collapse: collapse;
 }
@@ -360,6 +382,10 @@ th , td { /*mine*/
 	font-size: 10px; 	
 }
 #eventTable td{
+	padding-top:2px;
+	padding-bottom:2px;
+}
+#facilityEventTable td{
 	padding-top:2px;
 	padding-bottom:2px;
 }
@@ -596,6 +622,10 @@ select:disabled.tableSelect{
 	background-color: #111;
 }
 td#eventTable{
+	padding-bottom: 0;
+	padding-top: 0;
+}
+td#facilityEventTable{
 	padding-bottom: 0;
 	padding-top: 0;
 }
