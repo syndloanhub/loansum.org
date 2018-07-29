@@ -35,8 +35,8 @@
     
    	<script src="https://code.jquery.com/jquery-3.3.1.js"></script> <!--use min for production-->
 	<script src="jquery.scrollintoview.js"></script> <!--use min for production-->
-  	<script src="smart-table.js"></script>
-  	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.11/smart-table.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
    
     <script>
