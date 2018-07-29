@@ -224,14 +224,14 @@ button{
 	border-radius: none;
 	border: none;	
 }
-#calculateButton{
+button:hover{
+	color:white;
+}
+.faIcon{
 	padding-left:7px;
 	padding-right:7px;
 	padding-top:3px;
 	padding-bottom: 3px;
-}
-button:hover{
-	color:white;
 }
 .actionButtons{
 	width: 84%;
