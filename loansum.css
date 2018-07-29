@@ -132,6 +132,18 @@ header, section, footer, aside, nav, main, article, figure {
 	font-size:12px;
 }
 
+::-webkit-scrollbar {
+	width: 4px;
+}
+::-webkit-scrollbar-track {
+	background-color: #000;
+	border-radius: 2px;
+}
+::-webkit-scrollbar-thumb {
+	background-color: green;
+	border-radius: 2px; 
+}
+
 body {
 	-webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -237,8 +249,6 @@ textarea {
 	color: #fff;
 	border: solid 1px green;
 }
-
-
 
 #loanIdFilter, #borrowerFilter, #agentFilter, #facilityTypeFilter,
 #originalCommitmentAmountFilter, #startDateFilter, #maturityDateFilter, #currencyFilter,
