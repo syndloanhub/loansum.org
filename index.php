@@ -20,7 +20,7 @@
 	<![endif]-->
 
 	<!--[if lt IE 8]><!-->
-		<link rel="stylesheet" href="ie7/ie7.css">
+		<!-- <link rel="stylesheet" href="ie7/ie7.css"> -->
 	<!--<![endif]-->
 </head>
 
@@ -30,19 +30,18 @@
 	<main>	
 		<img id="logo" src="images/loansumLogo.png" width="125px">  	
 		<?php include 'includes/nav.html';?>
-		<?php include 'includes/calculator.html';?>
+		<?php include 'includes/newcalculator.html';?>
 	</main>      
     
    	<script src="https://code.jquery.com/jquery-3.3.1.js"></script> <!--use min for production-->
 	<script src="jquery.scrollintoview.js"></script> <!--use min for production-->
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.11/smart-table.min.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-
    
     <script>
 	$(document).ready(function(){
-		$('#calculatorButton').click(function() {
-			$('#calculator').slideToggle(500);
+		$('#newCalculatorButton').click(function() {
+			$('#newCalculator').slideToggle(500);
 		});
 		$('#filterLoanId').click(function() {
 			$('#loanIdFilter').toggle(500);
