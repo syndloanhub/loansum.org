@@ -159,7 +159,7 @@ body {
 
 main{
 	width:100%;
-	min-height:100vh; /*test this*/
+	height:100vh;/*min-height:100vh; testing, may choose to put back*/
 	background-image: url(images/loansumBackground.jpg);
 	background-size: cover;
 	overflow: hidden;
@@ -187,10 +187,52 @@ main{
 .topnav a:hover {
   color:#0675c2;
 }
+.topnav a:active {
+  color:#0675c2;
+}
 .topnav .icon {
   display: none;
 }
-
+#tagline{
+	text-align: center;
+	font-size: 36px;
+	font-family: Verdana, Geneva, sans-serif;
+	padding-top:50vh;
+	color:#fff;
+}
+#taglineLS{
+	color:#0675c2;
+}
+a:active{
+	color: #0675c2;
+}
+h1{
+	color:#0675c2;
+	text-align: left;
+	font-size: 20px;
+	padding-bottom: 10px;
+	padding-top: 30px;
+}
+#intro h1:first-child{
+	padding-top: 0;
+}
+.sideNav{
+	display: block;
+	float: left;
+	width:20%;
+	text-align: left;
+	padding-left: 100px;
+	line-height: 1.5;
+	font-weight: bold;
+}
+.sideNav a{
+	display: block;
+	color:/*#111;*/white;
+	text-decoration: none;
+}
+.sideNav a:hover, .sideNav a:active{
+	text-decoration: underline;
+}
 /*navigation for mobile and tablet*/
 @media screen and (max-width: 769px) {	
   .topnav a {
@@ -215,7 +257,14 @@ main{
     float: none;
     display: block;   
   }
-} 
+  #tagline{
+	font-size: 24px;
+	}
+ 
+.sideNav{
+	display: none;
+}
+}
 /*end for mobile and tablet*/
 
 button{
@@ -234,7 +283,7 @@ button:hover{
 	padding-bottom: 3px;
 }
 .actionButtons{
-	width: 84%;
+	width: 88.4%;
 	margin: auto;
 	text-align: left;
 }
@@ -244,7 +293,7 @@ textarea {
     -ms-box-sizing: border-box;
     box-sizing: border-box;	 
     padding: 5px;
-	width: 84%;  
+	width: 88.4%;  
 	margin: auto;
 	color: #fff;
 	border: solid 1px green;
@@ -306,29 +355,43 @@ textarea {
     box-sizing: border-box;
 }
 
-#calculator{
+#calculator, #intro{
 		-webkit-box-sizing: border-box;
     	-moz-box-sizing: border-box;
     	-ms-box-sizing: border-box;
     	box-sizing: border-box;
 		position: relative;
 		top:30px;
-		height: 600px;/*680px; testing from height:680px*/	
+		height: 600px;
 		margin-top:20px;
 		padding:20px;
 		padding-bottom: 60px; /*testing*/
 		text-align: center;
-		width: 100%;
-		background-color: black;
-		opacity:.7;
+		width: 95%;
+	    margin:auto;
+		background-color:#000; 
+		opacity:.6;
 		color:green;
 		display:none;
-		overflow-y: auto;
+		overflow-y:auto; /*testing*/
 		overflow-x:auto; /*testing*/
 	}
+#intro{
+	color:#fff;
+	padding-top: 60px;
+}
+#introText{
+	width: 60%;
+	float: right;
+	text-align: left;
+	padding-right: 100px;		
+}
+#introText p{
+	padding-bottom: 1em;
+}
 
 #displaySelectedLoan{
-	width: 84%;
+	width: 88.4%;
 	margin: auto;
 	text-align: left;
 	font-size: 10px;
@@ -349,7 +412,7 @@ table {
 }
 
 #loanTable, #contractTable, #eventTable, #facilityEventTable, #tradeTable, #calculateTradeTable{		
-	width:84%;
+	width:88.4%;
 	margin:auto;
 	border: 1px solid green;
 	min-width: 863px;
@@ -371,13 +434,13 @@ table {
 	height: 20px;
 }*/
 #editEvents{
-	width: 84%;
+	width: 88.4%;
 	margin: auto;
 	margin-top: 35px;
 	text-align: left;
 }
 #facilityEditEvents{
-	width: 84%;
+	width: 88.4%;
 	margin: auto;
 	margin-top: 35px;
 	text-align: left;
@@ -474,7 +537,7 @@ tfoot td {
 
 /*style the tabs*/
 div.tab{
-	width:84%;
+	width:88.4%;
 	margin:auto;
 	margin-bottom:5px;
 	overflow: hidden;
@@ -525,7 +588,7 @@ ul.nav-tabs li.active a{
     	-moz-box-sizing: border-box;
     	-ms-box-sizing: border-box;
     	box-sizing: border-box;			
-		width: 84%;
+		width: 88.4%;
 		margin:auto;
 		margin-top: 20px;	
 		border-style: solid;
