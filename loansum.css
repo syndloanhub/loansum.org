@@ -352,13 +352,16 @@ table {
 	resize:vertical;/*mine*/	
 }
 
-#loans, #events, #contracts, #trades, #loanTable, #contractTable, #eventTable, #facilityEventTable, #tradeTable, #calculateTradeTable{		
+#loans, #events, #contracts, #trades, #cashflows, #interestExplain, #costOfFundedExplain, #loanTable, #contractTable, #eventTable, #facilityEventTable, #tradeTable, #calculateTradeTable{		
 	/*width:84%;
 	margin:auto;*/
 	clear: both;
 	border: 1px solid green;
 	min-width: 863px;
 	/*overflow-x: scroll;*/
+}
+#cashflows {
+	height: 162px;
 }
 #eventTable{	
 	height: 65px;

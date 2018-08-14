@@ -453,6 +453,92 @@
 				<div id="displayError" ng-if="trades.error">{{trades.error}}</div>
 			</div>
 
+			<div ng-controller="CashflowsController as cashflows"
+				ng-show="tabs.getActiveTab() == 'cash flows'">
+				<table id="cashflows" st-safe-src="cashflows.data"
+					st-table="cashflows.displayed" class="table">
+					<thead>
+						<tr>
+							<th st-ratio="10">PAY DATE</th>
+							<th st-ratio="10">PAY TYPE</th>
+							<th st-ratio="10">SOURCE TYPE</th>
+							<th st-ratio="10">SOURCE ID</th>
+							<th st-ratio="10">PAYER</th>
+							<th st-ratio="10">RECEIVER</th>
+							<th st-ratio="10">UNCERTAIN</th>
+							<th st-ratio="20">AMOUNT</th>
+							<th st-ratio="10">CURRENCY</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-click="cashflows.setSelected(cashflow)"
+							st-select-row="cashflow" st-select-mode="single"
+							ng-repeat="cashflow in cashflows.displayed">
+							<td st-ratio="10">{{cashflow.paymentDate | date : "M/d/yy"}}</td>
+							<td st-ratio="10">{{cashflow.type}}</td>
+							<td st-ratio="10">{{cashflow.sourceType}}</td>
+							<td st-ratio="10">{{cashflow.sourceId}}</td>
+							<td st-ratio="10">{{cashflow.payingCounterparty}}</td>
+							<td st-ratio="10">{{cashflow.receivingCounterparty}}</td>
+							<td st-ratio="10">{{cashflow.uncertain}}</td>
+							<td st-ratio="20">{{cashflow.amount | currency : "" : 2}}</td>
+							<td st-ratio="10">{{cashflow.currency}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+				<table ng-show="cashflows.isAccrualSelected()" id="interestExplain"
+					st-safe-src="cashflows.selected.explains"
+					st-table="cashflows.selected.displayed" class="table">
+					<thead>
+						<tr>
+							<th>SHARE NOT</th>
+							<th>START DATE</th>
+							<th>END DATE</th>
+							<th>DAY COUNT</th>
+							<th>DAYS</th>
+							<th>DIY</th>
+							<th>RATE</th>
+							<th>SHARE AMT</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="explain in cashflows.selected.displayed">
+							<td>{{explain.shareNotional | number : 2}}</td>
+							<td>{{explain.startDate | date : "M/d/yy"}}</td>
+							<td>{{explain.endDate | date : "M/d/yy"}}</td>
+							<td>{{explain.dayCount}}</td>
+							<td>{{explain.days}}</td>
+							<td>{{explain.daysInYear | number : 0}}</td>
+							<td>{{explain.allInRate * 100.0 | number : 6}}</td>
+							<td>{{explain.shareAmount | number : 2}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<table ng-show="cashflows.isCostOfFundedSelected()"
+					id="costOfFundedExplain" st-safe-src="cashflows.selected.explains"
+					st-table="cashflows.selected.displayed" class="table">
+					<thead>
+						<tr>
+							<th>SHARE NOT</th>
+							<th>PRICE</th>
+							<th>SETTLEMENT PERIOD PIK</th>
+							<th>FORMULA</th>
+							<th>SHARE AMT</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="explain in cashflows.selected.displayed">
+							<td>{{explain.shareNotional | number : 2}}</td>
+							<td>{{explain.price * 100.0 | number : 5}}</td>
+							<td>{{explain.settPerPik | number : 2}}</td>
+							<td>{{explain.formula}}</td>
+							<td>{{explain.shareAmount | number : 2}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
 			<div ng-controller="TextModelController as textmodel"
 				ng-show="tabs.getActiveTab() == 'model'">
 				<textarea rows=25 ng-model="textmodel.prettymodel"
