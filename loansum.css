@@ -327,7 +327,7 @@ textarea {
 		overflow-x:auto; /*testing*/
 	}
 
-#displaySelectedLoan, #displayError{
+#displaySelectedLoan, #displayError, #displayFormula{
 	/*width: 84%;
 	margin: auto;*/
 	clear: both;
@@ -352,7 +352,7 @@ table {
 	resize:vertical;/*mine*/	
 }
 
-#loans, #events, #contracts, #trades, #cashflows, #interestExplain, #costOfFundedExplain, #loanTable, #contractTable, #eventTable, #facilityEventTable, #tradeTable, #calculateTradeTable{		
+#loans, #events, #contracts, #trades, #cashflows, #interestExplain, #costOfFundedExplain, #benefitOfUnfundedExplain, #costOfCarryExplain, #economicBenefitExplain, #loanTable, #contractTable, #eventTable, #facilityEventTable, #tradeTable, #calculateTradeTable{		
 	/*width:84%;
 	margin:auto;*/
 	clear: both;

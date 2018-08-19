@@ -487,6 +487,9 @@
 					</tbody>
 				</table>
 				<br>
+				<div id="displayFormula" ng-if="cashflows.selected.formula">
+					formula: <span class="white">{{cashflows.selected.formula}}</span>
+				</div>
 				<table ng-show="cashflows.isAccrualSelected()" id="interestExplain"
 					st-safe-src="cashflows.selected.explains"
 					st-table="cashflows.selected.displayed" class="table">
@@ -523,7 +526,6 @@
 							<th>SHARE NOT</th>
 							<th>PRICE</th>
 							<th>SETTLEMENT PERIOD PIK</th>
-							<th>FORMULA</th>
 							<th>SHARE AMT</th>
 						</tr>
 					</thead>
@@ -532,7 +534,73 @@
 							<td>{{explain.shareNotional | number : 2}}</td>
 							<td>{{explain.price * 100.0 | number : 5}}</td>
 							<td>{{explain.settPerPik | number : 2}}</td>
-							<td>{{explain.formula}}</td>
+							<td>{{explain.shareAmount | number : 2}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<table ng-show="cashflows.isBenefitOfUnfundedSelected()"
+					id="benefitOfUnfundedExplain" st-safe-src="cashflows.selected.explains"
+					st-table="cashflows.selected.displayed" class="table">
+					<thead>
+						<tr>
+							<th>UNFUNDED AMOUNT</th>
+							<th>PRICE</th>
+							<th>BENEFIT OF UNFUNDED</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="explain in cashflows.selected.displayed">
+							<td>{{explain.unfundedAmt | number : 2}}</td>
+							<td>{{explain.price * 100.0 | number : 5}}</td>
+							<td>{{explain.shareAmount | number : 2}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<table ng-show="cashflows.isCostOfCarrySelected()"
+					id="costOfCarryExplain" st-safe-src="cashflows.selected.explains"
+					st-table="cashflows.selected.displayed" class="table">
+					<thead>
+						<tr>
+							<th>EXP SETT PX</th>
+							<th>START DATE</th>
+							<th>END DATE</th>
+							<th>DAYS</th>
+							<th>DIY</th>
+							<th>AVG LIBOR</th>
+							<th>SHARE AMT</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="explain in cashflows.selected.displayed">
+							<td>{{explain.expSettPx | number : 2}}</td>
+							<td>{{explain.startDate | date : "M/d/yy"}}</td>
+							<td>{{explain.endDate | date : "M/d/yy"}}</td>
+							<td>{{explain.days}}</td>
+							<td>{{explain.daysInYear | number : 0}}</td>
+							<td>{{explain.avgLibor * 100.0 | number : 6}}</td>
+							<td>{{explain.shareAmount | number : 2}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<table ng-show="cashflows.isEconomicBenefitSelected()"
+					id="economicBenefitExplain"
+					st-safe-src="cashflows.selected.explains"
+					st-table="cashflows.selected.displayed" class="table">
+					<thead>
+						<tr>
+							<th>TRD DT FUNDED</th>
+							<th>SETT DT FUNDED</th>
+							<th>TRD DT REPAY</th>
+							<th>PRICE</th>
+							<th>ECON BENEFIT</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="explain in cashflows.selected.displayed">
+							<td>{{explain.trdDtFunded | number : 2}}</td>
+							<td>{{explain.settDtFunded | number : 2}}</td>
+							<td>{{explain.trdDtRepay | number : 2}}</td>
+							<td>{{explain.price * 100.0 | number : 5}}</td>
 							<td>{{explain.shareAmount | number : 2}}</td>
 						</tr>
 					</tbody>
