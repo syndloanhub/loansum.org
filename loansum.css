@@ -355,7 +355,7 @@ textarea {
     box-sizing: border-box;
 }
 
-#calculator, #intro{
+#calculator, #newCalculator, #intro {
 		-webkit-box-sizing: border-box;
     	-moz-box-sizing: border-box;
     	-ms-box-sizing: border-box;
@@ -390,13 +390,17 @@ textarea {
 	padding-bottom: 1em;
 }
 
-#displaySelectedLoan{
+#displaySelectedLoan, #displayError{
 	width: 88.4%;
 	margin: auto;
+	/*clear: both; john's*/
 	text-align: left;
 	font-size: 10px;
 	line-height: 2;
 	padding-left: 10px;
+}
+#displayError {
+	color:red
 }
 	
 /*from smart table flex-fixed header*/
@@ -411,7 +415,7 @@ table {
 	resize:vertical;/*mine*/	
 }
 
-#loanTable, #contractTable, #eventTable, #facilityEventTable, #tradeTable, #calculateTradeTable{		
+#loans, #events, #contracts, #trades, #loanTable, #contractTable, #eventTable, #facilityEventTable, #tradeTable, #calculateTradeTable{		
 	width:88.4%;
 	margin:auto;
 	border: 1px solid green;
@@ -422,8 +426,8 @@ table {
 	height: 65px;
 	margin-top: 10px;
 }
-#facilityEventTable{	
-	height: 70px;
+#events{	
+	height: 75px;
 	margin-top: 10px;
 }
 #calculateTradeTable{		
@@ -433,18 +437,24 @@ table {
 /*#calculateTradeTable tr{
 	height: 20px;
 }*/
-#editEvents{
-	width: 88.4%;
+
+#editEvents, #editContractEvents{
+	width: 88.4%;;
 	margin: auto;
 	margin-top: 35px;
 	text-align: left;
 }
+/*<<<<<<< HEAD   ARE THESE FIELDS USED? HAS A TYPO IN JOHN'S VERSION
 #facilityEditEvents{
 	width: 88.4%;
+=======
+#editFfacilityEvents{
+	/*clear: both;
+>>>>>>> origin/master
 	margin: auto;
 	margin-top: 35px;
 	text-align: left;
-}
+}*/
 table, th , td  { /*mine*/
   	border-collapse: collapse;
 }
@@ -452,7 +462,10 @@ th , td { /*mine*/
  	padding: 5px;
 	padding-left:0;
 	padding-right:0;
-	font-size: 10px; 	
+	font-size: 10px; 
+	white-space:nowrap;   // disable auto wrap
+	overflow:hidden;      // text overflowed will be hidden
+	text-overflow:ellipsis; // text 0verflowed will be replaced with ...
 }
 #eventTable td{
 	padding-top:2px;
@@ -464,8 +477,7 @@ th , td { /*mine*/
 }
 th{/*mine*/
 	border-bottom: solid 1px green;
-	border-right: solid 1px green;
-		
+	border-right: solid 1px green;		
 }
 th:last-child{/*mine*/
 	border-right: none;
@@ -601,9 +613,25 @@ ul.nav-tabs li.active a{
 		/*display:table;*/
 	}
 	
+	#loanStaticInfo, #contractDetail, #tradeDetail,#tradeProceeds{
+		-webkit-box-sizing: border-box;
+    	-moz-box-sizing: border-box;
+    	-ms-box-sizing: border-box;
+    	box-sizing: border-box;			
+		/*width: 84%;*/
+		margin:auto;
+		margin-top: 20px;	
+		border-style: solid;
+		border-width: 1px;
+		border-color: green;
+		font-size: 12px;
+		color:green;
+		min-width: 863px;
+		/*overflow-x: scroll;*/
+		/*display:table;*/
+	}	
 	
-	
-	#loanStaticInfo, #contractDetail, #tradeDetail{
+	#loanStaticInfo, #contractDetail, #tradeDetail, #tradeProceeds{
 		padding:5px;
 	}
 	.alignleft{
