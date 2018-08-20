@@ -4369,7 +4369,7 @@
   "seller": "cpty~Divestnow, LLC",
   "amount": 2.5E7,
   "currency": "USD",
-  "price": 1.0,
+  "price": 1.01,
   "expectedSettlementDate": "2017-03-23",
   "delayedCompensationFlag": true,
   "association": "LSTA",

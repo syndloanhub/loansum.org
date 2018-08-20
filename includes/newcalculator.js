@@ -5,13 +5,17 @@
       .controller('LoansController', LoansController).controller('ContractsController', ContractsController)
       .controller("TradesController", TradesController).controller("EventsController", EventsController)
       .controller("ContractEventsController", ContractEventsController)
-      .controller("TextModelController", TextModelController).service("CalculatorService", CalculatorService);
+      .controller("TextModelController", TextModelController).controller("CashflowsController", CashflowsController)
+      .service("CalculatorService", CalculatorService);
 
-  function TabController() {
+  TabController.$inject = [ '$scope' ]
+
+  function TabController($scope) {
     var tabs = this;
 
     tabs.setActiveTab = function(value) {
       tabs.activeTab = value;
+      $scope.$broadcast("calculator:tabSelected", value);
     }
 
     tabs.getActiveTab = function() {
@@ -227,6 +231,50 @@
     };
   }
 
+  CashflowsController.$inject = [ 'CalculatorService', '$scope' ]
+
+  function CashflowsController(CalculatorService, $scope) {
+    var cashflows = this;
+    var service = CalculatorService;
+
+    $scope.$on('calculator:tabSelected', function(event, tab) {
+      if (tab == 'cash flows') {
+        service.calculateCashflows().then(function(data) {
+          cashflows.data = data;
+        });
+      }
+    });
+
+    cashflows.isAccrualSelected = function() {
+      return cashflows.selected && (cashflows.selected.type == 'Interest' || cashflows.selected.type == 'PikInterest' || cashflows.selected.type == 'DelayedCompensation');
+    }
+
+    cashflows.isCostOfFundedSelected = function() {
+      return cashflows.selected && cashflows.selected.type == 'CostOfFunded';
+    }
+
+    cashflows.isBenefitOfUnfundedSelected = function() {
+      return cashflows.selected && cashflows.selected.type == 'BenefitOfUnfunded';
+    }
+
+    cashflows.isCostOfCarrySelected = function() {
+      return cashflows.selected && cashflows.selected.type == 'CostOfCarry';
+    }
+
+    cashflows.isEconomicBenefitSelected = function() {
+      return cashflows.selected && cashflows.selected.type == 'EconomicBenefit';
+    }
+
+    cashflows.setSelected = function(cashflow) {
+      if (cashflow.isSelected) {
+        cashflows.selected = cashflow;
+      } else {
+        delete cashflows.selected;
+      }
+    }
+
+  }
+
   // Calculator service. This service encapsulates the loansum data model and
   // all interactions with the loansum application service.
 
@@ -279,6 +327,42 @@
           deferred.resolve(service.selectedTrade.tradeProceeds);
         }
       });
+
+      return deferred.promise;
+    }
+
+    service.calculateCashflows = function() {
+      var deferred = $q.defer();
+
+      if (!service.selectedLoan) {
+        deferred.resolve([]);
+      } else {
+        var filter = [ {
+        loan : service.selectedLoan.id,
+        trades : []
+        } ];
+
+        for ( var i in service.selectedLoan.trades) {
+          filter[0].trades.push(service.selectedLoan.trades[i].info.id);
+        }
+
+        var model = ui2model(filterui(service.uimodel, filter));
+
+        $http.post("loansum-service/loansum/calculateCashflows", model[0]).then(function(response) {
+          var cashflows = response.data;
+          if (cashflows.message) {
+            deferred.reject(cashflows.message);
+          } else {
+            console.log("service raw cashflows: " + JSON.stringify(cashflows, undefined, 2));
+            var cashFlows = [];
+            for ( var i in cashflows.cashFlows) {
+              cashFlows.push(new TradeCashflow(cashflows.cashFlows[i]));
+            }
+            service.selectedLoan.cashflows = cashFlows;
+            deferred.resolve(cashFlows);
+          }
+        });
+      }
 
       return deferred.promise;
     }
@@ -346,7 +430,7 @@
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     const currencyAmountRegex = /^USD [\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?$/;
     const standardIdRegex = /.*~.*/;
-    const prunable = [ "isSelected", "pctShare", "totalCommitmentSchedule", "pikProjection", "paymentProjection" ]
+    const prunable = [ "isSelected", "pctShare", "totalCommitmentSchedule", "pikProjection", "paymentProjection", "cashflows" ]
 
     // Objects.
 
@@ -378,6 +462,110 @@
           this[type] = new CurrencyAmount(s.substring(0, 3), parseFloat(s.substring(4)));
         }
       }
+    }
+
+    function TradeCashflow(cashflow) {
+      var s = cashflow.cashFlow.forecastValue;
+
+      if (cashflow.annotation.source) {
+        this.sourceType = cashflow.annotation.source.replace(/~.*$/, "");
+        this.sourceId = cashflow.annotation.source.replace(/^.*~/, "")
+      }
+
+      this.currency = s.substring(0, 3);
+      this.amount = parseFloat(s.substring(4));
+      this.type = cashflow.annotation.type;
+      this.paymentDate = new Date(cashflow.cashFlow.paymentDate);
+      this.payingCounterparty = cashflow.annotation.payingCounterparty.replace(/^.*~/, "");
+      this.receivingCounterparty = cashflow.annotation.receivingCounterparty.replace(/^.*~/, "");
+      this.uncertain = cashflow.annotation.uncertain;
+      this.explains = [];
+
+      if (cashflow.annotation.explains) {
+        if (this.type == 'Interest' || this.type == 'PikInterest' || this.type == 'DelayedCompensation') {
+          for ( var i in cashflow.annotation.explains.map.CashFlow.value) {
+            this.explains.push(new AccrualExplain(cashflow.annotation.explains.map.CashFlow.value[i]));
+            if (!this.formula) {
+              this.formula = this.explains[0].formula;
+            }
+          }
+        } else if (this.type == 'CostOfFunded') {
+          for ( var i in cashflow.annotation.explains.map.CashFlow.value) {
+            this.explains.push(new CostOfFundedExplain(cashflow.annotation.explains.map.CashFlow.value[i]));
+            if (!this.formula) {
+              this.formula = this.explains[0].formula;
+            }
+          }
+        } else if (this.type == 'BenefitOfUnfunded') {
+          for ( var i in cashflow.annotation.explains.map.CashFlow.value) {
+            this.explains.push(new BenefitOfUnfundedExplain(cashflow.annotation.explains.map.CashFlow.value[i]));
+            if (!this.formula) {
+              this.formula = this.explains[0].formula;
+            }
+          }
+        } else if (this.type == 'CostOfCarry') {
+          for ( var i in cashflow.annotation.explains.map.CashFlow.value) {
+            this.explains.push(new CostOfCarryExplain(cashflow.annotation.explains.map.CashFlow.value[i]));
+            if (!this.formula) {
+              this.formula = this.explains[0].formula;
+            }
+          }
+        } else if (this.type == 'EconomicBenefit') {
+          for ( var i in cashflow.annotation.explains.map.CashFlow.value) {
+            this.explains.push(new EconomicBenefitExplain(cashflow.annotation.explains.map.CashFlow.value[i]));
+            if (!this.formula) {
+              this.formula = this.explains[0].formula;
+            }
+          }
+        }
+      }
+    }
+
+    function AccrualExplain(explain) {
+      this.shareNotional = parseFloat(explain.map["Share Not"]);
+      this.dayCount = explain.map["Day Cnt"].value;
+      this.startDate = new Date(explain.map["Start"].value);
+      this.endDate = new Date(explain.map["End"].value);
+      this.days = parseInt(explain.map["Days"]);
+      this.daysInYear = parseFloat(explain.map["DIY"]);
+      this.allInRate = parseFloat(explain.map["All-in Rt"]);
+      this.shareAmount = parseFloat(explain.map["Share Amt"]);
+      this.formula = explain.map["Formula"];
+    }
+
+    function CostOfFundedExplain(explain) {
+      this.shareNotional = parseFloat(explain.map["Share Not"]);
+      this.price = parseFloat(explain.map["Price"]);
+      this.shareAmount = parseFloat(explain.map["Share Amt"]);
+      this.settPerPik = parseFloat(explain.map["Sett Per PIK"]);
+      this.formula = explain.map["Formula"];
+    }
+
+    function BenefitOfUnfundedExplain(explain) {
+      this.unfundedAmt = parseFloat(explain.map["Unfunded Amt"]);
+      this.price = parseFloat(explain.map["Price"]);
+      this.shareAmount = parseFloat(explain.map["Share Amt"]);
+      this.formula = explain.map["Formula"];
+    }
+
+    function CostOfCarryExplain(explain) {
+      this.expSettPx = parseFloat(explain.map["Exp Sett Px"]);
+      this.shareAmount = parseFloat(explain.map["Share Amt"]);
+      this.formula = explain.map["Formula"];
+      this.startDate = new Date(explain.map["Start"].value);
+      this.endDate = new Date(explain.map["End"].value);
+      this.days = parseInt(explain.map["Days"]);
+      this.daysInYear = parseFloat(explain.map["DIY"]);
+      this.avgLibor = parseFloat(explain.map["Avg LIBOR"]);
+    }
+
+    function EconomicBenefitExplain(explain) {
+      this.trdDtFunded = parseFloat(explain.map["Trd Dt Funded"]);
+      this.settDtFunded = parseFloat(explain.map["Sett Dt Funded"]);
+      this.trdDtRepay = parseFloat(explain.map["Trd Dt Repay"]);
+      this.shareAmount = parseFloat(explain.map["Share Amt"]);
+      this.formula = explain.map["Formula"];
+      this.price = parseFloat(explain.map["Price"]);
     }
 
     // Utility functions.
