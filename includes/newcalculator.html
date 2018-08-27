@@ -75,7 +75,7 @@
 					<br>
 					<section class="column1">
 						<label>Loan Id</label> <input class="formInput" type="text"
-							ng-model="loans.selected.id.value" size="30"> <br> <label>Borrower</label>
+							ng-model="loans.selected.id.value" size="30"> <label>Borrower</label>
 						<input class="formInput" type="text"
 							ng-model="loans.selected.borrower.value" size="30"><br>
 						<label>Agent</label> <input class="formInput" type="text"
@@ -528,7 +528,7 @@
 							<th>SHARE NOT</th>
 							<th>PRICE</th>
 							<th>SETTLEMENT PERIOD PIK</th>
-							<th>SHARE AMT</th>
+							<th>COST OF FUNDED</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -541,7 +541,8 @@
 					</tbody>
 				</table>
 				<table ng-show="cashflows.isBenefitOfUnfundedSelected()"
-					id="benefitOfUnfundedExplain" st-safe-src="cashflows.selected.explains"
+					id="benefitOfUnfundedExplain"
+					st-safe-src="cashflows.selected.explains"
 					st-table="cashflows.selected.displayed" class="table">
 					<thead>
 						<tr>
