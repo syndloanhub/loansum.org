@@ -6,13 +6,14 @@
       .controller("TradesController", TradesController).controller("EventsController", EventsController)
       .controller("ContractEventsController", ContractEventsController)
       .controller("TextModelController", TextModelController).controller("CashflowsController", CashflowsController)
-      .service("CalculatorService", CalculatorService);
+      .service("CalculatorService", CalculatorService)
+      .directive('stRatio', stRatio);
 
   TabController.$inject = [ '$scope' ]
 
   function TabController($scope) {
     var tabs = this;
-
+  
     tabs.setActiveTab = function(value) {
       tabs.activeTab = value;
       $scope.$broadcast("calculator:tabSelected", value);
@@ -726,6 +727,15 @@
 
       return loans;
     }
+  }
+	
+  function stRatio() {
+    return {
+      link : function(scope, element, attr) {
+        var ratio = +(attr.stRatio);
+        element.css('width', ratio + '%');
+      }
+    };
   }
 
 })();

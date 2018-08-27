@@ -18,15 +18,15 @@
 		</ul>
 
 		<div ng-controller='LoansController as loans'>
-			<div>
+			<div>	
 				<div id="displaySelectedLoan" ng-if="loans.selected">
 					selected loan: <span class="white">{{loans.selected.id.value}}</span>
 					&nbsp;&nbsp;&nbsp; borrower: <span class="white">{{loans.selected.borrower.value}}</span>
 				</div>
-				<div id="displaySelectedLoan" ng-if="!loans.selected">
+				<div id="displayNoSelectedLoan" ng-if="!loans.selected">
 					<br>
 				</div>
-			</div>
+			</div>		
 
 			<div ng-show="tabs.getActiveTab() == 'loans'">
 				<table id="loans" st-safe-src="loans.data"
@@ -103,7 +103,7 @@
 				</div>
 
 				<div ng-controller="EventsController as events">
-					<div id="foo" class="edit">&#x270e;</div>
+					<div class="edit editTable">&#x270e;</div>
 
 					<table id="events" st-safe-src="events.data"
 						st-table="events.displayed" class="table">
@@ -152,9 +152,9 @@
 					st-table="contracts.displayed" class="table">
 					<thead>
 						<tr>
-							<th st-ratio="4">CONTRACT ID</th>
-							<th st-ratio="10">START DATE</th>
-							<th st-ratio="10">END DATE</th>
+							<th st-ratio="8">CONTRACT ID</th>
+							<th st-ratio="8">START DATE</th>
+							<th st-ratio="8">END DATE</th>
 							<th st-ratio="10">PAYMENT DATE</th>
 							<th st-ratio="13">AMOUNT</th>
 							<th st-ratio="12">TYPE</th>
@@ -169,10 +169,10 @@
 						<tr ng-click="contracts.setSelected(contract)"
 							st-select-row="contract" st-select-mode="single"
 							ng-repeat="contract in contracts.displayed">
-							<td st-ratio="4">{{contract.id.value}}</td>
-							<td st-ratio="10">{{contract.accrual.startDate | date :
+							<td st-ratio="8">{{contract.id.value}}</td>
+							<td st-ratio="8">{{contract.accrual.startDate | date :
 								"M/d/yy"}}</td>
-							<td st-ratio="10">{{contract.accrual.endDate | date :
+							<td st-ratio="8">{{contract.accrual.endDate | date :
 								"M/d/yy"}}</td>
 							<td st-ratio="10">{{contract.paymentDate | date : "M/d/yy"}}</td>
 							<td st-ratio="13">{{contract.accrual.accrualAmount.value |
@@ -253,48 +253,49 @@
 							type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 							ng-model="contracts.selected.accrual.pikSpread" size="30"><br>
 					</section>
+				</div>
 
-					<div ng-controller="ContractEventsController as contractEvents">
-						<div class="edit">&#x270e;</div>
+				<div ng-controller="ContractEventsController as contractEvents">
+					<div class="edit editTable">&#x270e;</div>
 
-						<table id="editContractEvents" st-safe-src="contractEvents.data"
-							st-table="contractEvents.displayed" class="table">
-							<thead>
-								<tr>
-									<th st-ratio="20">EVENT TYPE</th>
-									<th st-ratio="20">EFFECTIVE DATE</th>
-									<th st-ratio="20">AMOUNT</th>
-									<th st-ratio="20">PAYDOWN INTEREST</th>
-									<th st-ratio="20">PRICE</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="contractEvent in contractEvents.displayed">
-									<td st-ratio="20">
-										<button type="button" ng-click="contractEvents.remove()"
-											class="btn btn-sm btn-danger inTableDelete">
-											<i class="glyphicon glyphicon-remove-circle"></i>-
-										</button> <select ng-model="contractEvent['@bean']"
-										class="mySelect tableSelect"
-										ng-options="x for x in tabs.ContractEventTypes">
+					<table id="editContractEvents" st-safe-src="contractEvents.data"
+						st-table="contractEvents.displayed" class="table">
+						<thead>
+							<tr>
+								<th st-ratio="20">EVENT TYPE</th>
+								<th st-ratio="20">EFFECTIVE DATE</th>
+								<th st-ratio="20">AMOUNT</th>
+								<th st-ratio="20">PAYDOWN INTEREST</th>
+								<th st-ratio="20">PRICE</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="contractEvent in contractEvents.displayed">
+								<td st-ratio="20">
+									<button type="button" ng-click="contractEvents.remove()"
+										class="btn btn-sm btn-danger inTableDelete">
+										<i class="glyphicon glyphicon-remove-circle"></i>-
+									</button> 
+									<select ng-model="contractEvent['@bean']"
+									    class="mySelect tableSelect"
+									    ng-options="x for x in tabs.ContractEventTypes">
 									</select>
-									</td>
-									<td st-ratio="20"><input class="tableInput" type="date"
-										ng-model="contractEvent.effectiveDate"></td>
-									<td st-ratio="20"><input class="tableInput number"
-										type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-										ng-model="contractEvent.amount.value"></td>
-									<td st-ratio="20"><select
-										ng-model="contractEvent.interestOnPaydown"
-										class="mySelect tableSelect"
-										ng-options="x for x in tabs.Boolean"></select></td>
-									<td st-ratio="20"><input class="tableInput number"
-										type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-										ng-model="contractEvent.price"></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+								</td>
+								<td st-ratio="20"><input class="tableInput" type="date"
+									ng-model="contractEvent.effectiveDate"></td>
+								<td st-ratio="20"><input class="tableInput number"
+									type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
+									ng-model="contractEvent.amount.value"></td>
+								<td st-ratio="20"><select
+									ng-model="contractEvent.interestOnPaydown"
+									class="mySelect tableSelect"
+									ng-options="x for x in tabs.Boolean"></select></td>
+								<td st-ratio="20"><input class="tableInput number"
+									type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
+									ng-model="contractEvent.price"></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 
@@ -306,11 +307,11 @@
 						<tr>
 							<th st-ratio="8">TRADE ID</th>
 							<th st-ratio="10">BUY/SELL</th>
-							<th st-ratio="12">BUYER</th>
-							<th st-ratio="12">SELLER</th>
-							<th st-ratio="16">AMOUNT</th>
+							<th st-ratio="14">BUYER</th>
+							<th st-ratio="14">SELLER</th>
+							<th st-ratio="14">AMOUNT</th>
 							<th st-ratio="10">CURRENCY</th>
-							<th st-ratio="16">PRICE</th>
+							<th st-ratio="14">PRICE</th>
 							<th st-ratio="16">EXPECTED SETTLEMENT DATE</th>
 						</tr>
 					</thead>
@@ -319,11 +320,11 @@
 							st-select-mode="single" ng-repeat="trade in trades.displayed">
 							<td st-ratio="8">{{trade.info.id.value}}</td>
 							<td st-ratio="10">{{trade.buySell}}</td>
-							<td st-ratio="12">{{trade.buyer.value}}</td>
-							<td st-ratio="12">{{trade.seller.value}}</td>
-							<td st-ratio="16">{{trade.amount | currency : "" : 2}}</td>
+							<td st-ratio="14">{{trade.buyer.value}}</td>
+							<td st-ratio="14">{{trade.seller.value}}</td>
+							<td st-ratio="14">{{trade.amount | currency : "" : 2}}</td>
 							<td st-ratio="10">{{trade.currency}}</td>
-							<td st-ratio="16">{{trade.price | currency : "" : 2}}</td>
+							<td st-ratio="14">{{trade.price | currency : "" : 2}}</td>
 							<td st-ratio="16">{{trade.expectedSettlementDate | date :
 								"M/d/yy" }}</td>
 						</tr>
@@ -409,43 +410,44 @@
 						</select><br>
 					</section>
 
-					<section class="actionButtons">
-						<button type="button" ng-click="trades.add()"
-							class="btn btn-sm btn-success">
-							<i class="glyphicon glyphicon-plus"></i>+
-						</button>
-						<button id="calculateButton" type="button"
+					
+				</div>
+				<section class="actionButtons">
+					<button type="button" ng-click="trades.add()"
+						    class="btn btn-sm btn-success">
+						<i class="glyphicon glyphicon-plus"></i>+
+					</button>
+					<button id="calculateButton" type="button"
 							ng-click="trades.calculateProceeds()"
 							class="btn btn-sm btn-success">
-							<i class="fa fa-calculator"></i>
-						</button>
-					</section>
-				</div>
+						<i class="fa fa-calculator"></i>
+					</button>
+				</section>
 
 				<table id="tradeProceeds" class="table">
 					<thead>
 						<tr>
-							<th>COST OF FUNDED</th>
-							<th>BENEFIT OF UNFUNDED</th>
-							<th>DELAYED COMPENSATION</span></th>
-							<th>COST OF CARRY</span></th>
-							<th>ECONOMIC BENEFIT</th>
-							<th>TOTAL REMITTANCE</th>
+							<th st-ratio="17">COST OF FUNDED</th>
+							<th st-ratio="17">BENEFIT OF UNFUNDED</th>
+							<th st-ratio="16">DELAYED COMPENSATION</th>
+							<th st-ratio="16">COST OF CARRY</th>
+							<th st-ratio="17">ECONOMIC BENEFIT</th>
+							<th st-ratio="17">TOTAL REMITTANCE</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td width="100./6%">{{trades.selected.tradeProceeds.costOfFunded.value
+							<td st-ratio="17">{{trades.selected.tradeProceeds.costOfFunded.value
 								| currency : "" : 2}}</td>
-							<td with="100./6%">{{trades.selected.tradeProceeds.benefitOfUnfunded.value
+							<td st-ratio="17">{{trades.selected.tradeProceeds.benefitOfUnfunded.value
 								| currency : "" : 2}}</td>
-							<td width="100./6%">{{trades.selected.tradeProceeds.delayedCompensation.value
+							<td st-ratio="16">{{trades.selected.tradeProceeds.delayedCompensation.value
 								| currency : "" : 2}}</td>
-							<td width="100./6%">{{trades.selected.tradeProceeds.costOfCarry.value
+							<td st-ratio="16">{{trades.selected.tradeProceeds.costOfCarry.value
 								| currency : "" : 2}}</td>
-							<td width="100./6%">{{trades.selected.tradeProceeds.economicBenefit.value
+							<td st-ratio="17">{{trades.selected.tradeProceeds.economicBenefit.value
 								| currency : "" : 2}}</td>
-							<td width="100./6%">{{trades.selected.tradeProceeds.totalRemittance.value
+							<td st-ratio="17">{{trades.selected.tradeProceeds.totalRemittance.value
 								| currency : "" : 2}}</td>
 						</tr>
 					</tbody>

@@ -57,10 +57,6 @@ img, object, embed, video {
 	max-width: 100%;
 }
 
-/* IE 6 does not support max-width so default to width 100% */
-.ie6 img {
-	width:100%;
-}
 
 /* For older browsers*/
 header, section, footer, aside, nav, main, article, figure {
@@ -130,6 +126,7 @@ header, section, footer, aside, nav, main, article, figure {
 .edit{
 	color:green; 
 	font-size:12px;
+	text-align: left;
 }
 
 ::-webkit-scrollbar {
@@ -273,6 +270,12 @@ button{
 	border-radius: none;
 	border: none;	
 }
+#calculateButton{
+	padding-left:7px;
+	padding-right:7px;
+	padding-top:3px;
+	padding-bottom: 3px;
+}
 button:hover{
 	color:white;
 }
@@ -283,8 +286,8 @@ button:hover{
 	padding-bottom: 3px;
 }
 .actionButtons{
-	width: 88.4%;
-	margin: auto;
+	/*width: 88.4%;
+	margin: auto;*/
 	text-align: left;
 }
 textarea {
@@ -293,25 +296,12 @@ textarea {
     -ms-box-sizing: border-box;
     box-sizing: border-box;	 
     padding: 5px;
-	width: 88.4%;  
-	margin: auto;
+	width: 100%;  
+	/*margin: auto;*/
 	color: #fff;
 	border: solid 1px green;
 }
 
-#loanIdFilter, #borrowerFilter, #agentFilter, #facilityTypeFilter,
-#originalCommitmentAmountFilter, #startDateFilter, #maturityDateFilter, #currencyFilter,
-#contractIdFilter, #contractStartDateFilter, #endDateFilter, #paymentDateFilter, #amountFilter, #typeFilter, #indexFilter, #spreadFilter, #allInRateFilter, #dayCountFilter, #contractCurrencyFilter {
-	display: none;
-	background-color: #222;
-	border: solid green .5px;
-	border-radius: 0;
-	padding-left:1px;
-	width:122px;
-	height:26px;
-	z-index: 5;
-	position: absolute;
-}
 #loanIdHead, #currencyHead, #contractIdHead{
 	width:10%;
 	-webkit-box-sizing: border-box;
@@ -370,7 +360,7 @@ textarea {
 		width: 95%;
 	    margin:auto;
 		background-color:#000; 
-		opacity:.6;
+		opacity:.7;/*changed it back to .7 from .6 because all the text is affected as well*/
 		color:green;
 		display:none;
 		overflow-y:auto; /*testing*/
@@ -390,13 +380,17 @@ textarea {
 	padding-bottom: 1em;
 }
 
-#displaySelectedLoan, #displayError, #displayFormula{
-	width: 88.4%;
-	margin: auto;
+#displaySelectedLoan, #displayNoSelectedLoan, #displayError, #displayFormula{
+	/*width: 88.4%;
+	margin: auto;*/
 	text-align: left;
 	font-size: 10px;
 	line-height: 2;
-	padding-left: 10px;
+	padding-left: 5px;
+	clear:both;
+}
+#displaySelectedLoan, #displayNoSelectedLoan{
+	padding-top: 5px;
 }
 #displayError {
 	color:red
@@ -414,8 +408,9 @@ table {
 	resize:vertical;/*mine*/	
 }
 
-#loans, #events, #contracts, #trades, #cashflows, #interestExplain, #costOfFundedExplain, #benefitOfUnfundedExplain, #costOfCarryExplain, #economicBenefitExplain, #loanTable, #contractTable, #eventTable, #facilityEventTable, #tradeTable, #calculateTradeTable{		
-	width:88.4%;
+/*#loans, #events, #contracts, #trades, #cashflows, #interestExplain, #costOfFundedExplain, #benefitOfUnfundedExplain, #costOfCarryExplain, #economicBenefitExplain, #loanTable, #contractTable, #eventTable, #facilityEventTable, #tradeTable, #calculateTradeTable*/
+.table{		
+	width:100%;/*88.4%;*/
 	margin:auto;
 	border: 1px solid green;
 	min-width: 863px;
@@ -440,11 +435,12 @@ table {
 	height: 20px;
 }*/
 
-#editEvents, #editContractEvents{
-	width: 88.4%;;
-	margin: auto;
+#editContractEvents{
+	margin-top: 10px;	
+}
+.editTable{
 	margin-top: 35px;
-	text-align: left;
+}
 }
 /*<<<<<<< HEAD   ARE THESE FIELDS USED? HAS A TYPO IN JOHN'S VERSION
 #facilityEditEvents{
@@ -518,7 +514,7 @@ th{	/*mine*/
 	/*height: 26px;*/
 	padding-bottom: 6px;
 	max-height: 26px;
-	overflow-x:visible;
+	overflow-x:hidden;
 }
 td{ /*mine*/
 	border-left: 0px;
@@ -533,7 +529,7 @@ thead, tfoot {
 }
 
 th, tbody td {
-    width: 20%; /* this can vary */
+    /*width: 20%; /* this can vary */
    /* overflow-x: scroll;*/
    /* text-overflow: ellipsis; /*look at overflow-y for header?*/
     display: inline-block;
@@ -553,10 +549,8 @@ tfoot td {
 div.tab{
 	width:88.4%;
 	margin:auto;
-	margin-bottom:5px;
+	
 	overflow: hidden;
-}
-ul.nav-tabs{
 }
 ul.nav-tabs li{
 	float:left;
@@ -602,8 +596,8 @@ ul.nav-tabs li.active a{
     	-moz-box-sizing: border-box;
     	-ms-box-sizing: border-box;
     	box-sizing: border-box;			
-		width: 88.4%;
-		margin:auto;
+		/*width: 88.4%;
+		margin:auto;*/
 		margin-top: 20px;	
 		border-style: solid;
 		border-width: 1px;
@@ -633,7 +627,7 @@ ul.nav-tabs li.active a{
 		/*display:table;*/
 	}	
 	
-	#loanStaticInfo, #contractDetail, #tradeDetail, #tradeProceeds{
+	#loanStaticInfo, #contractDetail, #tradeDetail{
 		padding:5px;
 	}
 	.alignleft{
