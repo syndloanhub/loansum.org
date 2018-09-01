@@ -18,7 +18,7 @@
 		</ul>
 
 		<div ng-controller='LoansController as loans'>
-			<div>	
+			<div>
 				<div id="displaySelectedLoan" ng-if="loans.selected">
 					selected loan: <span class="white">{{loans.selected.id.value}}</span>
 					&nbsp;&nbsp;&nbsp; borrower: <span class="white">{{loans.selected.borrower.value}}</span>
@@ -26,7 +26,7 @@
 				<div id="displayNoSelectedLoan" ng-if="!loans.selected">
 					<br>
 				</div>
-			</div>		
+			</div>
 
 			<div ng-show="tabs.getActiveTab() == 'loans'">
 				<table id="loans" st-safe-src="loans.data"
@@ -65,12 +65,12 @@
 						<i class="glyphicon glyphicon-plus"></i>+
 					</button>
 					<button type="button" ng-click="loans.remove()"
-						class="btn btn-sm btn-danger">
+						ng-if="loans.selected" class="btn btn-sm btn-danger">
 						<i class="glyphicon glyphicon-remove-circle"></i>-
 					</button>
 				</section>
 
-				<div id="loanStaticInfo" class="alignleft">
+				<div id="loanStaticInfo" class="alignleft" ng-if="loans.selected">
 					<div class="edit">&#x270e;</div>
 					<br>
 					<section class="column1">
@@ -102,7 +102,8 @@
 					</section>
 				</div>
 
-				<div ng-controller="EventsController as events">
+				<div ng-controller="EventsController as events"
+					ng-if="loans.selected">
 					<div class="edit editTable">&#x270e;</div>
 
 					<table id="events" st-safe-src="events.data"
@@ -275,11 +276,10 @@
 									<button type="button" ng-click="contractEvents.remove()"
 										class="btn btn-sm btn-danger inTableDelete">
 										<i class="glyphicon glyphicon-remove-circle"></i>-
-									</button> 
-									<select ng-model="contractEvent['@bean']"
-									    class="mySelect tableSelect"
-									    ng-options="x for x in tabs.ContractEventTypes">
-									</select>
+									</button> <select ng-model="contractEvent['@bean']"
+									class="mySelect tableSelect"
+									ng-options="x for x in tabs.ContractEventTypes">
+								</select>
 								</td>
 								<td st-ratio="20"><input class="tableInput" type="date"
 									ng-model="contractEvent.effectiveDate"></td>
@@ -410,16 +410,16 @@
 						</select><br>
 					</section>
 
-					
+
 				</div>
 				<section class="actionButtons">
 					<button type="button" ng-click="trades.add()"
-						    class="btn btn-sm btn-success">
+						class="btn btn-sm btn-success">
 						<i class="glyphicon glyphicon-plus"></i>+
 					</button>
 					<button id="calculateButton" type="button"
-							ng-click="trades.calculateProceeds()"
-							class="btn btn-sm btn-success">
+						ng-click="trades.calculateProceeds()"
+						class="btn btn-sm btn-success">
 						<i class="fa fa-calculator"></i>
 					</button>
 				</section>
@@ -613,7 +613,7 @@
 			<div ng-controller="TextModelController as textmodel"
 				ng-show="tabs.getActiveTab() == 'model'">
 				<textarea rows=25 ng-model="textmodel.prettymodel"
-					ng-blur="textmodel.update()">{{textmodel.prettymodel}}</textarea>
+					ng-focus="textmodel.refresh()" ng-blur="textmodel.update()">{{textmodel.prettymodel}}</textarea>
 			</div>
 		</div>
 	</div>
