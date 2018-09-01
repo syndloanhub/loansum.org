@@ -584,7 +584,7 @@
       this.currency = s.substring(0, 3);
       this.amount = parseFloat(s.substring(4));
       this.type = cashflow.annotation.type;
-      this.paymentDate = new Date(cashflow.cashFlow.paymentDate);
+      this.paymentDate = parseDate(cashflow.cashFlow.paymentDate);
       this.payingCounterparty = cashflow.annotation.payingCounterparty.replace(/^.*~/, "");
       this.receivingCounterparty = cashflow.annotation.receivingCounterparty.replace(/^.*~/, "");
       this.uncertain = cashflow.annotation.uncertain;
@@ -633,8 +633,8 @@
     function AccrualExplain(explain) {
       this.shareNotional = parseFloat(explain.map["Share Not"]);
       this.dayCount = explain.map["Day Cnt"].value;
-      this.startDate = new Date(explain.map["Start"].value);
-      this.endDate = new Date(explain.map["End"].value);
+      this.startDate = parseDate(explain.map["Start"].value);
+      this.endDate = parseDate(explain.map["End"].value);
       this.days = parseInt(explain.map["Days"]);
       this.daysInYear = parseFloat(explain.map["DIY"]);
       this.allInRate = parseFloat(explain.map["All-in Rt"]);
@@ -661,8 +661,8 @@
       this.expSettPx = parseFloat(explain.map["Exp Sett Px"]);
       this.shareAmount = parseFloat(explain.map["Share Amt"]);
       this.formula = explain.map["Formula"];
-      this.startDate = new Date(explain.map["Start"].value);
-      this.endDate = new Date(explain.map["End"].value);
+      this.startDate = parseDate(explain.map["Start"].value);
+      this.endDate = parseDate(explain.map["End"].value);
       this.days = parseInt(explain.map["Days"]);
       this.daysInYear = parseFloat(explain.map["DIY"]);
       this.avgLibor = parseFloat(explain.map["Avg LIBOR"]);
@@ -725,14 +725,18 @@
       }
     }
 
+    function parseDate(str) {
+      var ymd = str.split("-");
+      return new Date(parseInt(ymd[0]), parseInt(ymd[1]) - 1, parseInt(ymd[2]));
+    }
+
     // The reviver function for transforming native loansum JSON
     // representation to UI model.
 
     function model2uiReviver(key, value) {
       if (typeof value === "string") {
         if (dateRegex.test(value)) {
-          var ymd = value.split("-");
-          value = new Date(parseInt(ymd[0]), parseInt(ymd[1]) - 1, parseInt(ymd[2]));
+          value = parseDate(value);
         } else if (currencyAmountRegex.test(value)) {
           value = new CurrencyAmount(value.substring(0, 3), parseFloat(value.substring(4)));
         } else if (standardIdRegex.test(value)) {
