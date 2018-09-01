@@ -6,14 +6,15 @@
       .controller("TradesController", TradesController).controller("EventsController", EventsController)
       .controller("ContractEventsController", ContractEventsController)
       .controller("TextModelController", TextModelController).controller("CashflowsController", CashflowsController)
-      .service("CalculatorService", CalculatorService)
-      .directive('stRatio', stRatio);
+      .service("CalculatorService", CalculatorService).directive('stRatio', stRatio);
 
   TabController.$inject = [ '$scope' ]
 
   function TabController($scope) {
     var tabs = this;
-  
+
+    tabs.activeTab = 'loans';
+
     tabs.setActiveTab = function(value) {
       tabs.activeTab = value;
       $scope.$broadcast("calculator:tabSelected", value);
@@ -72,6 +73,17 @@
 
       loans.data = data;
     });
+
+    loans.remove = function() {
+      delete loans.selected;
+      service.removeSelectedLoan();
+      service.setSelectedLoan(undefined);
+    }
+
+    loans.add = function() {
+      var loan = service.addNewLoan()
+      loans.setSelected(loan)
+    }
   }
 
   EventsController.$inject = [ 'CalculatorService', '$scope' ]
@@ -230,6 +242,17 @@
       service.update(textmodel.prettymodel);
       $scope.$emit("calculator:modelUpdated", service.uimodel);
     };
+
+    textmodel.refresh = function() {
+      textmodel.prettymodel = service.prettymodel;
+    };
+
+    $scope.$on('calculator:tabSelected', function(event, tab) {
+      if (tab == 'model') {
+        service.refresh();
+        textmodel.prettymodel = service.prettymodel;
+      }
+    });
   }
 
   CashflowsController.$inject = [ 'CalculatorService', '$scope' ]
@@ -307,7 +330,6 @@
       service.model = JSON.parse(data);
       service.prettymodel = JSON.stringify(service.model, undefined, 2);
       service.uimodel = model2ui(service.model);
-      console.log("service.update: uimodel=" + JSON.stringify(service.uimodel, undefined, 2));
     }
 
     service.calculateProceeds = function() {
@@ -374,6 +396,92 @@
 
     service.getSelectedLoan = function() {
       return service.selectedLoan;
+    }
+
+    service.removeSelectedLoan = function() {
+      for ( var i in service.uimodel) {
+        if (service.uimodel[i] == service.selectedLoan) {
+          service.uimodel.splice(i, 1);
+          service.refresh();
+          return;
+        }
+      }
+    }
+
+    service.refresh = function() {
+      console.log("uimodel=" + pretty(service.uimodel));
+      service.model = ui2model(service.uimodel)
+      service.prettymodel = pretty(service.model);
+    }
+
+    service.addNewLoan = function() {
+      var tid = Math.floor(Math.random() * (100000 - 10000)) + 10000;
+      var start = new Date();
+      var maturity = new Date();
+      var payment_date = new Date();
+
+      maturity.setFullYear(start.getFullYear() + 2);
+      payment_date.setMonth(start.getMonth() + 1);
+
+      var newLoan = {
+      "id" : new StandardId("lid", "New TL"),
+      "borrower" : new StandardId("cpty", "Borrower"),
+      "agent" : new StandardId("cpty", "Agent"),
+      "facilityType" : "Term",
+      "identifiers" : [],
+      "originalCommitmentAmount" : new CurrencyAmount('USD', 10000000.0),
+      "startDate" : start,
+      "maturityDate" : maturity,
+      "contracts" : [ {
+      "id" : new StandardId("contract", "1"),
+      "accrual" : {
+      "@bean" : "FixedRateAccrual",
+      "startDate" : start,
+      "endDate" : payment_date,
+      "allInRate" : 0.05,
+      "pikSpread" : 0,
+      "accrualAmount" : new CurrencyAmount("USD", 10000000.0),
+      "dayCount" : "Act/360",
+      "paymentFrequency" : "P1M"
+      },
+      "paymentDate" : payment_date,
+      "events" : [],
+      } ],
+      "fees" : [],
+      "events" : [],
+      "trades" : [ {
+      "buySell" : "Buy",
+      "buyer" : new StandardId("cpty", "Buyer"),
+      "seller" : new StandardId("cpty", "Seller"),
+      "amount" : 1000000,
+      "currency" : "USD",
+      "price" : 1,
+      "expectedSettlementDate" : start,
+      "delayedCompensationFlag" : true,
+      "association" : "LSTA",
+      "formOfPurchase" : "Assignment",
+      "documentationType" : "Par",
+      "tradeType" : "Primary",
+      "whenIssuedFlag" : false,
+      "commitmentReductionCreditFlag" : false,
+      "paydownOnTradeDate" : false,
+      "adjustmentOnTradeDate" : true,
+      "accrualSettlementType" : "SettledWithoutAccrued",
+      "averageLibor" : 0,
+      "info" : {
+      "id" : new StandardId("trade", "" + tid),
+      "tradeDate" : start,
+      "settlementDate" : start,
+      "attributes" : {}
+      },
+      } ]
+      };
+
+      service.uimodel.push(newLoan);
+      service.model = ui2model(service.uimodel)
+      service.prettymodel = pretty(service.model);
+
+      return newLoan;
     }
 
     service.getEvents = function() {
@@ -623,7 +731,8 @@
     function model2uiReviver(key, value) {
       if (typeof value === "string") {
         if (dateRegex.test(value)) {
-          value = new Date(value);
+          var ymd = value.split("-");
+          value = new Date(parseInt(ymd[0]), parseInt(ymd[1]) - 1, parseInt(ymd[2]));
         } else if (currencyAmountRegex.test(value)) {
           value = new CurrencyAmount(value.substring(0, 3), parseFloat(value.substring(4)));
         } else if (standardIdRegex.test(value)) {
@@ -728,7 +837,7 @@
       return loans;
     }
   }
-	
+
   function stRatio() {
     return {
       link : function(scope, element, attr) {
