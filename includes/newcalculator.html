@@ -96,7 +96,7 @@
 				</div>
 
 				<div ng-controller="EventsController as events"
-					ng-if="loans.selected">
+					ng-show="loans.selected">
 					<div class="edit editTable">&#x270e;</div>
 					<table id="events" st-safe-src="events.data"
 						st-table="events.displayed" class="table">
@@ -114,7 +114,7 @@
 						<tbody>
 							<tr ng-repeat="event in events.displayed">
 								<td st-ratio="25">
-									<button type="button" ng-click="events.remove()"
+									<button type="button" ng-click="events.remove(event)"
 										class="btn btn-sm btn-danger inTableDelete">
 										<i class="glyphicon glyphicon-remove-circle"></i>-
 									</button> <select ng-model="event['@bean']" class="mySelect tableSelect"
@@ -206,63 +206,45 @@
 				<div id="contractDetail" class="alignleft"
 					ng-if="contracts.selected">
 					<div class="edit">&#x270e;</div>
-					<label>Contract ID</label> 
-					<input class="formInput" type="text"
-						ng-model="contracts.selected.id.value"> 
-					<label>Type</label>
+					<label>Contract ID</label> <input class="formInput" type="text"
+						ng-model="contracts.selected.id.value"> <label>Type</label>
 					<select ng-change="accrualTypeChange()"
 						ng-model="contracts.selected.accrual['@bean']" class="mySelect"
 						ng-options="x for x in tabs.AccrualTypes">
-					</select> 
-					<label>Currency</label> 
-					<select
+					</select> <label>Currency</label> <select
 						ng-model="contracts.selected.accrual.accrualAmount.currency"
 						class="mySelect" ng-options="x for x in tabs.Currencies">
-					</select> <br> 
-					<label>Start Date</label> 
-					<input class="formInput"
-						   type="date" ng-model="contracts.selected.accrual.startDate">
-					<label>Index</label> 
-					<select
+					</select> <br> <label>Start Date</label> <input class="formInput"
+						type="date" ng-model="contracts.selected.accrual.startDate">
+					<label>Index</label> <select
 						ng-model="contracts.selected.accrual.index.value" class="mySelect"
 						ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'"
 						ng-options="x for x in tabs.IborTerms">
-					</select> 
-					<label>Payment Freq</label> 
-					<select
+					</select> <label>Payment Freq</label> <select
 						ng-model="contracts.selected.accrual.paymentFrequency"
 						class="mySelect" ng-options="x for x in tabs.PaymentFrequencies">
-					</select><br> 
-					<label>End Date</label> 
-					<input class="formInput"
-						   type="date" ng-model="contracts.selected.accrual.endDate">
-					<label>Spread</label> 
-					<input class="formInput number" type="text"
+					</select><br> <label>End Date</label> <input class="formInput"
+						type="date" ng-model="contracts.selected.accrual.endDate">
+					<label>Spread</label> <input class="formInput number" type="text"
 						ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 						ng-model="contracts.selected.accrual.spread"
 						ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'">
-					<label>Base Rate</label> 
-					<input class="formInput number"
+					<label>Base Rate</label> <input class="formInput number"
 						type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 						ng-model="contracts.selected.accrual.baseRate"
 						ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'"><br>
-					<label>Payment Date</label> 
-					<input class="formInput" type="date"
-						ng-model="contracts.selected.paymentDate"> 
-					<label>All In Rate</label> 
-					<input class="formInput number" type="text"
+					<label>Payment Date</label> <input class="formInput" type="date"
+						ng-model="contracts.selected.paymentDate"> <label>All
+						In Rate</label> <input class="formInput number" type="text"
 						ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-						ng-model="contracts.selected.accrual.allInRate"> 
-					<label>Pik Spread</label> 
-					<input class="formInput number" type="text"
+						ng-model="contracts.selected.accrual.allInRate"> <label>Pik
+						Spread</label> <input class="formInput number" type="text"
 						ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 						ng-model="contracts.selected.accrual.pikSpread"><br>
-					<label>Amount (M)</label> 
-					<input class="formInput number"
+					<label>Amount (M)</label> <input class="formInput number"
 						type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 						ng-model="contracts.selected.accrual.accrualAmount.value">
-					<label>Day Count</label> 
-					<select
+					<label>Day Count</label> <select
 						ng-model="contracts.selected.accrual.dayCount" class="mySelect"
 						ng-options="x for x in tabs.DayCounts">
 					</select>
@@ -632,6 +614,15 @@
 
 			<div ng-controller="TextModelController as textmodel"
 				ng-show="tabs.getActiveTab() == 'model'">
+				<div>
+					<button type="button" ng-click="textmodel.download()"
+						class="btn btn-sm btn-success">
+						<i class="glyphicon glyphicon-plus"></i>Download model to file:
+					</button>
+					<input class="formInput" type="text" ng-model="textmodel.modelfile">
+					<br> <input type="file" id="modelfile">
+					<button ng-click="textmodel.upload()">Upload file to model</button>
+				</div>
 				<textarea rows=25 ng-model="textmodel.prettymodel"
 					ng-focus="textmodel.refresh()" ng-blur="textmodel.update()">{{textmodel.prettymodel}}</textarea>
 			</div>

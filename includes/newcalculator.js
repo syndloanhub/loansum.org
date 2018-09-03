@@ -53,7 +53,6 @@
     });
 
     loans.setSelected = function(loan) {
-      console.log("loan " + loan.id.value + " isSelected=" + loan.isSelected);
       if (loan.isSelected) {
         loans.selected = loan;
         service.setSelectedLoan(loan);
@@ -93,11 +92,6 @@
     var service = CalculatorService;
 
     $scope.$on('calculator:loanSelected', function(event, loan) {
-      if (events.selected) {
-        events.selected.isSelected = false;
-        events.setSelected(events.selected);
-      }
-
       if (loan.isSelected) {
         events.data = loan.events;
       } else {
@@ -105,16 +99,13 @@
       }
     });
 
-    events.setSelected = function(event) {
-      if (event.isSelected) {
-        events.selected = event;
-        service.setSelectedEvent(event);
-      } else {
-        delete events.selected;
-        service.setSelectedEvent(undefined);
-      }
+    events.remove = function(event) {
+      console.log("removing event");
+      service.removeEvent(event);
+    }
 
-      $scope.$broadcast("calculator:eventSelected", event);
+    events.add = function() {
+      service.addNewEvent()
     }
   }
 
@@ -234,6 +225,8 @@
     var textmodel = this;
     var service = CalculatorService;
 
+    textmodel.modelfile = "model.json";
+
     $scope.$on('calculator:loansLoaded', function(event, data) {
       textmodel.prettymodel = service.prettymodel;
     });
@@ -253,6 +246,45 @@
         textmodel.prettymodel = service.prettymodel;
       }
     });
+
+    function destroyClickedElement(event) {
+      document.body.removeChild(event.target);
+    }
+
+    textmodel.download = function() {
+      console.log("Downloading model to: " + textmodel.modelfile);
+
+      var blob = new Blob([ textmodel.prettymodel ], {
+        type : "text/plain"
+      });
+
+      var url = window.URL.createObjectURL(blob);
+      var link = document.createElement("a");
+
+      link.download = textmodel.modelfile;
+      link.innerHTML = "Download File";
+      link.href = url;
+      link.onclick = destroyClickedElement;
+      link.style.display = "none";
+
+      document.body.appendChild(link);
+
+      link.click();
+    }
+
+    textmodel.upload = function() {
+      var modelfile = document.getElementById("modelfile").files[0];
+      var reader = new FileReader();
+
+      console.log("Uploading model from: " + modelfile);
+
+      reader.onload = function(event) {
+        textmodel.prettymodel = event.target.result;
+        textmodel.update();
+      };
+
+      reader.readAsText(modelfile, "UTF-8");
+    }
   }
 
   CashflowsController.$inject = [ 'CalculatorService', '$scope' ]
@@ -488,12 +520,28 @@
       return service.selectedLoan.events;
     }
 
-    service.setSelectedEvent = function(event) {
-      service.selectedEvent = event;
+    service.removeEvent = function(event) {
+      for ( var i in service.selectedLoan.events) {
+        if (service.selectedLoan.events[i] == event) {
+          service.selectedLoan.events.splice(i, 1);
+          service.refresh();
+          return;
+        }
+      }
     }
 
-    service.getSelectedEvent = function() {
-      return service.selectedEvent;
+    service.addNewEvent = function() {
+      var event = {
+      "@bean" : "CommitmentAdjustment",
+      "effectiveDate" : new Date(),
+      "amount" : new CurrencyAmount('USD', 1000000.0),
+      "pik" : false,
+      "refusalAllowed" : true
+      };
+
+      service.selectedLoan.events.push(event);
+      service.model = ui2model(service.uimodel)
+      service.prettymodel = pretty(service.model);
     }
 
     service.getContracts = function() {
