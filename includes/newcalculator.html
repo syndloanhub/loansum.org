@@ -145,7 +145,8 @@
 			<div ng-controller="ContractsController as contracts"
 				ng-show="tabs.getActiveTab() == 'contracts'">
 				<table id="contracts" st-safe-src="contracts.data"
-					st-table="contracts.displayed" class="table" ng-if="loans.selected">
+					st-table="contracts.displayed" class="table"
+					ng-show="loans.selected">
 					<thead>
 						<tr>
 							<th st-ratio="8"><span st-sort="id.value">CONTRACT ID</span></th>
@@ -251,7 +252,7 @@
 				</div>
 
 				<div ng-controller="ContractEventsController as contractEvents"
-					ng-if="contracts.selected">
+					ng-show="contracts.selected">
 					<div class="edit editTable">&#x270e;</div>
 
 					<table id="editContractEvents" st-safe-src="contractEvents.data"
@@ -271,7 +272,8 @@
 						<tbody>
 							<tr ng-repeat="contractEvent in contractEvents.displayed">
 								<td st-ratio="20">
-									<button type="button" ng-click="contractEvents.remove()"
+									<button type="button"
+										ng-click="contractEvents.remove(contractEvent)"
 										class="btn btn-sm btn-danger inTableDelete">
 										<i class="glyphicon glyphicon-remove-circle"></i>-
 									</button> <select ng-model="contractEvent['@bean']"
@@ -294,6 +296,13 @@
 							</tr>
 						</tbody>
 					</table>
+
+					<section class="actionButtons">
+						<button type="button" ng-click="contractEvents.add()"
+							class="btn btn-sm btn-success">
+							<i class="glyphicon glyphicon-plus"></i>+
+						</button>
+					</section>
 				</div>
 			</div>
 

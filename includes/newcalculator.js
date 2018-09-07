@@ -80,8 +80,8 @@
     }
 
     loans.add = function() {
-      var loan = service.addNewLoan()
-      loans.setSelected(loan)
+      var loan = service.addNewLoan();
+      loans.setSelected(loan);
     }
   }
 
@@ -105,7 +105,7 @@
     }
 
     events.add = function() {
-      service.addNewEvent()
+      service.addNewEvent();
     }
   }
 
@@ -129,7 +129,6 @@
     });
 
     contracts.setSelected = function(contract) {
-      console.log("contract " + contract.id.value + " isSelected=" + contract.isSelected);
       if (contract.isSelected) {
         contracts.selected = contract;
         service.setSelectedContract(contract);
@@ -140,6 +139,16 @@
 
       $scope.$broadcast("calculator:contractSelected", contract);
     }
+
+    contracts.remove = function() {
+      delete contracts.selected;
+      service.removeSelectedContract();
+    }
+
+    contracts.add = function() {
+      var contract = service.addNewContract();
+      contracts.setSelected(contract);
+    }
   }
 
   ContractEventsController.$inject = [ 'CalculatorService', '$scope' ]
@@ -149,30 +158,19 @@
     var service = CalculatorService;
 
     $scope.$on('calculator:contractSelected', function(event, contract) {
-      console.log("contractEventsController, contract selected");
-      if (contractEvents.selected) {
-        conractEvents.selected.isSelected = false;
-        contractEvents.setSelected(contractEvents.selected);
-      }
-
       if (contract.isSelected) {
         contractEvents.data = contract.events;
-        console.log(JSON.stringify(contractEvents.data));
       } else {
         delete contractEvents.data;
       }
     });
 
-    contractEvents.setSelected = function(contractEvent) {
-      if (contractEvent.isSelected) {
-        contractEvents.selected = contractEvent;
-        service.setSelectedContractEvent(contractEvent);
-      } else {
-        delete contractEvents.selected;
-        service.setSelectedContractEvent(undefined);
-      }
+    contractEvents.remove = function(event) {
+      service.removeContractEvent(event);
+    }
 
-      $scope.$broadcast("calculator:contractEventSelected", contractEvent);
+    contractEvents.add = function() {
+      service.addNewContractEvent();
     }
   }
 
@@ -196,7 +194,6 @@
     });
 
     trades.setSelected = function(trade) {
-      console.log("trade " + trade.info.id.value + " isSelected=" + trade.isSelected);
       if (trade.isSelected) {
         trades.selected = trade;
         service.setSelectedTrade(trade);
@@ -216,6 +213,16 @@
         trades.error = error;
         delete trades.selected.tradeProceeds;
       });
+    }
+
+    trades.remove = function() {
+      delete trades.selected;
+      service.removeSelectedTrade();
+    }
+
+    trades.add = function() {
+      var trade = service.addNewTrade();
+      trades.setSelected(trade);
     }
   }
 
@@ -556,6 +563,71 @@
       return service.selectedContract;
     }
 
+    service.removeSelectedContract = function() {
+      for ( var i in service.selectedLoan.contracts) {
+        if (service.selectedLoan.contracts[i] == service.selectedContract) {
+          service.selectedLoan.contracts.splice(i, 1);
+          service.refresh();
+          service.setSelectedContract(undefined);
+          return;
+        }
+      }
+    }
+
+    service.addNewContract = function() {
+      var cid = Math.floor(Math.random() * (100000 - 10000)) + 10000;
+      var start = new Date();
+      var payment_date = new Date();
+
+      payment_date.setMonth(start.getMonth() + 1);
+
+      var newContract = {
+      "id" : new StandardId("contract", "" + cid),
+      "accrual" : {
+      "@bean" : "FixedRateAccrual",
+      "startDate" : start,
+      "endDate" : payment_date,
+      "allInRate" : 0.05,
+      "pikSpread" : 0,
+      "accrualAmount" : new CurrencyAmount("USD", 10000000.0),
+      "dayCount" : "Act/360",
+      "paymentFrequency" : "P1M"
+      },
+      "paymentDate" : payment_date,
+      "events" : []
+      };
+
+      service.selectedLoan.contracts.push(newContract);
+      service.model = ui2model(service.uimodel)
+      service.prettymodel = pretty(service.model);
+
+      return newContract;
+    }
+
+    service.removeContractEvent = function(event) {
+      for ( var i in service.selectedContract.events) {
+        if (service.selectedContract.events[i] == event) {
+          service.selectedContract.events.splice(i, 1);
+          service.refresh();
+          return;
+        }
+      }
+    }
+
+    service.addNewContractEvent = function() {
+      var event = {
+      "@bean" : "Repayment",
+      "effectiveDate" : new Date(),
+      "amount" : new CurrencyAmount('USD', 1000000.0),
+      "interestOnPaydown" : false,
+      "price" : 1.0
+      };
+
+      service.selectedContract.events.push(event);
+      service.model = ui2model(service.uimodel)
+      service.prettymodel = pretty(service.model);
+    }
+
     service.getContractEvents = function() {
       return service.selectedContract.events;
     }
@@ -578,6 +650,55 @@
 
     service.getSelectedTrade = function() {
       return service.selectedTrade;
+    }
+
+    service.removeSelectedTrade = function() {
+      for ( var i in service.selectedLoan.trades) {
+        if (service.selectedLoan.trades[i] == service.selectedTrade) {
+          service.selectedLoan.trades.splice(i, 1);
+          service.refresh();
+          service.setSelectedTrade(undefined);
+          return;
+        }
+      }
+    }
+
+    service.addNewTrade = function() {
+      var tid = Math.floor(Math.random() * (100000 - 10000)) + 10000;
+      var today = new Date();
+      
+      var newTrade = {
+      "buySell" : "Buy",
+      "buyer" : new StandardId("cpty", "Buyer"),
+      "seller" : new StandardId("cpty", "Seller"),
+      "amount" : 1000000,
+      "currency" : "USD",
+      "price" : 1,
+      "expectedSettlementDate" : today,
+      "delayedCompensationFlag" : true,
+      "association" : "LSTA",
+      "formOfPurchase" : "Assignment",
+      "documentationType" : "Par",
+      "tradeType" : "Primary",
+      "whenIssuedFlag" : false,
+      "commitmentReductionCreditFlag" : false,
+      "paydownOnTradeDate" : false,
+      "adjustmentOnTradeDate" : true,
+      "accrualSettlementType" : "SettledWithoutAccrued",
+      "averageLibor" : 0,
+      "info" : {
+      "id" : new StandardId("trade", "" + tid),
+      "tradeDate" : today,
+      "settlementDate" : today,
+      "attributes" : {}
+      }
+      };
+
+      service.selectedLoan.trades.push(newTrade);
+      service.model = ui2model(service.uimodel)
+      service.prettymodel = pretty(service.model);
+
+      return newTrade;
     }
 
     // Private content.
