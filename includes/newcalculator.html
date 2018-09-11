@@ -2,6 +2,7 @@
 <script src="includes/newcalculator.js"></script>
 
 <div id="newCalculator" ng-app="CalculatorApp">
+<div id="wrapper">
 	<div class="tab" ng-controller="TabController as tabs">
 		<ul class="nav nav-tabs">
 			<li ng-class="{ active: tabs.getActiveTab() == 'loans' }"><a
@@ -16,11 +17,11 @@
 				ng-click="tabs.setActiveTab('model')">model</a></li>
 		</ul>
 
-		<div ng-controller='LoansController as loans'>
+		<div ng-controller="LoansController as loans">
 			<div>
 				<div id="displaySelectedLoan" ng-if="loans.selected">
-					selected loan: <span class="white">{{loans.selected.id.value}}</span>
-					&nbsp;&nbsp;&nbsp; borrower: <span class="white">{{loans.selected.borrower.value}}</span>
+					selected loan: <span class="selected">{{loans.selected.id.value}}</span>
+					&nbsp;&nbsp;&nbsp; borrower: <span class="selected">{{loans.selected.borrower.value}}</span>
 				</div>
 				<div id="displayNoSelectedLoan" ng-if="!loans.selected">
 					<br>
@@ -79,12 +80,12 @@
 					<label>Loan Id</label> <input class="formInput" type="text"
 						ng-model="loans.selected.id.value" size="30"> <label>Facility
 						Type</label> <select ng-model="loans.selected.facilityType"
-						ng-options="x for x in tabs.FacilityTypes" class="mySelect">
+						ng-options="x for x in tabs.FacilityTypes">
 					</select> <label>Start Date</label> <input class="formInput" type="date"
 						ng-model="loans.selected.startDate"> <br> <label>Borrower</label>
 					<input class="formInput" type="text"
 						ng-model="loans.selected.borrower.value" size="30"> <label>Orig
-						Commitment</label> <input class="formInput number" type="text"
+						Commitment</label> <input class="formInput" type="text"
 						ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 						ng-model="loans.selected.originalCommitmentAmount.value" size="30">
 					<label>Maturity Date</label> <input class="formInput" type="date"
@@ -92,7 +93,7 @@
 					<input class="formInput" type="text"
 						ng-model="loans.selected.agent.value" size="30"> <label>Currency</label>
 					<select ng-model="loans.selected.originalCommitmentAmount.currency"
-						ng-options="x for x in tabs.Currencies" class="mySelect"></select>
+						ng-options="x for x in tabs.Currencies"></select>
 				</div>
 
 				<div ng-controller="EventsController as events"
@@ -117,17 +118,17 @@
 									<button type="button" ng-click="events.remove()"
 										class="btn btn-sm btn-danger inTableDelete">
 										<i class="glyphicon glyphicon-remove-circle"></i>-
-									</button> <select ng-model="event['@bean']" class="mySelect tableSelect"
+									</button> <select ng-model="event['@bean']" class="tableSelect"
 									ng-options="x for x in tabs.FacilityEventTypes">
 								</select>
 								</td>
 								<td st-ratio="25"><input class="tableInput" type="date"
 									ng-model="event.effectiveDate"></td>
-								<td st-ratio="25"><input class="tableInput number"
+								<td st-ratio="25"><input class="tableInput"
 									type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 									ng-model="event.amount.value"></td>
 								<td st-ratio="25"><select ng-model="event.refusalAllowed"
-									class="mySelect tableSelect"
+									class="tableSelect"
 									ng-options="x for x in tabs.Boolean"></select></td>
 							</tr>
 						</tbody>
@@ -211,38 +212,38 @@
 						ng-model="contracts.selected.id.value"> 
 					<label>Type</label>
 					<select ng-change="accrualTypeChange()"
-						ng-model="contracts.selected.accrual['@bean']" class="mySelect"
+						ng-model="contracts.selected.accrual['@bean']"
 						ng-options="x for x in tabs.AccrualTypes">
 					</select> 
 					<label>Currency</label> 
 					<select
 						ng-model="contracts.selected.accrual.accrualAmount.currency"
-						class="mySelect" ng-options="x for x in tabs.Currencies">
+						ng-options="x for x in tabs.Currencies">
 					</select> <br> 
 					<label>Start Date</label> 
 					<input class="formInput"
 						   type="date" ng-model="contracts.selected.accrual.startDate">
 					<label>Index</label> 
 					<select
-						ng-model="contracts.selected.accrual.index.value" class="mySelect"
+						ng-model="contracts.selected.accrual.index.value"
 						ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'"
 						ng-options="x for x in tabs.IborTerms">
 					</select> 
 					<label>Payment Freq</label> 
 					<select
 						ng-model="contracts.selected.accrual.paymentFrequency"
-						class="mySelect" ng-options="x for x in tabs.PaymentFrequencies">
+						ng-options="x for x in tabs.PaymentFrequencies">
 					</select><br> 
 					<label>End Date</label> 
 					<input class="formInput"
 						   type="date" ng-model="contracts.selected.accrual.endDate">
 					<label>Spread</label> 
-					<input class="formInput number" type="text"
+					<input class="formInput" type="text"
 						ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 						ng-model="contracts.selected.accrual.spread"
 						ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'">
 					<label>Base Rate</label> 
-					<input class="formInput number"
+					<input class="formInput"
 						type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 						ng-model="contracts.selected.accrual.baseRate"
 						ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'"><br>
@@ -250,20 +251,20 @@
 					<input class="formInput" type="date"
 						ng-model="contracts.selected.paymentDate"> 
 					<label>All In Rate</label> 
-					<input class="formInput number" type="text"
+					<input class="formInput" type="text"
 						ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 						ng-model="contracts.selected.accrual.allInRate"> 
 					<label>Pik Spread</label> 
-					<input class="formInput number" type="text"
+					<input class="formInput" type="text"
 						ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 						ng-model="contracts.selected.accrual.pikSpread"><br>
 					<label>Amount (M)</label> 
-					<input class="formInput number"
+					<input class="formInput"
 						type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 						ng-model="contracts.selected.accrual.accrualAmount.value">
 					<label>Day Count</label> 
 					<select
-						ng-model="contracts.selected.accrual.dayCount" class="mySelect"
+						ng-model="contracts.selected.accrual.dayCount"
 						ng-options="x for x in tabs.DayCounts">
 					</select>
 				</div>
@@ -293,20 +294,20 @@
 										class="btn btn-sm btn-danger inTableDelete">
 										<i class="glyphicon glyphicon-remove-circle"></i>-
 									</button> <select ng-model="contractEvent['@bean']"
-									class="mySelect tableSelect"
+									class="tableSelect"
 									ng-options="x for x in tabs.ContractEventTypes">
 								</select>
 								</td>
 								<td st-ratio="20"><input class="tableInput" type="date"
 									ng-model="contractEvent.effectiveDate"></td>
-								<td st-ratio="20"><input class="tableInput number"
+								<td st-ratio="20"><input class="tableInput"
 									type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 									ng-model="contractEvent.amount.value"></td>
 								<td st-ratio="20"><select
 									ng-model="contractEvent.interestOnPaydown"
-									class="mySelect tableSelect"
+									class="tableSelect"
 									ng-options="x for x in tabs.Boolean"></select></td>
-								<td st-ratio="20"><input class="tableInput number"
+								<td st-ratio="20"><input class="tableInput"
 									type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 									ng-model="contractEvent.price"></td>
 							</tr>
@@ -364,58 +365,58 @@
 					<div class="edit">&#x270e;</div>
 					<br> <label>Trade ID</label> <input class="formInput"
 						type="text" ng-model="trades.selected.info.id.value"> <label>Association</label>
-					<select ng-model="trades.selected.association" class="mySelect"
+					<select ng-model="trades.selected.association"
 						ng-options="x for x in tabs.Associations">
 					</select> <label class="labelLong">Trade Type</label> <select
-						ng-model="trades.selected.tradeType" class="mySelect"
+						ng-model="trades.selected.tradeType"
 						ng-options="x for x in tabs.TradeType">
 					</select><br> <label>Buy/Sell</label> <select
-						ng-model="trades.selected.buySell" class="mySelect"
+						ng-model="trades.selected.buySell"
 						ng-options="x for x in tabs.BuySell">
 					</select> <label>Form Of Purchase</label> <select
-						ng-model="trades.selected.formOfPurchase" class="mySelect"
+						ng-model="trades.selected.formOfPurchase"
 						ng-options="x for x in tabs.FormOfPurchase">
 					</select> <label class="labelLong">When Issued</label> <select
-						ng-model="trades.selected.whenIssuedFlag" class="mySelect"
+						ng-model="trades.selected.whenIssuedFlag"
 						ng-options="x for x in tabs.Boolean">
 					</select><br> <label>Buyer</label> <input class="formInput" type="text"
 						ng-model="trades.selected.buyer.value" size="30"> <label>Documentation
 						Type</label> <select ng-model="trades.selected.documentationType"
-						class="mySelect" ng-options="x for x in tabs.DocType">
+						ng-options="x for x in tabs.DocType">
 					</select> <label class="labelLong">Commitment Reduction</label> <select
 						ng-model="trades.selected.commitmentReductionCreditFlag"
-						class="mySelect" ng-options="x for x in tabs.Boolean">
+						ng-options="x for x in tabs.Boolean">
 					</select><br> <label>Seller</label> <input class="formInput"
 						type="text" ng-model="trades.selected.seller.value" size="30">
 					<label>DC Waived</label> <select
 						ng-model="trades.selected.delayedCompensationFlag"
-						class="mySelect" ng-options="x for x in tabs.Boolean">
+						ng-options="x for x in tabs.Boolean">
 					</select> <label class="labelLong">Accrual Settle Type</label> <select
-						ng-model="trades.selected.accrualSettlementType" class="mySelect"
+						ng-model="trades.selected.accrualSettlementType"
 						ng-options="x for x in tabs.AccrualSettlementTypes">
-					</select><br> <label>Amount</label> <input class="formInput number"
+					</select><br> <label>Amount</label> <input class="formInput"
 						type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 						ng-model="trades.selected.amount" size="30"> <label>Trade
 						Date</label> <input class="formInput" type="date"
 						ng-model="trades.selected.info.tradeDate"> <label
 						class="labelLong">Average Libor</label> <input
-						class="formInput number" type="text"
+						class="formInput" type="text"
 						ng-pattern="/^-?[0-9]+(\.{1}[0-9]*)?$/"
 						ng-model="trades.selected.averageLibor" size="30"><br>
 					<label>Currency</label> <select ng-model="trades.selected.currency"
-						class="mySelect" ng-options="x for x in tabs.Currencies">
+						ng-options="x for x in tabs.Currencies">
 					</select> <label>Exp Settle Date</label> <input class="formInput"
 						type="date" ng-model="trades.selected.expectedSettlementDate">
 					<label class="labelLong">Paydown Trade Date</label> <select
-						ng-model="trades.selected.paydownOnTradeDate" class="mySelect"
+						ng-model="trades.selected.paydownOnTradeDate"
 						ng-options="x for x in tabs.Boolean">
-					</select><br> <label>Price</label> <input class="formInput number"
+					</select><br> <label>Price</label> <input class="formInput"
 						type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
 						ng-model="trades.selected.price" size="30"> <label>Act
 						Settle Date</label> <input class="formInput" type="date"
 						ng-model="trades.selected.info.settlementDate"> <label
 						class="labelLong">Adjustment Trade Date</label> <select
-						ng-model="trades.selected.adjustmentOnTradeDate" class="mySelect"
+						ng-model="trades.selected.adjustmentOnTradeDate"
 						ng-options="x for x in tabs.Boolean">
 					</select>
 				</div>
@@ -495,7 +496,7 @@
 				</table>
 				<br>
 				<div id="displayFormula" ng-if="cashflows.selected.formula">
-					formula: <span class="white">{{cashflows.selected.formula}}</span>
+					formula: <span class="selected">{{cashflows.selected.formula}}</span>
 				</div>
 				<table ng-show="cashflows.isAccrualSelected()" id="interestExplain"
 					st-safe-src="cashflows.selected.explains"
@@ -632,9 +633,10 @@
 
 			<div ng-controller="TextModelController as textmodel"
 				ng-show="tabs.getActiveTab() == 'model'">
-				<textarea rows=25 ng-model="textmodel.prettymodel"
+				<textarea rows="25" ng-model="textmodel.prettymodel"
 					ng-focus="textmodel.refresh()" ng-blur="textmodel.update()">{{textmodel.prettymodel}}</textarea>
 			</div>
 		</div>
 	</div>
+</div>
 </div>

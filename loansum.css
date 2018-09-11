@@ -1,121 +1,57 @@
 @charset "UTF-8";
 /* CSS Document */
 
-/*This is Eric Meyer's Reset CSS, which he has made available for free at http://meyerweb.com/eric/tools/css/reset/index.html.*/
-/* v1.0 | 20080212 */
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+*/
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
-del, dfn, em, font, img, ins, kbd, q, s, samp,
+del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td, textarea {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	outline: 0;
-	font-size: 100%;
-	vertical-align: baseline;
-	background: transparent;
+table, caption, tbody, tfoot, thead, tr, th, td,
+textarea, article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, main, menu, nav, section {
+    display: block;
 }
 body {
-	line-height: 1;
+    line-height: 1;
 }
 ol, ul {
-	list-style: none;
+    list-style: none;
 }
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-/* remember to define focus styles! */
-:focus {
-	outline: 0;
-}
-/* remember to highlight inserts somehow! */
-ins {
-	text-decoration: none;
-}
-del {
-	text-decoration: line-through;
-}
-/* tables still need 'cellspacing="0"' in the markup */
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+}embed, video {
+    max-width: 100%;
 }
-/*End of Reset*/
-
-
-img, object, embed, video {
-	max-width: 100%;
-}
-
-
-/* For older browsers*/
-header, section, footer, aside, nav, main, article, figure {
-    display: block; 
-}
+/*end of reset*/
 
 .glyphicon {
-  font-family: 'Glyphicons Halflings';
-  font-size:1rem;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-
-@font-face {
-  font-family: 'ls-icon';
-  src:  url('fonts/ls-icon.eot?an0mxr');
-  src:  url('fonts/ls-icon.eot?an0mxr#iefix') format('embedded-opentype'),
-    url('fonts/ls-icon.ttf?an0mxr') format('truetype'),
-    url('fonts/ls-icon.woff?an0mxr') format('woff'),
-    url('fonts/ls-icon.svg?an0mxr#ls-icon') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-
-[class^="icon-"], [class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'ls-icon' !important;
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-
-  /* Better Font Rendering */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.icon-filter:before {
-  content: "\e900";
-}
-.icon-filter{
-	color:black;
-	font-size: 10px;
-}
-.icon-filter:hover{
-	color:green;
-}
-.isFiltered{
-	color:green;
-}
-.darken {
-    filter: brightness(.5);
-    -webkit-filter: brightness(.5);
-}
-.white{
-	color:white;
+    font-family: 'Glyphicons Halflings';
+    font-size:1rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 .st-sort-ascent:before {
     content: '\25B2';
@@ -131,6 +67,7 @@ header, section, footer, aside, nav, main, article, figure {
 
 ::-webkit-scrollbar {
 	width: 4px;
+	height: 4px;
 }
 ::-webkit-scrollbar-track {
 	background-color: #000;
@@ -142,24 +79,22 @@ header, section, footer, aside, nav, main, article, figure {
 }
 
 body {
-	-webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 	width:100%;
-	/*overflow: hidden;*/
 	color:#fff;
 	font-family: Verdana, Geneva, sans-serif;
 }
 
 main{
+	box-sizing: border-box;
 	width:100%;
 	height:100vh;/*min-height:100vh; testing, may choose to put back*/
 	background-image: url(images/loansumBackground.jpg);
 	background-size: cover;
 	overflow: hidden;
+	padding-bottom: 30px;
 }		
 		
 #logo{
@@ -168,27 +103,27 @@ main{
 }
 
 .topnav {
-  position: relative;
-  float: right;
-  padding-top:9.4vh;
-  padding-right:10%;
+    position: relative;
+    float: right;
+    padding-top:9.4vh;
+    padding-right:10%;
 }
 .topnav a {
-  float: left;
-  display:inline;
-  padding-right: 20px;
-  color: #fff;
-  text-decoration: none;
-  font-size: 12px;
+    float: left;
+    display:inline;
+    padding-right: 20px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
 }
 .topnav a:hover {
-  color:#0675c2;
+    color:#0675c2;
 }
 .topnav a:active {
-  color:#0675c2;
+    color:#0675c2;
 }
 .topnav .icon {
-  display: none;
+    display: none;
 }
 #tagline{
 	text-align: center;
@@ -230,166 +165,122 @@ h1{
 .sideNav a:hover, .sideNav a:active{
 	text-decoration: underline;
 }
+
 /*navigation for mobile and tablet*/
 @media screen and (max-width: 769px) {	
   .topnav a {
 	  display: none;
   }	
   .topnav a.icon {
-    float: right;
-    display: block;
-	font-size: 16px;
+      float: right;
+      display: block;
+	  font-size: 16px;
   }	
   .topnav.responsive .icon {
 	  float: right; 
   }
   .topnav.responsive a:not(:first-child) {
-	padding-top:4px;
-	padding-bottom:8px;
-	clear: both;
-	width:100;	
-	text-align: right;
+	  padding-top:4px;
+	  padding-bottom:8px;
+	  clear: both;
+	  width:100;	
+	  text-align: right;
   }
   .topnav.responsive a {
-    float: none;
-    display: block;   
+      float: none;
+      display: block;   
   }
   #tagline{
-	font-size: 24px;
-	}
+	  font-size: 24px;
+  }
  
-.sideNav{
-	display: none;
-}
+  .sideNav{
+	  display: none;
+  }
 }
 /*end for mobile and tablet*/
 
-button{
-	background-color: #222;
+button {
+	background-color: #292929;
 	color:green;
 	border-radius: none;
 	border: none;	
 }
-#calculateButton{
+#calculateButton {
 	padding-left:7px;
 	padding-right:7px;
 	padding-top:3px;
 	padding-bottom: 3px;
 }
-button:hover{
+button:hover {
 	color:white;
 }
-.faIcon{
+button:focus {
+	outline-color: transparent;
+    outline-style: none;
+	background-color: #353535;
+}
+.faIcon {
 	padding-left:7px;
 	padding-right:7px;
 	padding-top:3px;
 	padding-bottom: 3px;
 }
-.actionButtons{
-	/*width: 88.4%;
-	margin: auto;*/
+.actionButtons {
 	text-align: left;
 }
 textarea {
-	-webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
     box-sizing: border-box;	 
     padding: 5px;
 	width: 100%;  
-	/*margin: auto;*/
 	color: #fff;
 	border: solid 1px green;
 }
 
-#loanIdHead, #currencyHead, #contractIdHead{
-	width:10%;
-	-webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
+#newCalculator, #intro {
     box-sizing: border-box;
+	width: 95%;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:30px;
+    height: 80vh; 
+	padding:20px;
+	text-align: center;	
+	background-color: rgba(0,0,0,.6); 
+	color:green;
+	display:none;
+	overflow-y:auto; 
+	overflow-x:auto;
 }
-#agentHead, #facilityTypeHead{
-	width:11%;
-	-webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    box-sizing: border-box;
+#wrapper{
+	width: 100%;
+	min-width: 988px;
+	margin:auto;
+	padding-bottom: 20px;
+	overflow:auto;
 }
-#startDateHead{
-	width:12%;
-	-webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    box-sizing: border-box;
-}
-#maturityDateHead{
-	width:14%;
-	-webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    box-sizing: border-box;
-}
-#originalCommitmentAmountHead{
-	width:19%;
-	-webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    box-sizing: border-box;
-} 
-#borrowerHead{
-	width:13%;
-	-webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-#calculator, #newCalculator, #intro {
-		-webkit-box-sizing: border-box;
-    	-moz-box-sizing: border-box;
-    	-ms-box-sizing: border-box;
-    	box-sizing: border-box;
-		position: relative;
-		top:30px;
-		height: 600px;
-		margin-top:20px;
-		padding:20px;
-		padding-bottom: 60px; /*testing*/
-		text-align: center;
-		width: 95%;
-	    margin:auto;
-		background-color:#000; 
-		opacity:.7;/*changed it back to .7 from .6 because all the text is affected as well*/
-		color:green;
-		display:none;
-		overflow-y:auto; /*testing*/
-		overflow-x:auto; /*testing*/
-	}
-#intro{
+#intro {
 	color:#fff;
 	padding-top: 60px;
 }
-#introText{
+#introText {
 	width: 60%;
 	float: right;
 	text-align: left;
 	padding-right: 100px;		
 }
-#introText p{
+#introText p {
 	padding-bottom: 1em;
 }
 
-#displaySelectedLoan, #displayNoSelectedLoan, #displayError, #displayFormula{
-	/*width: 88.4%;
-	margin: auto;*/
+#displaySelectedLoan, #displayNoSelectedLoan, #displayError, #displayFormula {
 	text-align: left;
 	font-size: 10px;
 	line-height: 2;
 	padding-left: 5px;
 	clear:both;
 }
-#displaySelectedLoan, #displayNoSelectedLoan{
+#displaySelectedLoan, #displayNoSelectedLoan {
 	padding-top: 5px;
 }
 #displayError {
@@ -398,65 +289,48 @@ textarea {
 	
 /*from smart table flex-fixed header*/
 table {   
-    -moz-box-sizing: border-box;
 	box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     height: 108px; /* this can vary */	
-	/*overflow: scroll;/*mine*/
 	resize:vertical;/*mine*/	
 }
 
-/*#loans, #events, #contracts, #trades, #cashflows, #interestExplain, #costOfFundedExplain, #benefitOfUnfundedExplain, #costOfCarryExplain, #economicBenefitExplain, #loanTable, #contractTable, #eventTable, #facilityEventTable, #tradeTable, #calculateTradeTable*/
-.table{		
-	width:100%;/*88.4%;*/
+.table {	
+	box-sizing: border-box;
+	width:100%;
 	margin:auto;
 	border: 1px solid green;
 	min-width: 863px;
-	/*overflow-x: scroll;*/
 }
 #cashflows {
 	height: 162px;
 }
-#eventTable{	
+#eventTable {	
 	height: 65px;
 	margin-top: 10px;
 }
-#events{	
+#events {	
 	height: 75px;
 	margin-top: 10px;
 }
-#calculateTradeTable{		
+#calculateTradeTable {		
 	margin-top: 20px;
 	height:44px;
 }
-/*#calculateTradeTable tr{
-	height: 20px;
-}*/
 
-#editContractEvents{
+#editContractEvents {
 	margin-top: 10px;	
 }
-.editTable{
+.editTable {
 	margin-top: 20px;
 }
-}
-/*<<<<<<< HEAD   ARE THESE FIELDS USED? HAS A TYPO IN JOHN'S VERSION
-#facilityEditEvents{
-	width: 88.4%;
-=======
-#editFfacilityEvents{
-	/*clear: both;
->>>>>>> origin/master
-	margin: auto;
-	margin-top: 35px;
-	text-align: left;
-}*/
-table, th , td  { /*mine*/
+
+table, th , td { /*mine*/
   	border-collapse: collapse;
 }
-th , td { /*mine*/
+th , td {
  	padding: 5px;
 	padding-left:0;
 	padding-right:0;
@@ -465,24 +339,24 @@ th , td { /*mine*/
 	overflow:hidden;      /* text overflowed will be hidden */
 	text-overflow:ellipsis; /* text 0verflowed will be replaced with ... */
 }
-#eventTable td{
+
+#eventTable td {
 	padding-top:2px;
 	padding-bottom:2px;
 }
-#facilityEventTable td{
+#facilityEventTable td {
 	padding-top:2px;
 	padding-bottom:2px;
 }
-th{/*mine*/
+th {
 	border-bottom: solid 1px green;
 	border-right: solid 1px green;		
 }
-th:last-child{/*mine*/
+th:last-child {
 	border-right: none;
 }
 
-table * {
-    -moz-box-sizing: inherit; 
+table * { 
 	box-sizing: inherit;
 }
 
@@ -502,36 +376,31 @@ thead > tr, tbody > tr, tfoot > tr {
     flex-direction: row;
     flex-wrap: nowrap;
 }
-tr{
+tr {
 	color: gold;
 }
 tr.st-selected {
 	color:white;
 }
-th{	/*mine*/
+th {	
 	font-weight: normal;
 	color: green;
-	/*height: 26px;*/
 	padding-bottom: 6px;
 	max-height: 26px;
 	overflow-x:hidden;
 }
-td{ /*mine*/
+td { 
 	border-left: 0px;
 	border-right: 0px;
 	border-bottom: 1px solid #000;
-	background-color: #222;
+	background-color: #292929;
 }
-	
-	
+		
 thead, tfoot {
     flex-shrink: 0;
 }
 
 th, tbody td {
-    /*width: 20%; /* this can vary */
-   /* overflow-x: scroll;*/
-   /* text-overflow: ellipsis; /*look at overflow-y for header?*/
     display: inline-block;
 }
 	
@@ -546,40 +415,37 @@ tfoot td {
 	
 
 /*style the tabs*/
-div.tab{
+div.tab {
 	width:88.4%;
 	margin:auto;
 	
 	overflow: hidden;
 }
-ul.nav-tabs li{
+ul.nav-tabs li {
 	float:left;
 	margin-left:1px;
 	margin-right: 1px;
 	padding-left: 10px;
 	padding-right: 10px;
-	line-height: 1.42857143;
-	
-	
+	line-height: 1.42857143;		
 }
-ul.nav-tabs li:first-child{
+ul.nav-tabs li:first-child {
 	padding-left: 5px;
 	margin-left: 0;
 }
-ul.nav-tabs li.active{
+ul.nav-tabs li.active {
 	border-bottom-color: black;
 }
-ul.nav-tabs a{
+ul.nav-tabs a {
 	color: rgb(42, 100, 150);
 	font-size:14px;
-	text-decoration: none;	
+	text-decoration: none;
 }
-ul.nav-tabs a:hover{
+ul.nav-tabs a:hover {
 	color: white;
 }
-ul.nav-tabs li.active a{
+ul.nav-tabs li.active a {
 	color:white;
-	/*border-bottom-color: transparent;*/
 }
 
 .fade {
@@ -591,161 +457,144 @@ ul.nav-tabs li.active a{
 .fade.in {
   opacity: 1;
 }
-	form{
-		-webkit-box-sizing: border-box;
-    	-moz-box-sizing: border-box;
-    	-ms-box-sizing: border-box;
-    	box-sizing: border-box;			
-		/*width: 88.4%;
-		margin:auto;*/
-		margin-top: 20px;	
-		border-style: solid;
-		border-width: 1px;
-		border-color: green;
-		font-size: 12px;
-		color:green;
-		min-width: 863px;
-		/*overflow-x: scroll;*/
-		/*display:table;*/
-	}
+/*form {
+    box-sizing: border-box;			
+	margin-top: 20px;	
+	border-style: solid;
+	border-width: 1px;
+	border-color: green;
+	font-size: 12px;
+	color:green;
+	min-width: 863px;
+}*/
 	
-	#loanStaticInfo, #contractDetail, #tradeDetail,#tradeProceeds{
-		-webkit-box-sizing: border-box;
-    	-moz-box-sizing: border-box;
-    	-ms-box-sizing: border-box;
-    	box-sizing: border-box;			
-		/*width: 84%;*/
-		margin:auto;
-		margin-top: 20px;	
-		border-style: solid;
-		border-width: 1px;
-		border-color: green;
-		font-size: 12px;
-		color:green;
-		min-width: 863px;
-		/*overflow-x: scroll;*/
-		/*display:table;*/
+#loanStaticInfo, #contractDetail, #tradeDetail,#tradeProceeds {
+    box-sizing: border-box;			
+	/*width: 84%;*/
+	margin:auto;
+	margin-top: 20px;	
+	border-style: solid;
+	border-width: 1px;
+	border-color: green;
+	font-size: 12px;
+	color:green;
+	min-width: 863px;
 	}	
 	
-	#loanStaticInfo, #contractDetail, #tradeDetail{
+#loanStaticInfo, #contractDetail, #tradeDetail {
 		padding:5px;
-	}
-	.alignleft{
-		text-align: left;
-	}
-.inTableDelete{
+}
+.alignleft {
+	text-align: left;
+}
+.inTableDelete {
 	float: left;
 	line-height: 14px;
 }
-.column1, .column2, .column3{
+.column1, .column2, .column3 {
 	width:30%;
 	display:inline-block;
 }
-.column2{
+.column2 {
 	padding-left: 5%;
 }
-.column3{
+.column3 {
 	float: right;
 }
-	label {
+label {
     display: inline-block;
     width:120px;
     text-align: left;
 	letter-spacing:-1px;
-	}
-.labelLong{	
+}
+.labelLong {	
 	width: 130px;
 }
-	input.formInput{
-		-webkit-box-sizing: border-box;
-    	-moz-box-sizing: border-box;
-    	-ms-box-sizing: border-box;
-    	box-sizing: border-box;	
-		border-color:green;
-		border-style:solid;
-		border-width: 1px; 
-		margin-bottom: 5px;
-	
-		margin-right: 10px;
-		background-color:#222;
-		border: none;
-		color: gold;
-		padding-left:4px;
-		width: 200px;
-	}
-input:disabled, select:disabled{
+input.formInput {
+    box-sizing: border-box;	
+	margin-bottom: 5px;	
+	margin-right: 10px;
+	background-color:#292929;
+	border: none;
+	color: gold;
+	padding-left:4px;
+	width: 200px;
+}
+
+input.formInput:focus {
+	outline-color: transparent;
+    outline-style: none;
+	background-color: #353535;	
+}
+input:disabled, select:disabled {
 	background-color: #111;
 }
-input.tableInput{
+input.tableInput {
 	padding:0;
 	border:none;
 	margin: 0;
-	background-color:#222;
+	background-color:#292929;
 	color:gold;
 }
-tr.st-selected input, tr.st-selected select{
+.selected, tr.st-selected input, tr.st-selected select {
 	color:white;
 }
 
-
-select{
-	background-color:#222;
+select {
+	background-color:#292929;
 	margin-right: 10px;
 	color:gold;
 	border:none;
 	width:200px;
 	padding-left:1px;
 	margin-bottom: 5px;
-	/*outline: 1px inset black; outline-offset:-1px;/*?*/
-	/*-webkit-appearance: none;*/
 }
-.tableSelect{
+
+select:focus {
+	outline-color: transparent;
+    outline-style: none;
+	background-color: #353535;
+}
+
+.tableSelect {
 	margin: 0;
 	padding: 0;
 	border: none;
 	width: auto;
 }
-.tableInput{
+.tableInput {
 	text-align: center;
 }
-input:disabled.tableInput{
+input:disabled.tableInput {
 	width:90%;
 	text-align: center;
 	background-color: #111;
 }
-select:disabled.tableSelect{
+select:disabled.tableSelect {
 	width:90%;
 	text-align: center;
 	background-color: #111;
 }
-td#eventTable{
+td#eventTable {
 	padding-bottom: 0;
 	padding-top: 0;
 }
-td#facilityEventTable{
+td#facilityEventTable {
 	padding-bottom: 0;
 	padding-top: 0;
 }
-	select::-ms-expand { display: none; }
-	select:not([multiple]) {
+select::-ms-expand { 
+		display: none;
+}
+select:not([multiple]) {
     -webkit-appearance: none;
     -moz-appearance: none;
     background-position: right 50%;
     background-repeat: no-repeat;
     background-image: url(images/selectArrow.png);
 }
-/*.number{
-		text-align: right;		
-	}*/
-.gold{
-	color:gold;
-}
-.mySelect {
-    border-radius: 0
-}
-/*select:focus{background-color: green;}*/
-option{
-		color: green;
+option {
+	color: green;
 	}
 input.ng-invalid {
 	color:#D51B1B;
@@ -753,11 +602,11 @@ input.ng-invalid {
 
 /* for desktop*/
 @-webkit-keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
+    from { opacity: 0;}
+    to { opacity: 1;}
 }
 
 @keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
+    from { opacity: 0;}
+    to { opacity: 1;}
 }
