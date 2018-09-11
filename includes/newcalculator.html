@@ -97,7 +97,7 @@
 				</div>
 
 				<div ng-controller="EventsController as events"
-					ng-if="loans.selected">
+					ng-show="loans.selected">
 					<div class="edit editTable">&#x270e;</div>
 					<table id="events" st-safe-src="events.data"
 						st-table="events.displayed" class="table">
@@ -115,7 +115,7 @@
 						<tbody>
 							<tr ng-repeat="event in events.displayed">
 								<td st-ratio="25">
-									<button type="button" ng-click="events.remove()"
+									<button type="button" ng-click="events.remove(event)"
 										class="btn btn-sm btn-danger inTableDelete">
 										<i class="glyphicon glyphicon-remove-circle"></i>-
 									</button> <select ng-model="event['@bean']" class="tableSelect"
@@ -146,7 +146,8 @@
 			<div ng-controller="ContractsController as contracts"
 				ng-show="tabs.getActiveTab() == 'contracts'">
 				<table id="contracts" st-safe-src="contracts.data"
-					st-table="contracts.displayed" class="table" ng-if="loans.selected">
+					st-table="contracts.displayed" class="table"
+					ng-show="loans.selected">
 					<thead>
 						<tr>
 							<th st-ratio="8"><span st-sort="id.value">CONTRACT ID</span></th>
@@ -207,29 +208,29 @@
 				<div id="contractDetail" class="alignleft"
 					ng-if="contracts.selected">
 					<div class="edit">&#x270e;</div>
-					<label>Contract ID</label> 
+					<label>Contract ID</label>
 					<input class="formInput" type="text"
-						ng-model="contracts.selected.id.value"> 
+						ng-model="contracts.selected.id.value">
 					<label>Type</label>
 					<select ng-change="accrualTypeChange()"
 						ng-model="contracts.selected.accrual['@bean']"
 						ng-options="x for x in tabs.AccrualTypes">
-					</select> 
-					<label>Currency</label> 
+					</select>
+					<label>Currency</label>
 					<select
 						ng-model="contracts.selected.accrual.accrualAmount.currency"
-						ng-options="x for x in tabs.Currencies">
-					</select> <br> 
-					<label>Start Date</label> 
+						ng-options="x for x in tabs.Currencies">				
+					</select> <br>
+					<label>Start Date</label>
 					<input class="formInput"
-						   type="date" ng-model="contracts.selected.accrual.startDate">
-					<label>Index</label> 
+						type="date" ng-model="contracts.selected.accrual.startDate">
+					<label>Index</label>
 					<select
 						ng-model="contracts.selected.accrual.index.value"
 						ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'"
 						ng-options="x for x in tabs.IborTerms">
-					</select> 
-					<label>Payment Freq</label> 
+					</select>
+					<label>Payment Freq</label>
 					<select
 						ng-model="contracts.selected.accrual.paymentFrequency"
 						ng-options="x for x in tabs.PaymentFrequencies">
@@ -266,11 +267,11 @@
 					<select
 						ng-model="contracts.selected.accrual.dayCount"
 						ng-options="x for x in tabs.DayCounts">
-					</select>
+					</select>					
 				</div>
 
 				<div ng-controller="ContractEventsController as contractEvents"
-					ng-if="contracts.selected">
+					ng-show="contracts.selected">
 					<div class="edit editTable">&#x270e;</div>
 
 					<table id="editContractEvents" st-safe-src="contractEvents.data"
@@ -290,7 +291,8 @@
 						<tbody>
 							<tr ng-repeat="contractEvent in contractEvents.displayed">
 								<td st-ratio="20">
-									<button type="button" ng-click="contractEvents.remove()"
+									<button type="button"
+										ng-click="contractEvents.remove(contractEvent)"
 										class="btn btn-sm btn-danger inTableDelete">
 										<i class="glyphicon glyphicon-remove-circle"></i>-
 									</button> <select ng-model="contractEvent['@bean']"
@@ -313,6 +315,13 @@
 							</tr>
 						</tbody>
 					</table>
+
+					<section class="actionButtons">
+						<button type="button" ng-click="contractEvents.add()"
+							class="btn btn-sm btn-success">
+							<i class="glyphicon glyphicon-plus"></i>+
+						</button>
+					</section>
 				</div>
 			</div>
 
@@ -633,7 +642,16 @@
 
 			<div ng-controller="TextModelController as textmodel"
 				ng-show="tabs.getActiveTab() == 'model'">
-				<textarea rows="25" ng-model="textmodel.prettymodel"
+				<div>
+					<button type="button" ng-click="textmodel.download()"
+						class="btn btn-sm btn-success">
+						<i class="glyphicon glyphicon-plus"></i>Download model to file:
+					</button>
+					<input class="formInput" type="text" ng-model="textmodel.modelfile">
+					<br> <input type="file" id="modelfile">
+					<button ng-click="textmodel.upload()">Upload file to model</button>
+				</div>
+				<textarea rows=25 ng-model="textmodel.prettymodel"
 					ng-focus="textmodel.refresh()" ng-blur="textmodel.update()">{{textmodel.prettymodel}}</textarea>
 			</div>
 		</div>

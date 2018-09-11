@@ -53,7 +53,6 @@
     });
 
     loans.setSelected = function(loan) {
-      console.log("loan " + loan.id.value + " isSelected=" + loan.isSelected);
       if (loan.isSelected) {
         loans.selected = loan;
         service.setSelectedLoan(loan);
@@ -81,8 +80,8 @@
     }
 
     loans.add = function() {
-      var loan = service.addNewLoan()
-      loans.setSelected(loan)
+      var loan = service.addNewLoan();
+      loans.setSelected(loan);
     }
   }
 
@@ -93,11 +92,6 @@
     var service = CalculatorService;
 
     $scope.$on('calculator:loanSelected', function(event, loan) {
-      if (events.selected) {
-        events.selected.isSelected = false;
-        events.setSelected(events.selected);
-      }
-
       if (loan.isSelected) {
         events.data = loan.events;
       } else {
@@ -105,16 +99,13 @@
       }
     });
 
-    events.setSelected = function(event) {
-      if (event.isSelected) {
-        events.selected = event;
-        service.setSelectedEvent(event);
-      } else {
-        delete events.selected;
-        service.setSelectedEvent(undefined);
-      }
+    events.remove = function(event) {
+      console.log("removing event");
+      service.removeEvent(event);
+    }
 
-      $scope.$broadcast("calculator:eventSelected", event);
+    events.add = function() {
+      service.addNewEvent();
     }
   }
 
@@ -138,7 +129,6 @@
     });
 
     contracts.setSelected = function(contract) {
-      console.log("contract " + contract.id.value + " isSelected=" + contract.isSelected);
       if (contract.isSelected) {
         contracts.selected = contract;
         service.setSelectedContract(contract);
@@ -149,6 +139,16 @@
 
       $scope.$broadcast("calculator:contractSelected", contract);
     }
+
+    contracts.remove = function() {
+      delete contracts.selected;
+      service.removeSelectedContract();
+    }
+
+    contracts.add = function() {
+      var contract = service.addNewContract();
+      contracts.setSelected(contract);
+    }
   }
 
   ContractEventsController.$inject = [ 'CalculatorService', '$scope' ]
@@ -158,30 +158,19 @@
     var service = CalculatorService;
 
     $scope.$on('calculator:contractSelected', function(event, contract) {
-      console.log("contractEventsController, contract selected");
-      if (contractEvents.selected) {
-        conractEvents.selected.isSelected = false;
-        contractEvents.setSelected(contractEvents.selected);
-      }
-
       if (contract.isSelected) {
         contractEvents.data = contract.events;
-        console.log(JSON.stringify(contractEvents.data));
       } else {
         delete contractEvents.data;
       }
     });
 
-    contractEvents.setSelected = function(contractEvent) {
-      if (contractEvent.isSelected) {
-        contractEvents.selected = contractEvent;
-        service.setSelectedContractEvent(contractEvent);
-      } else {
-        delete contractEvents.selected;
-        service.setSelectedContractEvent(undefined);
-      }
+    contractEvents.remove = function(event) {
+      service.removeContractEvent(event);
+    }
 
-      $scope.$broadcast("calculator:contractEventSelected", contractEvent);
+    contractEvents.add = function() {
+      service.addNewContractEvent();
     }
   }
 
@@ -205,7 +194,6 @@
     });
 
     trades.setSelected = function(trade) {
-      console.log("trade " + trade.info.id.value + " isSelected=" + trade.isSelected);
       if (trade.isSelected) {
         trades.selected = trade;
         service.setSelectedTrade(trade);
@@ -226,6 +214,16 @@
         delete trades.selected.tradeProceeds;
       });
     }
+
+    trades.remove = function() {
+      delete trades.selected;
+      service.removeSelectedTrade();
+    }
+
+    trades.add = function() {
+      var trade = service.addNewTrade();
+      trades.setSelected(trade);
+    }
   }
 
   TextModelController.$inject = [ 'CalculatorService', '$scope' ]
@@ -233,6 +231,8 @@
   function TextModelController(CalculatorService, $scope) {
     var textmodel = this;
     var service = CalculatorService;
+
+    textmodel.modelfile = "model.json";
 
     $scope.$on('calculator:loansLoaded', function(event, data) {
       textmodel.prettymodel = service.prettymodel;
@@ -253,6 +253,45 @@
         textmodel.prettymodel = service.prettymodel;
       }
     });
+
+    function destroyClickedElement(event) {
+      document.body.removeChild(event.target);
+    }
+
+    textmodel.download = function() {
+      console.log("Downloading model to: " + textmodel.modelfile);
+
+      var blob = new Blob([ textmodel.prettymodel ], {
+        type : "text/plain"
+      });
+
+      var url = window.URL.createObjectURL(blob);
+      var link = document.createElement("a");
+
+      link.download = textmodel.modelfile;
+      link.innerHTML = "Download File";
+      link.href = url;
+      link.onclick = destroyClickedElement;
+      link.style.display = "none";
+
+      document.body.appendChild(link);
+
+      link.click();
+    }
+
+    textmodel.upload = function() {
+      var modelfile = document.getElementById("modelfile").files[0];
+      var reader = new FileReader();
+
+      console.log("Uploading model from: " + modelfile);
+
+      reader.onload = function(event) {
+        textmodel.prettymodel = event.target.result;
+        textmodel.update();
+      };
+
+      reader.readAsText(modelfile, "UTF-8");
+    }
   }
 
   CashflowsController.$inject = [ 'CalculatorService', '$scope' ]
@@ -488,12 +527,28 @@
       return service.selectedLoan.events;
     }
 
-    service.setSelectedEvent = function(event) {
-      service.selectedEvent = event;
+    service.removeEvent = function(event) {
+      for ( var i in service.selectedLoan.events) {
+        if (service.selectedLoan.events[i] == event) {
+          service.selectedLoan.events.splice(i, 1);
+          service.refresh();
+          return;
+        }
+      }
     }
 
-    service.getSelectedEvent = function() {
-      return service.selectedEvent;
+    service.addNewEvent = function() {
+      var event = {
+      "@bean" : "CommitmentAdjustment",
+      "effectiveDate" : new Date(),
+      "amount" : new CurrencyAmount('USD', 1000000.0),
+      "pik" : false,
+      "refusalAllowed" : true
+      };
+
+      service.selectedLoan.events.push(event);
+      service.model = ui2model(service.uimodel)
+      service.prettymodel = pretty(service.model);
     }
 
     service.getContracts = function() {
@@ -506,6 +561,71 @@
 
     service.getSelectedContract = function() {
       return service.selectedContract;
+    }
+
+    service.removeSelectedContract = function() {
+      for ( var i in service.selectedLoan.contracts) {
+        if (service.selectedLoan.contracts[i] == service.selectedContract) {
+          service.selectedLoan.contracts.splice(i, 1);
+          service.refresh();
+          service.setSelectedContract(undefined);
+          return;
+        }
+      }
+    }
+
+    service.addNewContract = function() {
+      var cid = Math.floor(Math.random() * (100000 - 10000)) + 10000;
+      var start = new Date();
+      var payment_date = new Date();
+
+      payment_date.setMonth(start.getMonth() + 1);
+
+      var newContract = {
+      "id" : new StandardId("contract", "" + cid),
+      "accrual" : {
+      "@bean" : "FixedRateAccrual",
+      "startDate" : start,
+      "endDate" : payment_date,
+      "allInRate" : 0.05,
+      "pikSpread" : 0,
+      "accrualAmount" : new CurrencyAmount("USD", 10000000.0),
+      "dayCount" : "Act/360",
+      "paymentFrequency" : "P1M"
+      },
+      "paymentDate" : payment_date,
+      "events" : []
+      };
+
+      service.selectedLoan.contracts.push(newContract);
+      service.model = ui2model(service.uimodel)
+      service.prettymodel = pretty(service.model);
+
+      return newContract;
+    }
+
+    service.removeContractEvent = function(event) {
+      for ( var i in service.selectedContract.events) {
+        if (service.selectedContract.events[i] == event) {
+          service.selectedContract.events.splice(i, 1);
+          service.refresh();
+          return;
+        }
+      }
+    }
+
+    service.addNewContractEvent = function() {
+      var event = {
+      "@bean" : "Repayment",
+      "effectiveDate" : new Date(),
+      "amount" : new CurrencyAmount('USD', 1000000.0),
+      "interestOnPaydown" : false,
+      "price" : 1.0
+      };
+
+      service.selectedContract.events.push(event);
+      service.model = ui2model(service.uimodel)
+      service.prettymodel = pretty(service.model);
     }
 
     service.getContractEvents = function() {
@@ -530,6 +650,55 @@
 
     service.getSelectedTrade = function() {
       return service.selectedTrade;
+    }
+
+    service.removeSelectedTrade = function() {
+      for ( var i in service.selectedLoan.trades) {
+        if (service.selectedLoan.trades[i] == service.selectedTrade) {
+          service.selectedLoan.trades.splice(i, 1);
+          service.refresh();
+          service.setSelectedTrade(undefined);
+          return;
+        }
+      }
+    }
+
+    service.addNewTrade = function() {
+      var tid = Math.floor(Math.random() * (100000 - 10000)) + 10000;
+      var today = new Date();
+      
+      var newTrade = {
+      "buySell" : "Buy",
+      "buyer" : new StandardId("cpty", "Buyer"),
+      "seller" : new StandardId("cpty", "Seller"),
+      "amount" : 1000000,
+      "currency" : "USD",
+      "price" : 1,
+      "expectedSettlementDate" : today,
+      "delayedCompensationFlag" : true,
+      "association" : "LSTA",
+      "formOfPurchase" : "Assignment",
+      "documentationType" : "Par",
+      "tradeType" : "Primary",
+      "whenIssuedFlag" : false,
+      "commitmentReductionCreditFlag" : false,
+      "paydownOnTradeDate" : false,
+      "adjustmentOnTradeDate" : true,
+      "accrualSettlementType" : "SettledWithoutAccrued",
+      "averageLibor" : 0,
+      "info" : {
+      "id" : new StandardId("trade", "" + tid),
+      "tradeDate" : today,
+      "settlementDate" : today,
+      "attributes" : {}
+      }
+      };
+
+      service.selectedLoan.trades.push(newTrade);
+      service.model = ui2model(service.uimodel)
+      service.prettymodel = pretty(service.model);
+
+      return newTrade;
     }
 
     // Private content.
