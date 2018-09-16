@@ -8,7 +8,7 @@
       .controller("TextModelController", TextModelController).controller("CashflowsController", CashflowsController)
       .service("CalculatorService", CalculatorService).directive('stRatio', stRatio);
 
-  TabController.$inject = [ '$scope' ]
+  TabController.$inject = [ '$scope' ];
 
   function TabController($scope) {
     var tabs = this;
@@ -18,11 +18,11 @@
     tabs.setActiveTab = function(value) {
       tabs.activeTab = value;
       $scope.$broadcast("calculator:tabSelected", value);
-    }
+    };
 
     tabs.getActiveTab = function() {
       return tabs.activeTab;
-    }
+    };
 
     tabs.FacilityTypes = [ "Term", "Revolving", "DelayedDraw", "LetterOfCredit" ];
     tabs.Currencies = [ "USD" ];
@@ -41,7 +41,7 @@
     tabs.AccrualSettlementTypes = [ "SettledWithoutAccrued", "SettledWithAccrued", "Flat" ];
   }
 
-  LoansController.$inject = [ 'CalculatorService', '$scope' ]
+  LoansController.$inject = [ 'CalculatorService', '$scope' ];
 
   function LoansController(CalculatorService, $scope) {
     var loans = this;
@@ -62,7 +62,9 @@
       }
 
       $scope.$broadcast("calculator:loanSelected", loan);
-    }
+    };
+	
+	
 
     $scope.$on('calculator:modelUpdated', function(event, data) {
       if (loans.selected) {
@@ -77,15 +79,21 @@
       delete loans.selected;
       service.removeSelectedLoan();
       service.setSelectedLoan(undefined);
-    }
+    };
 
     loans.add = function() {
       var loan = service.addNewLoan();
       loans.setSelected(loan);
-    }
+    };
+	  
+	loans.scroll = function() {
+ 	  var index = loans.displayed.indexOf(loans.data[(loans.data.length)-1]) + 1;  
+      //$("#loans tr:eq("+index+")").scrollintoview(); 
+	  scrollTo("#loans", index);
+    };
   }
 
-  EventsController.$inject = [ 'CalculatorService', '$scope' ]
+  EventsController.$inject = [ 'CalculatorService', '$scope' ];
 
   function EventsController(CalculatorService, $scope) {
     var events = this;
@@ -102,14 +110,19 @@
     events.remove = function(event) {
       console.log("removing event");
       service.removeEvent(event);
-    }
+    };
 
     events.add = function() {
       service.addNewEvent();
-    }
+    };
+	  
+	events.scroll = function() {
+ 	  var index = events.displayed.indexOf(events.data[(events.data.length)-1]) + 1;   
+	  scrollTo("#events", index);
+    };
   }
 
-  ContractsController.$inject = [ 'CalculatorService', '$scope' ]
+  ContractsController.$inject = [ 'CalculatorService', '$scope' ];
 
   function ContractsController(CalculatorService, $scope) {
     var contracts = this;
@@ -138,20 +151,25 @@
       }
 
       $scope.$broadcast("calculator:contractSelected", contract);
-    }
+    };
 
     contracts.remove = function() {
       delete contracts.selected;
       service.removeSelectedContract();
-    }
+    };
 
     contracts.add = function() {
       var contract = service.addNewContract();
       contracts.setSelected(contract);
-    }
+    };
+	  
+	contracts.scroll = function() {
+ 	  var index = contracts.displayed.indexOf(contracts.data[(contracts.data.length)-1]) + 1;  
+	  scrollTo("#contracts", index);
+    };
   }
 
-  ContractEventsController.$inject = [ 'CalculatorService', '$scope' ]
+  ContractEventsController.$inject = [ 'CalculatorService', '$scope' ];
 
   function ContractEventsController(CalculatorService, $scope) {
     var contractEvents = this;
@@ -167,14 +185,19 @@
 
     contractEvents.remove = function(event) {
       service.removeContractEvent(event);
-    }
+    };
 
     contractEvents.add = function() {
       service.addNewContractEvent();
-    }
+    };
+	  
+	contractEvents.scroll = function() {
+ 	  var index = contractEvents.displayed.indexOf(contractEvents.data[(contractEvents.data.length)-1]) + 1;  
+	  scrollTo("#editContractEvents", index);
+    };
   }
 
-  TradesController.$inject = [ 'CalculatorService', '$scope' ]
+  TradesController.$inject = [ 'CalculatorService', '$scope' ];
 
   function TradesController(CalculatorService, $scope) {
     var trades = this;
@@ -203,7 +226,7 @@
       }
 
       $scope.$broadcast("calculator:tradeSelected", trade);
-    }
+    };
 
     trades.calculateProceeds = function() {
       service.calculateProceeds().then(function(data) {
@@ -213,20 +236,25 @@
         trades.error = error;
         delete trades.selected.tradeProceeds;
       });
-    }
+    };
 
     trades.remove = function() {
       delete trades.selected;
       service.removeSelectedTrade();
-    }
+    };
 
     trades.add = function() {
       var trade = service.addNewTrade();
       trades.setSelected(trade);
-    }
+    };
+	  
+    trades.scroll = function() {
+ 	  var index = trades.displayed.indexOf(trades.data[(trades.data.length)-1]) + 1;  
+	  scrollTo("#trades", index);
+    };
   }
 
-  TextModelController.$inject = [ 'CalculatorService', '$scope' ]
+  TextModelController.$inject = [ 'CalculatorService', '$scope' ];
 
   function TextModelController(CalculatorService, $scope) {
     var textmodel = this;
@@ -277,7 +305,7 @@
       document.body.appendChild(link);
 
       link.click();
-    }
+    };
 
     textmodel.upload = function() {
       var modelfile = document.getElementById("modelfile").files[0];
@@ -291,10 +319,10 @@
       };
 
       reader.readAsText(modelfile, "UTF-8");
-    }
+    };
   }
 
-  CashflowsController.$inject = [ 'CalculatorService', '$scope' ]
+  CashflowsController.$inject = [ 'CalculatorService', '$scope' ];
 
   function CashflowsController(CalculatorService, $scope) {
     var cashflows = this;
@@ -310,23 +338,23 @@
 
     cashflows.isAccrualSelected = function() {
       return cashflows.selected && (cashflows.selected.type == 'Interest' || cashflows.selected.type == 'PikInterest' || cashflows.selected.type == 'DelayedCompensation');
-    }
+    };
 
     cashflows.isCostOfFundedSelected = function() {
       return cashflows.selected && cashflows.selected.type == 'CostOfFunded';
-    }
+    };
 
     cashflows.isBenefitOfUnfundedSelected = function() {
       return cashflows.selected && cashflows.selected.type == 'BenefitOfUnfunded';
-    }
+    };
 
     cashflows.isCostOfCarrySelected = function() {
       return cashflows.selected && cashflows.selected.type == 'CostOfCarry';
-    }
+    };
 
     cashflows.isEconomicBenefitSelected = function() {
       return cashflows.selected && cashflows.selected.type == 'EconomicBenefit';
-    }
+    };
 
     cashflows.setSelected = function(cashflow) {
       if (cashflow.isSelected) {
@@ -334,14 +362,14 @@
       } else {
         delete cashflows.selected;
       }
-    }
+    };
 
   }
 
   // Calculator service. This service encapsulates the loansum data model and
   // all interactions with the loansum application service.
 
-  CalculatorService.$inject = [ '$http', '$q' ]
+  CalculatorService.$inject = [ '$http', '$q' ];
 
   function CalculatorService($http, $q) {
     var service = this;
@@ -363,13 +391,13 @@
       }
 
       return deferred.promise;
-    }
+    };
 
     service.update = function(data) {
       service.model = JSON.parse(data);
       service.prettymodel = JSON.stringify(service.model, undefined, 2);
       service.uimodel = model2ui(service.model);
-    }
+    };
 
     service.calculateProceeds = function() {
       var deferred = $q.defer();
@@ -391,7 +419,7 @@
       });
 
       return deferred.promise;
-    }
+    };
 
     service.calculateCashflows = function() {
       var deferred = $q.defer();
@@ -427,15 +455,15 @@
       }
 
       return deferred.promise;
-    }
+    };
 
     service.setSelectedLoan = function(loan) {
       service.selectedLoan = loan;
-    }
+    };
 
     service.getSelectedLoan = function() {
       return service.selectedLoan;
-    }
+    };
 
     service.removeSelectedLoan = function() {
       for ( var i in service.uimodel) {
@@ -445,13 +473,13 @@
           return;
         }
       }
-    }
+    };
 
     service.refresh = function() {
       console.log("uimodel=" + pretty(service.uimodel));
       service.model = ui2model(service.uimodel)
       service.prettymodel = pretty(service.model);
-    }
+    };
 
     service.addNewLoan = function() {
       var tid = Math.floor(Math.random() * (100000 - 10000)) + 10000;
@@ -517,15 +545,15 @@
       };
 
       service.uimodel.push(newLoan);
-      service.model = ui2model(service.uimodel)
+      service.model = ui2model(service.uimodel);
       service.prettymodel = pretty(service.model);
 
       return newLoan;
-    }
+    };
 
     service.getEvents = function() {
       return service.selectedLoan.events;
-    }
+    };
 
     service.removeEvent = function(event) {
       for ( var i in service.selectedLoan.events) {
@@ -535,7 +563,7 @@
           return;
         }
       }
-    }
+    };
 
     service.addNewEvent = function() {
       var event = {
@@ -547,21 +575,21 @@
       };
 
       service.selectedLoan.events.push(event);
-      service.model = ui2model(service.uimodel)
+      service.model = ui2model(service.uimodel);
       service.prettymodel = pretty(service.model);
-    }
+    };
 
     service.getContracts = function() {
       return service.selectedLoan.contracts;
-    }
+    };
 
     service.setSelectedContract = function(contract) {
       service.selectedContract = contract;
-    }
+    };
 
     service.getSelectedContract = function() {
       return service.selectedContract;
-    }
+    };
 
     service.removeSelectedContract = function() {
       for ( var i in service.selectedLoan.contracts) {
@@ -572,7 +600,7 @@
           return;
         }
       }
-    }
+    };
 
     service.addNewContract = function() {
       var cid = Math.floor(Math.random() * (100000 - 10000)) + 10000;
@@ -598,11 +626,11 @@
       };
 
       service.selectedLoan.contracts.push(newContract);
-      service.model = ui2model(service.uimodel)
+      service.model = ui2model(service.uimodel);
       service.prettymodel = pretty(service.model);
 
       return newContract;
-    }
+    };
 
     service.removeContractEvent = function(event) {
       for ( var i in service.selectedContract.events) {
@@ -612,7 +640,7 @@
           return;
         }
       }
-    }
+    };
 
     service.addNewContractEvent = function() {
       var event = {
@@ -624,33 +652,33 @@
       };
 
       service.selectedContract.events.push(event);
-      service.model = ui2model(service.uimodel)
+      service.model = ui2model(service.uimodel);
       service.prettymodel = pretty(service.model);
-    }
+    };
 
     service.getContractEvents = function() {
       return service.selectedContract.events;
-    }
+    };
 
     service.setSelectedContractEvent = function(contractEvent) {
       service.selectedContractEvent = contractEvent;
-    }
+    };
 
     service.getSelectedContractEvent = function() {
       return service.selectedContractEvent;
-    }
+    };
 
     service.getTrades = function() {
       return service.selectedLoan.trades;
-    }
+    };
 
     service.setSelectedTrade = function(trade) {
       service.selectedTrade = trade;
-    }
+    };
 
     service.getSelectedTrade = function() {
       return service.selectedTrade;
-    }
+    };
 
     service.removeSelectedTrade = function() {
       for ( var i in service.selectedLoan.trades) {
@@ -661,7 +689,7 @@
           return;
         }
       }
-    }
+    };
 
     service.addNewTrade = function() {
       var tid = Math.floor(Math.random() * (100000 - 10000)) + 10000;
@@ -695,11 +723,11 @@
       };
 
       service.selectedLoan.trades.push(newTrade);
-      service.model = ui2model(service.uimodel)
+      service.model = ui2model(service.uimodel);
       service.prettymodel = pretty(service.model);
 
       return newTrade;
-    }
+    };
 
     // Private content.
 
@@ -747,7 +775,7 @@
 
       if (cashflow.annotation.source) {
         this.sourceType = cashflow.annotation.source.replace(/~.*$/, "");
-        this.sourceId = cashflow.annotation.source.replace(/^.*~/, "")
+        this.sourceId = cashflow.annotation.source.replace(/^.*~/, "");
       }
 
       this.currency = s.substring(0, 3);
@@ -1019,5 +1047,9 @@
       }
     };
   }
+	
+  function scrollTo(tableId, index) {
+    $(tableId + " tr:eq("+index+")").scrollintoview();
+  };
 
 })();
