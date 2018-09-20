@@ -63,8 +63,6 @@
 
       $scope.$broadcast("calculator:loanSelected", loan);
     };
-	
-	
 
     $scope.$on('calculator:modelUpdated', function(event, data) {
       if (loans.selected) {
@@ -85,11 +83,11 @@
       var loan = service.addNewLoan();
       loans.setSelected(loan);
     };
-	  
-	loans.scroll = function() {
- 	  var index = loans.displayed.indexOf(loans.data[(loans.data.length)-1]) + 1;  
-      //$("#loans tr:eq("+index+")").scrollintoview(); 
-	  scrollTo("#loans", index);
+
+    loans.scroll = function() {
+      var index = loans.displayed.indexOf(loans.data[(loans.data.length) - 1]) + 1;
+      // $("#loans tr:eq("+index+")").scrollintoview();
+      scrollTo("#loans", index);
     };
   }
 
@@ -115,10 +113,10 @@
     events.add = function() {
       service.addNewEvent();
     };
-	  
-	events.scroll = function() {
- 	  var index = events.displayed.indexOf(events.data[(events.data.length)-1]) + 1;   
-	  scrollTo("#events", index);
+
+    events.scroll = function() {
+      var index = events.displayed.indexOf(events.data[(events.data.length) - 1]) + 1;
+      scrollTo("#events", index);
     };
   }
 
@@ -162,10 +160,10 @@
       var contract = service.addNewContract();
       contracts.setSelected(contract);
     };
-	  
-	contracts.scroll = function() {
- 	  var index = contracts.displayed.indexOf(contracts.data[(contracts.data.length)-1]) + 1;  
-	  scrollTo("#contracts", index);
+
+    contracts.scroll = function() {
+      var index = contracts.displayed.indexOf(contracts.data[(contracts.data.length) - 1]) + 1;
+      scrollTo("#contracts", index);
     };
   }
 
@@ -190,11 +188,18 @@
     contractEvents.add = function() {
       service.addNewContractEvent();
     };
-	  
-	contractEvents.scroll = function() {
- 	  var index = contractEvents.displayed.indexOf(contractEvents.data[(contractEvents.data.length)-1]) + 1;  
-	  scrollTo("#editContractEvents", index);
+
+    contractEvents.scroll = function() {
+      var index = contractEvents.displayed.indexOf(contractEvents.data[(contractEvents.data.length) - 1]) + 1;
+      scrollTo("#editContractEvents", index);
     };
+
+    contractEvents.typeChange = function(event) {
+      if (event['@bean'] != 'Repayment') {
+        delete event.interestOnPaydown;
+        delete event.price;
+      }
+    }
   }
 
   TradesController.$inject = [ 'CalculatorService', '$scope' ];
@@ -247,10 +252,10 @@
       var trade = service.addNewTrade();
       trades.setSelected(trade);
     };
-	  
+
     trades.scroll = function() {
- 	  var index = trades.displayed.indexOf(trades.data[(trades.data.length)-1]) + 1;  
-	  scrollTo("#trades", index);
+      var index = trades.displayed.indexOf(trades.data[(trades.data.length) - 1]) + 1;
+      scrollTo("#trades", index);
     };
   }
 
@@ -443,7 +448,6 @@
           if (cashflows.message) {
             deferred.reject(cashflows.message);
           } else {
-            console.log("service raw cashflows: " + JSON.stringify(cashflows, undefined, 2));
             var cashFlows = [];
             for ( var i in cashflows.cashFlows) {
               cashFlows.push(new TradeCashflow(cashflows.cashFlows[i]));
@@ -694,7 +698,7 @@
     service.addNewTrade = function() {
       var tid = Math.floor(Math.random() * (100000 - 10000)) + 10000;
       var today = new Date();
-      
+
       var newTrade = {
       "buySell" : "Buy",
       "buyer" : new StandardId("cpty", "Buyer"),
@@ -737,6 +741,7 @@
     const currencyAmountRegex = /^USD [\+\-]?\d*\.?\d+(?:[Ee][\+\-]?\d+)?$/;
     const standardIdRegex = /.*~.*/;
     const prunable = [ "isSelected", "pctShare", "totalCommitmentSchedule", "pikProjection", "paymentProjection", "cashflows" ]
+    const modelPackage = 'com.syndloanhub.loansum.product.facility.';
 
     // Objects.
 
@@ -751,7 +756,7 @@
     }
 
     function LoanTrade(trade) {
-      this["@bean"] = "com.syndloanhub.loansum.product.facility.LoanTrade";
+      this["@bean"] = modelPackage + "LoanTrade";
 
       for ( var i in trade) {
         this[i] = trade[i];
@@ -910,6 +915,13 @@
           continue;
         } else if (prunable.includes(i)) {
           delete ui[i];
+          // Nothing good about this, need to force order
+          // that object attributes are produced in the JSON.
+        } else if (i == 'index') {
+          ui[i]['@type'] = 'com.opengamma.strata.basics.index.IborIndex';
+          var value = ui[i].value;
+          delete ui[i].value;
+          ui[i].value = value;
         }
 
         if (ui[i] !== null && typeof (ui[i]) == "object") {
@@ -918,6 +930,9 @@
           if (ui[i] == "IborIndex") {
             ui[i] = "com.opengamma.strata.basics.index.IborIndex";
           }
+        } else if (i == "@bean" && !ui[i].startsWith(modelPackage)) {
+          console.log("changing @bean from " + ui[i] + " to " + modelPackage + ui[i]);
+          ui[i] = modelPackage + ui[i];
         }
       }
     }
@@ -938,6 +953,8 @@
           value = new CurrencyAmount(value.substring(0, 3), parseFloat(value.substring(4)));
         } else if (standardIdRegex.test(value)) {
           value = new StandardId(value.replace(/~.*$/, ""), value.replace(/^.*~/, ""));
+        } else if (value.startsWith(modelPackage)) {
+          value = value.replace(modelPackage, '');
         }
       }
 
@@ -1047,9 +1064,10 @@
       }
     };
   }
-	
+
   function scrollTo(tableId, index) {
-    $(tableId + " tr:eq("+index+")").scrollintoview();
-  };
+    $(tableId + " tr:eq(" + index + ")").scrollintoview();
+  }
+  ;
 
 })();
