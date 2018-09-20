@@ -1,659 +1,775 @@
 
 <script src="includes/newcalculator.js"></script>
 
-<div id="newCalculator" ng-app="CalculatorApp">
-<div id="wrapper">
-	<div class="tab" ng-controller="TabController as tabs">
-		<ul class="nav nav-tabs">
-			<li ng-class="{ active: tabs.getActiveTab() == 'loans' }"><a
-				href ng-click="tabs.setActiveTab('loans')">loans</a></li>
-			<li ng-class="{ active: tabs.getActiveTab() == 'contracts' }"><a
-				href ng-click="tabs.setActiveTab('contracts')">contracts</a></li>
-			<li ng-class="{ active: tabs.getActiveTab() == 'trades' }"><a
-				href ng-click="tabs.setActiveTab('trades')">trades</a></li>
-			<li ng-class="{ active: tabs.getActiveTab() == 'cash flows' }"><a
-				href ng-click="tabs.setActiveTab('cash flows')">cash flows</a></li>
-			<li ng-class="{ active: getActiveTab() == 'model' }"><a href
-				ng-click="tabs.setActiveTab('model')">model</a></li>
-		</ul>
+<div
+    id="newCalculator"
+    ng-app="CalculatorApp">
+    <div id="wrapper">
+        <div
+            class="tab"
+            ng-controller="TabController as tabs">
+            <ul class="nav nav-tabs">
+                <li ng-class="{ active: tabs.getActiveTab() == 'loans' }"><a
+                    href
+                    ng-click="tabs.setActiveTab('loans')">loans</a></li>
+                <li ng-class="{ active: tabs.getActiveTab() == 'contracts' }"><a
+                    href
+                    ng-click="tabs.setActiveTab('contracts')">contracts</a></li>
+                <li ng-class="{ active: tabs.getActiveTab() == 'trades' }"><a
+                    href
+                    ng-click="tabs.setActiveTab('trades')">trades</a></li>
+                <li ng-class="{ active: tabs.getActiveTab() == 'cash flows' }"><a
+                    href
+                    ng-click="tabs.setActiveTab('cash flows')">cash flows</a></li>
+                <li ng-class="{ active: getActiveTab() == 'model' }"><a
+                    href
+                    ng-click="tabs.setActiveTab('model')">model</a></li>
+            </ul>
 
-		<div ng-controller="LoansController as loans">
-			<div>
-				<div id="displaySelectedLoan" ng-if="loans.selected">
-					selected loan: <span class="selected">{{loans.selected.id.value}}</span>
-					&nbsp;&nbsp;&nbsp; borrower: <span class="selected">{{loans.selected.borrower.value}}</span>
-				</div>
-				<div id="displayNoSelectedLoan" ng-if="!loans.selected">
-					<br>
-				</div>
-			</div>
+            <div ng-controller="LoansController as loans">
+                <div>
+                    <div
+                        id="displaySelectedLoan"
+                        ng-if="loans.selected">
+                        selected loan: <span class="selected">{{loans.selected.id.value}}</span> &nbsp;&nbsp;&nbsp;
+                        borrower: <span class="selected">{{loans.selected.borrower.value}}</span>
+                    </div>
+                    <div
+                        id="displayNoSelectedLoan"
+                        ng-if="!loans.selected">
+                        <br>
+                    </div>
+                </div>
 
-			<div ng-show="tabs.getActiveTab() == 'loans'">
-				<table id="loans" st-safe-src="loans.data"
-					st-table="loans.displayed" class="table">
-					<thead>
-						<tr>
-							<th st-ratio="10"><span st-sort="id.value">LOAN ID</span></th>
-							<th st-ratio="20"><span st-sort="borrower.value">BORROWER</span></th>
-							<th st-ratio="14"><span st-sort="agent.value">AGENT</span></th>
-							<th st-ratio="10"><span st-sort="facilityType">FACILITY
-									TYPE</span></th>
-							<th st-ratio="18"><span
-								st-sort="originalCommitmentAmount.value">ORIG COMMITMENT</span></th>
-							<th st-ratio="10"><span st-sort="startDate">START
-									DATE</span></th>
-							<th st-ratio="10"><span st-sort="maturityDate">MATURITY
-									DATE</span></th>
-							<th st-ratio="8"><span
-								st-sort="originalCommitmentAmount.currency">CURRENCY</span></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-click="loans.setSelected(loan)" st-select-row="loan"
-							st-select-mode="single" ng-repeat="loan in loans.displayed">
-							<td st-ratio="10">{{loan.id.value}}</td>
-							<td st-ratio="20">{{loan.borrower.value}}</td>
-							<td st-ratio="14">{{loan.agent.value}}</td>
-							<td st-ratio="10">{{loan.facilityType}}</td>
-							<td st-ratio="18">{{loan.originalCommitmentAmount.value |
-								currency : "" : 2}}</td>
-							<td st-ratio="10">{{loan.startDate | date : "M/d/yy" }}</td>
-							<td st-ratio="10">{{loan.maturityDate | date : "M/d/yy"}}</td>
-							<td st-ratio="8">{{loan.originalCommitmentAmount.currency}}</td>
-						</tr>
-					</tbody>
-				</table>
+                <div ng-show="tabs.getActiveTab() == 'loans'">
+                    <table
+                        id="loans"
+                        st-safe-src="loans.data"
+                        st-table="loans.displayed"
+                        class="table">
+                        <thead>
+                            <tr>
+                                <th st-ratio="10"><span st-sort="id.value">LOAN ID</span></th>
+                                <th st-ratio="20"><span st-sort="borrower.value">BORROWER</span></th>
+                                <th st-ratio="14"><span st-sort="agent.value">AGENT</span></th>
+                                <th st-ratio="10"><span st-sort="facilityType">FACILITY TYPE</span></th>
+                                <th st-ratio="18"><span st-sort="originalCommitmentAmount.value">ORIG
+                                        COMMITMENT</span></th>
+                                <th st-ratio="10"><span st-sort="startDate">START DATE</span></th>
+                                <th st-ratio="10"><span st-sort="maturityDate">MATURITY DATE</span></th>
+                                <th st-ratio="8"><span st-sort="originalCommitmentAmount.currency">CURRENCY</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                ng-click="loans.setSelected(loan)"
+                                st-select-row="loan"
+                                st-select-mode="single"
+                                ng-repeat="loan in loans.displayed">
+                                <td st-ratio="10">{{loan.id.value}}</td>
+                                <td st-ratio="20">{{loan.borrower.value}}</td>
+                                <td st-ratio="14">{{loan.agent.value}}</td>
+                                <td st-ratio="10">{{loan.facilityType}}</td>
+                                <td st-ratio="18">{{loan.originalCommitmentAmount.value | currency : "" : 2}}</td>
+                                <td st-ratio="10">{{loan.startDate | date : "M/d/yy" }}</td>
+                                <td st-ratio="10">{{loan.maturityDate | date : "M/d/yy"}}</td>
+                                <td st-ratio="8">{{loan.originalCommitmentAmount.currency}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-				<section class="actionButtons">
-					<button type="button" ng-mousedown="loans.add()" ng-mouseup="loans.scroll()" 
-						class="btn btn-sm btn-success">
-						<i class="glyphicon glyphicon-plus"></i>+
-					</button>
-					<button type="button" ng-click="loans.remove()"
-						ng-if="loans.selected" class="btn btn-sm btn-danger">
-						<i class="glyphicon glyphicon-remove-circle"></i>-
-					</button>
-				</section>
+                    <section class="actionButtons">
+                        <button
+                            type="button"
+                            ng-mousedown="loans.add()"
+                            ng-mouseup="loans.scroll()"
+                            class="btn btn-sm btn-success">
+                            <i class="glyphicon glyphicon-plus"></i>+
+                        </button>
+                        <button
+                            type="button"
+                            ng-click="loans.remove()"
+                            ng-if="loans.selected"
+                            class="btn btn-sm btn-danger">
+                            <i class="glyphicon glyphicon-remove-circle"></i>-
+                        </button>
+                    </section>
 
-				<div id="loanStaticInfo" class="alignleft" ng-if="loans.selected">
-					<div class="edit">&#x270e;</div>
-					<label>Loan Id</label> <input class="formInput" type="text"
-						ng-model="loans.selected.id.value" size="30"> <label>Facility
-						Type</label> <select ng-model="loans.selected.facilityType"
-						ng-options="x for x in tabs.FacilityTypes">
-					</select> <label>Start Date</label> <input class="formInput" type="date"
-						ng-model="loans.selected.startDate"> <br> <label>Borrower</label>
-					<input class="formInput" type="text"
-						ng-model="loans.selected.borrower.value" size="30"> <label>Orig
-						Commitment</label> <input class="formInput" type="text"
-						ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-						ng-model="loans.selected.originalCommitmentAmount.value" size="30">
-					<label>Maturity Date</label> <input class="formInput" type="date"
-						ng-model="loans.selected.maturityDate"><br> <label>Agent</label>
-					<input class="formInput" type="text"
-						ng-model="loans.selected.agent.value" size="30"> <label>Currency</label>
-					<select ng-model="loans.selected.originalCommitmentAmount.currency"
-						ng-options="x for x in tabs.Currencies"></select>
-				</div>
+                    <div
+                        id="loanStaticInfo"
+                        class="alignleft"
+                        ng-if="loans.selected">
+                        <div class="edit">&#x270e;</div>
+                        <label>Loan Id</label> <input
+                            class="formInput"
+                            type="text"
+                            ng-model="loans.selected.id.value"
+                            size="30"> <label>Facility Type</label> <select
+                            ng-model="loans.selected.facilityType"
+                            ng-options="x for x in tabs.FacilityTypes">
+                        </select> <label>Start Date</label> <input
+                            class="formInput"
+                            type="date"
+                            ng-model="loans.selected.startDate"> <br> <label>Borrower</label> <input
+                            class="formInput"
+                            type="text"
+                            ng-model="loans.selected.borrower.value"
+                            size="30"> <label>Orig Commitment</label> <input
+                            class="formInput"
+                            type="text"
+                            ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
+                            ng-model="loans.selected.originalCommitmentAmount.value"
+                            size="30"> <label>Maturity Date</label> <input
+                            class="formInput"
+                            type="date"
+                            ng-model="loans.selected.maturityDate"><br> <label>Agent</label> <input
+                            class="formInput"
+                            type="text"
+                            ng-model="loans.selected.agent.value"
+                            size="30"> <label>Currency</label> <select
+                            ng-model="loans.selected.originalCommitmentAmount.currency"
+                            ng-options="x for x in tabs.Currencies"></select>
+                    </div>
 
-				<div ng-controller="EventsController as events"
-					ng-show="loans.selected">
-					<div class="edit editTable">&#x270e;</div>
-					<table id="events" st-safe-src="events.data"
-						st-table="events.displayed" class="table">
-						<thead>
-							<tr>
-								<th st-ratio="25"><span st-sort="['@bean']">EVENT
-										TYPE</span></th>
-								<th st-ratio="25"><span st-sort="effectiveDate">EFFECTIVE
-										DATE</span></th>
-								<th st-ratio="25"><span st-sort="amount.value">AMOUNT</span></th>
-								<th st-ratio="25"><span st-sort="refusalAllowed">REFUSAL
-										ALLOWED</span></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="event in events.displayed">
-								<td st-ratio="25">
-									<button type="button" ng-click="events.remove(event)"
-										class="btn btn-sm btn-danger inTableDelete">
-										<i class="glyphicon glyphicon-remove-circle"></i>-
-									</button> <select ng-model="event['@bean']" class="tableSelect"
-									ng-options="x for x in tabs.FacilityEventTypes">
-								</select>
-								</td>
-								<td st-ratio="25"><input class="tableInput" type="date"
-									ng-model="event.effectiveDate"></td>
-								<td st-ratio="25"><input class="tableInput"
-									type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-									ng-model="event.amount.value"></td>
-								<td st-ratio="25"><select ng-model="event.refusalAllowed"
-									class="tableSelect"
-									ng-options="x for x in tabs.Boolean"></select></td>
-							</tr>
-						</tbody>
-					</table>
+                    <div
+                        ng-controller="EventsController as events"
+                        ng-show="loans.selected">
+                        <div class="edit editTable">&#x270e;</div>
+                        <table
+                            id="events"
+                            st-safe-src="events.data"
+                            st-table="events.displayed"
+                            class="table">
+                            <thead>
+                                <tr>
+                                    <th st-ratio="25"><span st-sort="['@bean']">EVENT TYPE</span></th>
+                                    <th st-ratio="25"><span st-sort="effectiveDate">EFFECTIVE DATE</span></th>
+                                    <th st-ratio="25"><span st-sort="amount.value">AMOUNT</span></th>
+                                    <th st-ratio="25"><span st-sort="refusalAllowed">REFUSAL ALLOWED</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="event in events.displayed">
+                                    <td st-ratio="25">
+                                        <button
+                                            type="button"
+                                            ng-click="events.remove(event)"
+                                            class="btn btn-sm btn-danger inTableDelete">
+                                            <i class="glyphicon glyphicon-remove-circle"></i>-
+                                        </button> <select
+                                        ng-model="event['@bean']"
+                                        class="tableSelect"
+                                        ng-options="x for x in tabs.FacilityEventTypes">
+                                    </select>
+                                    </td>
+                                    <td st-ratio="25"><input
+                                        class="tableInput"
+                                        type="date"
+                                        ng-model="event.effectiveDate"></td>
+                                    <td st-ratio="25"><input
+                                        class="tableInput"
+                                        type="text"
+                                        ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
+                                        ng-model="event.amount.value"></td>
+                                    <td st-ratio="25"><select
+                                        ng-model="event.refusalAllowed"
+                                        class="tableSelect"
+                                        ng-options="x for x in tabs.Boolean"></select></td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-					<section class="actionButtons">
-						<button type="button" ng-mousedown="events.add()" ng-mouseup="events.scroll()" 
-							class="btn btn-sm btn-success">
-							<i class="glyphicon glyphicon-plus"></i>+
-						</button>
-					</section>
-				</div>
-			</div>
+                        <section class="actionButtons">
+                            <button
+                                type="button"
+                                ng-mousedown="events.add()"
+                                ng-mouseup="events.scroll()"
+                                class="btn btn-sm btn-success">
+                                <i class="glyphicon glyphicon-plus"></i>+
+                            </button>
+                        </section>
+                    </div>
+                </div>
 
-			<div ng-controller="ContractsController as contracts"
-				ng-show="tabs.getActiveTab() == 'contracts'">
-				<table id="contracts" st-safe-src="contracts.data"
-					st-table="contracts.displayed" class="table"
-					ng-show="loans.selected">
-					<thead>
-						<tr>
-							<th st-ratio="8"><span st-sort="id.value">CONTRACT ID</span></th>
-							<th st-ratio="8"><span st-sort="accrual.startDate">START
-									DATE</span></th>
-							<th st-ratio="8"><span st-sort="accrual.endDate">END
-									DATE</span></th>
-							<th st-ratio="10"><span st-sort="paymentDate">PAYMENT
-									DATE</span></th>
-							<th st-ratio="13"><span
-								st-sort="accrual.accrualAmount.value">AMOUNT</span></th>
-							<th st-ratio="12"><span st-sort="accrual['@bean']">TYPE</span></th>
-							<th st-ratio="8"><span st-sort="accrual.index.value">INDEX</span></th>
-							<th st-ratio="8"><span st-sort="accrual.spread">SPREAD</span></th>
-							<th st-ratio="9"><span st-sort="accrual.allInRate">ALL
-									IN RATE</span></th>
-							<th st-ratio="8"><span st-sort="accrual.dayCount">DAY
-									COUNT</span></th>
-							<th st-ratio="8"><span
-								st-sort="accrual.accrualAmount.currency">CURRENCY</span></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-click="contracts.setSelected(contract)"
-							st-select-row="contract" st-select-mode="single"
-							ng-repeat="contract in contracts.displayed">
-							<td st-ratio="8">{{contract.id.value}}</td>
-							<td st-ratio="8">{{contract.accrual.startDate | date :
-								"M/d/yy"}}</td>
-							<td st-ratio="8">{{contract.accrual.endDate | date :
-								"M/d/yy"}}</td>
-							<td st-ratio="10">{{contract.paymentDate | date : "M/d/yy"}}</td>
-							<td st-ratio="13">{{contract.accrual.accrualAmount.value |
-								currency : "" : 2}}</td>
-							<td st-ratio="12">{{contract.accrual["@bean"]}}</td>
-							<td st-ratio="8">{{contract.accrual.index.value}}</td>
-							<td st-ratio="8">{{contract.accrual.spread * 100 | currency
-								: "" : 3}}</td>
-							<td st-ratio="9">{{contract.accrual.allInRate * 100 |
-								currency : "" : 6}}</td>
-							<td st-ratio="8">{{contract.accrual.dayCount}}</td>
-							<td st-ratio="8">{{contract.accrual.accrualAmount.currency}}</td>
-						</tr>
-					</tbody>
-				</table>
+                <div
+                    ng-controller="ContractsController as contracts"
+                    ng-show="tabs.getActiveTab() == 'contracts'">
+                    <table
+                        id="contracts"
+                        st-safe-src="contracts.data"
+                        st-table="contracts.displayed"
+                        class="table"
+                        ng-show="loans.selected">
+                        <thead>
+                            <tr>
+                                <th st-ratio="8"><span st-sort="id.value">CONTRACT ID</span></th>
+                                <th st-ratio="8"><span st-sort="accrual.startDate">START DATE</span></th>
+                                <th st-ratio="8"><span st-sort="accrual.endDate">END DATE</span></th>
+                                <th st-ratio="10"><span st-sort="paymentDate">PAYMENT DATE</span></th>
+                                <th st-ratio="13"><span st-sort="accrual.accrualAmount.value">AMOUNT</span></th>
+                                <th st-ratio="12"><span st-sort="accrual['@bean']">TYPE</span></th>
+                                <th st-ratio="8"><span st-sort="accrual.index.value">INDEX</span></th>
+                                <th st-ratio="8"><span st-sort="accrual.spread">SPREAD</span></th>
+                                <th st-ratio="9"><span st-sort="accrual.allInRate">ALL IN RATE</span></th>
+                                <th st-ratio="8"><span st-sort="accrual.dayCount">DAY COUNT</span></th>
+                                <th st-ratio="8"><span st-sort="accrual.accrualAmount.currency">CURRENCY</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                ng-click="contracts.setSelected(contract)"
+                                st-select-row="contract"
+                                st-select-mode="single"
+                                ng-repeat="contract in contracts.displayed">
+                                <td st-ratio="8">{{contract.id.value}}</td>
+                                <td st-ratio="8">{{contract.accrual.startDate | date : "M/d/yy"}}</td>
+                                <td st-ratio="8">{{contract.accrual.endDate | date : "M/d/yy"}}</td>
+                                <td st-ratio="10">{{contract.paymentDate | date : "M/d/yy"}}</td>
+                                <td st-ratio="13">{{contract.accrual.accrualAmount.value | currency : "" : 2}}</td>
+                                <td st-ratio="12">{{contract.accrual["@bean"]}}</td>
+                                <td st-ratio="8">{{contract.accrual.index.value}}</td>
+                                <td st-ratio="8">{{contract.accrual.spread * 100 | currency : "" : 3}}</td>
+                                <td st-ratio="9">{{contract.accrual.allInRate * 100 | currency : "" : 6}}</td>
+                                <td st-ratio="8">{{contract.accrual.dayCount}}</td>
+                                <td st-ratio="8">{{contract.accrual.accrualAmount.currency}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-				<section class="actionButtons">
-					<button type="button" ng-mousedown="contracts.add()" ng-mouseup="contracts.scroll()"
-						class="btn btn-sm btn-success">
-						<i class="glyphicon glyphicon-plus"></i>+
-					</button>
-					<button type="button" ng-click="contracts.remove()"
-						class="btn btn-sm btn-danger" ng-if="contracts.selected">
-						<i class="glyphicon glyphicon-remove-circle"></i>-
-					</button>
-				</section>
+                    <section class="actionButtons">
+                        <button
+                            type="button"
+                            ng-mousedown="contracts.add()"
+                            ng-mouseup="contracts.scroll()"
+                            class="btn btn-sm btn-success">
+                            <i class="glyphicon glyphicon-plus"></i>+
+                        </button>
+                        <button
+                            type="button"
+                            ng-click="contracts.remove()"
+                            class="btn btn-sm btn-danger"
+                            ng-if="contracts.selected">
+                            <i class="glyphicon glyphicon-remove-circle"></i>-
+                        </button>
+                    </section>
 
-				<div id="contractDetail" class="alignleft"
-					ng-if="contracts.selected">
-					<div class="edit">&#x270e;</div>
-					<label>Contract ID</label>
-					<input class="formInput" type="text"
-						ng-model="contracts.selected.id.value">
-					<label>Type</label>
-					<select ng-change="accrualTypeChange()"
-						ng-model="contracts.selected.accrual['@bean']"
-						ng-options="x for x in tabs.AccrualTypes">
-					</select>
-					<label>Currency</label>
-					<select
-						ng-model="contracts.selected.accrual.accrualAmount.currency"
-						ng-options="x for x in tabs.Currencies">				
-					</select> <br>
-					<label>Start Date</label>
-					<input class="formInput"
-						type="date" ng-model="contracts.selected.accrual.startDate">
-					<label>Index</label>
-					<select
-						ng-model="contracts.selected.accrual.index.value"
-						ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'"
-						ng-options="x for x in tabs.IborTerms">
-					</select>
-					<label>Payment Freq</label>
-					<select
-						ng-model="contracts.selected.accrual.paymentFrequency"
-						ng-options="x for x in tabs.PaymentFrequencies">
-					</select><br> 
-					<label>End Date</label> 
-					<input class="formInput"
-						   type="date" ng-model="contracts.selected.accrual.endDate">
-					<label>Spread</label> 
-					<input class="formInput" type="text"
-						ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-						ng-model="contracts.selected.accrual.spread"
-						ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'">
-					<label>Base Rate</label> 
-					<input class="formInput"
-						type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-						ng-model="contracts.selected.accrual.baseRate"
-						ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'"><br>
-					<label>Payment Date</label> 
-					<input class="formInput" type="date"
-						ng-model="contracts.selected.paymentDate"> 
-					<label>All In Rate</label> 
-					<input class="formInput" type="text"
-						ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-						ng-model="contracts.selected.accrual.allInRate"> 
-					<label>Pik Spread</label> 
-					<input class="formInput" type="text"
-						ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-						ng-model="contracts.selected.accrual.pikSpread"><br>
-					<label>Amount (M)</label> 
-					<input class="formInput"
-						type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-						ng-model="contracts.selected.accrual.accrualAmount.value">
-					<label>Day Count</label> 
-					<select
-						ng-model="contracts.selected.accrual.dayCount"
-						ng-options="x for x in tabs.DayCounts">
-					</select>					
-				</div>
+                    <div
+                        id="contractDetail"
+                        class="alignleft"
+                        ng-if="contracts.selected">
+                        <div class="edit">&#x270e;</div>
+                        <label>Contract ID</label> <input
+                            class="formInput"
+                            type="text"
+                            ng-model="contracts.selected.id.value"> <label>Type</label> <select
+                            ng-change="accrualTypeChange()"
+                            ng-model="contracts.selected.accrual['@bean']"
+                            ng-options="x for x in tabs.AccrualTypes">
+                        </select> <label>Currency</label> <select
+                            ng-model="contracts.selected.accrual.accrualAmount.currency"
+                            ng-options="x for x in tabs.Currencies">
+                        </select> <br> <label>Start Date</label> <input
+                            class="formInput"
+                            type="date"
+                            ng-model="contracts.selected.accrual.startDate"> <label>Index</label> <select
+                            ng-model="contracts.selected.accrual.index.value"
+                            ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'"
+                            ng-options="x for x in tabs.IborTerms">
+                        </select> <label>Payment Freq</label> <select
+                            ng-model="contracts.selected.accrual.paymentFrequency"
+                            ng-options="x for x in tabs.PaymentFrequencies">
+                        </select><br> <label>End Date</label> <input
+                            class="formInput"
+                            type="date"
+                            ng-model="contracts.selected.accrual.endDate"> <label>Spread</label> <input
+                            class="formInput"
+                            type="text"
+                            ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
+                            ng-model="contracts.selected.accrual.spread"
+                            ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'"> <label>Base
+                            Rate</label> <input
+                            class="formInput"
+                            type="text"
+                            ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
+                            ng-model="contracts.selected.accrual.baseRate"
+                            ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'"><br> <label>Payment
+                            Date</label> <input
+                            class="formInput"
+                            type="date"
+                            ng-model="contracts.selected.paymentDate"> <label>All In Rate</label> <input
+                            class="formInput"
+                            type="text"
+                            ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
+                            ng-model="contracts.selected.accrual.allInRate"> <label>Pik Spread</label> <input
+                            class="formInput"
+                            type="text"
+                            ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
+                            ng-model="contracts.selected.accrual.pikSpread"><br> <label>Amount (M)</label>
+                        <input
+                            class="formInput"
+                            type="text"
+                            ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
+                            ng-model="contracts.selected.accrual.accrualAmount.value"> <label>Day Count</label>
+                        <select
+                            ng-model="contracts.selected.accrual.dayCount"
+                            ng-options="x for x in tabs.DayCounts">
+                        </select>
+                    </div>
 
-				<div ng-controller="ContractEventsController as contractEvents"
-					ng-show="contracts.selected">
-					<div class="edit editTable">&#x270e;</div>
+                    <div
+                        ng-controller="ContractEventsController as contractEvents"
+                        ng-show="contracts.selected">
+                        <div class="edit editTable">&#x270e;</div>
 
-					<table id="editContractEvents" st-safe-src="contractEvents.data"
-						st-table="contractEvents.displayed" class="table">
-						<thead>
-							<tr>
-								<th st-ratio="20"><span st-sort="['@bean']">EVENT
-										TYPE</span></th>
-								<th st-ratio="20"><span st-sort="effectiveDate">EFFECTIVE
-										DATE</span></th>
-								<th st-ratio="20"><span st-sort="amount.value">AMOUNT</span></th>
-								<th st-ratio="20"><span st-sort="interestOnPaydown">PAYDOWN
-										INTEREST</span></th>
-								<th st-ratio="20"><span st-sort="price">PRICE</span></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="contractEvent in contractEvents.displayed">
-								<td st-ratio="20">
-									<button type="button"
-										ng-click="contractEvents.remove(contractEvent)"
-										class="btn btn-sm btn-danger inTableDelete">
-										<i class="glyphicon glyphicon-remove-circle"></i>-
-									</button> <select ng-model="contractEvent['@bean']"
-									class="tableSelect"
-									ng-options="x for x in tabs.ContractEventTypes">
-								</select>
-								</td>
-								<td st-ratio="20"><input class="tableInput" type="date"
-									ng-model="contractEvent.effectiveDate"></td>
-								<td st-ratio="20"><input class="tableInput"
-									type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-									ng-model="contractEvent.amount.value"></td>
-								<td st-ratio="20"><select
-									ng-model="contractEvent.interestOnPaydown"
-									class="tableSelect"
-									ng-options="x for x in tabs.Boolean"></select></td>
-								<td st-ratio="20"><input class="tableInput"
-									type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-									ng-model="contractEvent.price"></td>
-							</tr>
-						</tbody>
-					</table>
+                        <table
+                            id="editContractEvents"
+                            st-safe-src="contractEvents.data"
+                            st-table="contractEvents.displayed"
+                            class="table">
+                            <thead>
+                                <tr>
+                                    <th st-ratio="20"><span st-sort="['@bean']">EVENT TYPE</span></th>
+                                    <th st-ratio="20"><span st-sort="effectiveDate">EFFECTIVE DATE</span></th>
+                                    <th st-ratio="20"><span st-sort="amount.value">AMOUNT</span></th>
+                                    <th st-ratio="20"><span st-sort="interestOnPaydown">PAYDOWN INTEREST</span></th>
+                                    <th st-ratio="20"><span st-sort="price">PRICE</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="contractEvent in contractEvents.displayed">
+                                    <td st-ratio="20">
+                                        <button
+                                            type="button"
+                                            ng-click="contractEvents.remove(contractEvent)"
+                                            class="btn btn-sm btn-danger inTableDelete">
+                                            <i class="glyphicon glyphicon-remove-circle"></i>-
+                                        </button> <select
+                                        ng-model="contractEvent['@bean']"
+                                        class="tableSelect"
+                                        ng-options="x for x in tabs.ContractEventTypes"
+                                        ng-change="contractEvents.typeChange(contractEvent)">
+                                    </select>
+                                    </td>
+                                    <td st-ratio="20"><input
+                                        class="tableInput"
+                                        type="date"
+                                        ng-model="contractEvent.effectiveDate"></td>
+                                    <td st-ratio="20"><input
+                                        class="tableInput"
+                                        type="text"
+                                        ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
+                                        ng-model="contractEvent.amount.value"></td>
+                                    <td st-ratio="20"><select
+                                        ng-model="contractEvent.interestOnPaydown"
+                                        ng-disabled="contractEvent['@bean']!='Repayment'"
+                                        class="tableSelect"
+                                        ng-options="x for x in tabs.Boolean"></select></td>
+                                    <td st-ratio="20"><input
+                                        class="tableInput"
+                                        type="text"
+                                        ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
+                                        ng-model="contractEvent.price"
+                                        ng-disabled="contractEvent['@bean']!='Repayment'"></td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-					<section class="actionButtons">
-						<button type="button" ng-mousedown="contractEvents.add()" ng-mouseup="contractEvents.scroll()"
-							class="btn btn-sm btn-success">
-							<i class="glyphicon glyphicon-plus"></i>+
-						</button>
-					</section>
-				</div>
-			</div>
+                        <section class="actionButtons">
+                            <button
+                                type="button"
+                                ng-mousedown="contractEvents.add()"
+                                ng-mouseup="contractEvents.scroll()"
+                                class="btn btn-sm btn-success">
+                                <i class="glyphicon glyphicon-plus"></i>+
+                            </button>
+                        </section>
+                    </div>
+                </div>
 
-			<div ng-controller="TradesController as trades"
-				ng-show="tabs.getActiveTab() == 'trades'">
-				<table id="trades" st-safe-src="trades.data"
-					st-table="trades.displayed" class="table">
-					<thead>
-						<tr>
-							<th st-ratio="8"><span st-sort="info.id.value">TRADE
-									ID</span></th>
-							<th st-ratio="10"><span st-sort="buySell">BUY/SELL</span></th>
-							<th st-ratio="14"><span st-sort="buyer.value">BUYER</span></th>
-							<th st-ratio="14"><span st-sort="seller.value">SELLER</span></th>
-							<th st-ratio="14"><span st-sort="amount">AMOUNT</span></th>
-							<th st-ratio="10"><span st-sort="currency">CURRENCY</span></th>
-							<th st-ratio="14"><span st-sort="price">PRICE</span></th>
-							<th st-ratio="16"><span st-sort="expectedSettlementDate">EXPECTED
-									SETTLEMENT DATE</span></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-click="trades.setSelected(trade)" st-select-row="trade"
-							st-select-mode="single" ng-repeat="trade in trades.displayed">
-							<td st-ratio="8">{{trade.info.id.value}}</td>
-							<td st-ratio="10">{{trade.buySell}}</td>
-							<td st-ratio="14">{{trade.buyer.value}}</td>
-							<td st-ratio="14">{{trade.seller.value}}</td>
-							<td st-ratio="14">{{trade.amount | currency : "" : 2}}</td>
-							<td st-ratio="10">{{trade.currency}}</td>
-							<td st-ratio="14">{{trade.price | currency : "" : 2}}</td>
-							<td st-ratio="16">{{trade.expectedSettlementDate | date :
-								"M/d/yy" }}</td>
-						</tr>
-					</tbody>
-				</table>
+                <div
+                    ng-controller="TradesController as trades"
+                    ng-show="tabs.getActiveTab() == 'trades'">
+                    <table
+                        id="trades"
+                        st-safe-src="trades.data"
+                        st-table="trades.displayed"
+                        class="table">
+                        <thead>
+                            <tr>
+                                <th st-ratio="8"><span st-sort="info.id.value">TRADE ID</span></th>
+                                <th st-ratio="10"><span st-sort="buySell">BUY/SELL</span></th>
+                                <th st-ratio="14"><span st-sort="buyer.value">BUYER</span></th>
+                                <th st-ratio="14"><span st-sort="seller.value">SELLER</span></th>
+                                <th st-ratio="14"><span st-sort="amount">AMOUNT</span></th>
+                                <th st-ratio="10"><span st-sort="currency">CURRENCY</span></th>
+                                <th st-ratio="14"><span st-sort="price">PRICE</span></th>
+                                <th st-ratio="16"><span st-sort="expectedSettlementDate">EXPECTED SETTLEMENT
+                                        DATE</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                ng-click="trades.setSelected(trade)"
+                                st-select-row="trade"
+                                st-select-mode="single"
+                                ng-repeat="trade in trades.displayed">
+                                <td st-ratio="8">{{trade.info.id.value}}</td>
+                                <td st-ratio="10">{{trade.buySell}}</td>
+                                <td st-ratio="14">{{trade.buyer.value}}</td>
+                                <td st-ratio="14">{{trade.seller.value}}</td>
+                                <td st-ratio="14">{{trade.amount | currency : "" : 2}}</td>
+                                <td st-ratio="10">{{trade.currency}}</td>
+                                <td st-ratio="14">{{trade.price | currency : "" : 2}}</td>
+                                <td st-ratio="16">{{trade.expectedSettlementDate | date : "M/d/yy" }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-				<section class="actionButtons">
-					<button type="button" ng-mousedown="trades.add()" ng-mouseup="trades.scroll()"
-						class="btn btn-sm btn-success">
-						<i class="glyphicon glyphicon-plus"></i>+
-					</button>
-					<button type="button" ng-click="trades.remove()"
-						class="btn btn-sm btn-danger" ng-if="trades.selected">
-						<i class="glyphicon glyphicon-remove-circle"></i>-
-					</button>
-				</section>
+                    <section class="actionButtons">
+                        <button
+                            type="button"
+                            ng-mousedown="trades.add()"
+                            ng-mouseup="trades.scroll()"
+                            class="btn btn-sm btn-success">
+                            <i class="glyphicon glyphicon-plus"></i>+
+                        </button>
+                        <button
+                            type="button"
+                            ng-click="trades.remove()"
+                            class="btn btn-sm btn-danger"
+                            ng-if="trades.selected">
+                            <i class="glyphicon glyphicon-remove-circle"></i>-
+                        </button>
+                    </section>
 
-				<div id="tradeDetail" class="alignleft" ng-if="trades.selected">
-					<div class="edit">&#x270e;</div>
-					<br> <label>Trade ID</label> <input class="formInput"
-						type="text" ng-model="trades.selected.info.id.value"> <label>Association</label>
-					<select ng-model="trades.selected.association"
-						ng-options="x for x in tabs.Associations">
-					</select> <label class="labelLong">Trade Type</label> <select
-						ng-model="trades.selected.tradeType"
-						ng-options="x for x in tabs.TradeType">
-					</select><br> <label>Buy/Sell</label> <select
-						ng-model="trades.selected.buySell"
-						ng-options="x for x in tabs.BuySell">
-					</select> <label>Form Of Purchase</label> <select
-						ng-model="trades.selected.formOfPurchase"
-						ng-options="x for x in tabs.FormOfPurchase">
-					</select> <label class="labelLong">When Issued</label> <select
-						ng-model="trades.selected.whenIssuedFlag"
-						ng-options="x for x in tabs.Boolean">
-					</select><br> <label>Buyer</label> <input class="formInput" type="text"
-						ng-model="trades.selected.buyer.value" size="30"> <label>Documentation
-						Type</label> <select ng-model="trades.selected.documentationType"
-						ng-options="x for x in tabs.DocType">
-					</select> <label class="labelLong">Commitment Reduction</label> <select
-						ng-model="trades.selected.commitmentReductionCreditFlag"
-						ng-options="x for x in tabs.Boolean">
-					</select><br> <label>Seller</label> <input class="formInput"
-						type="text" ng-model="trades.selected.seller.value" size="30">
-					<label>DC Waived</label> <select
-						ng-model="trades.selected.delayedCompensationFlag"
-						ng-options="x for x in tabs.Boolean">
-					</select> <label class="labelLong">Accrual Settle Type</label> <select
-						ng-model="trades.selected.accrualSettlementType"
-						ng-options="x for x in tabs.AccrualSettlementTypes">
-					</select><br> <label>Amount</label> <input class="formInput"
-						type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-						ng-model="trades.selected.amount" size="30"> <label>Trade
-						Date</label> <input class="formInput" type="date"
-						ng-model="trades.selected.info.tradeDate"> <label
-						class="labelLong">Average Libor</label> <input
-						class="formInput" type="text"
-						ng-pattern="/^-?[0-9]+(\.{1}[0-9]*)?$/"
-						ng-model="trades.selected.averageLibor" size="30"><br>
-					<label>Currency</label> <select ng-model="trades.selected.currency"
-						ng-options="x for x in tabs.Currencies">
-					</select> <label>Exp Settle Date</label> <input class="formInput"
-						type="date" ng-model="trades.selected.expectedSettlementDate">
-					<label class="labelLong">Paydown Trade Date</label> <select
-						ng-model="trades.selected.paydownOnTradeDate"
-						ng-options="x for x in tabs.Boolean">
-					</select><br> <label>Price</label> <input class="formInput"
-						type="text" ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-						ng-model="trades.selected.price" size="30"> <label>Act
-						Settle Date</label> <input class="formInput" type="date"
-						ng-model="trades.selected.info.settlementDate"> <label
-						class="labelLong">Adjustment Trade Date</label> <select
-						ng-model="trades.selected.adjustmentOnTradeDate"
-						ng-options="x for x in tabs.Boolean">
-					</select>
-				</div>
-				<section class="actionButtons">
-					<button id="calculateButton" type="button"
-						ng-click="trades.calculateProceeds()"
-						class="btn btn-sm btn-success" ng-if="trades.selected">
-						<i class="fa fa-calculator"></i>
-					</button>
-				</section>
+                    <div
+                        id="tradeDetail"
+                        class="alignleft"
+                        ng-if="trades.selected">
+                        <div class="edit">&#x270e;</div>
+                        <br> <label>Trade ID</label> <input
+                            class="formInput"
+                            type="text"
+                            ng-model="trades.selected.info.id.value"> <label>Association</label> <select
+                            ng-model="trades.selected.association"
+                            ng-options="x for x in tabs.Associations">
+                        </select> <label class="labelLong">Trade Type</label> <select
+                            ng-model="trades.selected.tradeType"
+                            ng-options="x for x in tabs.TradeType">
+                        </select><br> <label>Buy/Sell</label> <select
+                            ng-model="trades.selected.buySell"
+                            ng-options="x for x in tabs.BuySell">
+                        </select> <label>Form Of Purchase</label> <select
+                            ng-model="trades.selected.formOfPurchase"
+                            ng-options="x for x in tabs.FormOfPurchase">
+                        </select> <label class="labelLong">When Issued</label> <select
+                            ng-model="trades.selected.whenIssuedFlag"
+                            ng-options="x for x in tabs.Boolean">
+                        </select><br> <label>Buyer</label> <input
+                            class="formInput"
+                            type="text"
+                            ng-model="trades.selected.buyer.value"
+                            size="30"> <label>Documentation Type</label> <select
+                            ng-model="trades.selected.documentationType"
+                            ng-options="x for x in tabs.DocType">
+                        </select> <label class="labelLong">Commitment Reduction</label> <select
+                            ng-model="trades.selected.commitmentReductionCreditFlag"
+                            ng-options="x for x in tabs.Boolean">
+                        </select><br> <label>Seller</label> <input
+                            class="formInput"
+                            type="text"
+                            ng-model="trades.selected.seller.value"
+                            size="30"> <label>DC Waived</label> <select
+                            ng-model="trades.selected.delayedCompensationFlag"
+                            ng-options="x for x in tabs.Boolean">
+                        </select> <label class="labelLong">Accrual Settle Type</label> <select
+                            ng-model="trades.selected.accrualSettlementType"
+                            ng-options="x for x in tabs.AccrualSettlementTypes">
+                        </select><br> <label>Amount</label> <input
+                            class="formInput"
+                            type="text"
+                            ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
+                            ng-model="trades.selected.amount"
+                            size="30"> <label>Trade Date</label> <input
+                            class="formInput"
+                            type="date"
+                            ng-model="trades.selected.info.tradeDate"> <label class="labelLong">Average
+                            Libor</label> <input
+                            class="formInput"
+                            type="text"
+                            ng-pattern="/^-?[0-9]+(\.{1}[0-9]*)?$/"
+                            ng-model="trades.selected.averageLibor"
+                            size="30"><br> <label>Currency</label> <select
+                            ng-model="trades.selected.currency"
+                            ng-options="x for x in tabs.Currencies">
+                        </select> <label>Exp Settle Date</label> <input
+                            class="formInput"
+                            type="date"
+                            ng-model="trades.selected.expectedSettlementDate"> <label class="labelLong">Paydown
+                            Trade Date</label> <select
+                            ng-model="trades.selected.paydownOnTradeDate"
+                            ng-options="x for x in tabs.Boolean">
+                        </select><br> <label>Price</label> <input
+                            class="formInput"
+                            type="text"
+                            ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
+                            ng-model="trades.selected.price"
+                            size="30"> <label>Act Settle Date</label> <input
+                            class="formInput"
+                            type="date"
+                            ng-model="trades.selected.info.settlementDate"> <label class="labelLong">Adjustment
+                            Trade Date</label> <select
+                            ng-model="trades.selected.adjustmentOnTradeDate"
+                            ng-options="x for x in tabs.Boolean">
+                        </select>
+                    </div>
+                    <section class="actionButtons">
+                        <button
+                            id="calculateButton"
+                            type="button"
+                            ng-click="trades.calculateProceeds()"
+                            class="btn btn-sm btn-success"
+                            ng-if="trades.selected">
+                            <i class="fa fa-calculator"></i>
+                        </button>
+                    </section>
 
-				<table id="tradeProceeds" class="table" ng-if="trades.selected">
-					<thead>
-						<tr>
-							<th st-ratio="17">COST OF FUNDED</th>
-							<th st-ratio="17">BENEFIT OF UNFUNDED</th>
-							<th st-ratio="16">DELAYED COMPENSATION</th>
-							<th st-ratio="16">COST OF CARRY</th>
-							<th st-ratio="17">ECONOMIC BENEFIT</th>
-							<th st-ratio="17">TOTAL REMITTANCE</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td st-ratio="17">{{trades.selected.tradeProceeds.costOfFunded.value
-								| currency : "" : 2}}</td>
-							<td st-ratio="17">{{trades.selected.tradeProceeds.benefitOfUnfunded.value
-								| currency : "" : 2}}</td>
-							<td st-ratio="16">{{trades.selected.tradeProceeds.delayedCompensation.value
-								| currency : "" : 2}}</td>
-							<td st-ratio="16">{{trades.selected.tradeProceeds.costOfCarry.value
-								| currency : "" : 2}}</td>
-							<td st-ratio="17">{{trades.selected.tradeProceeds.economicBenefit.value
-								| currency : "" : 2}}</td>
-							<td st-ratio="17">{{trades.selected.tradeProceeds.totalRemittance.value
-								| currency : "" : 2}}</td>
-						</tr>
-					</tbody>
-				</table>
-				<div id="displayError" ng-if="trades.error">{{trades.error}}</div>
-			</div>
+                    <table
+                        id="tradeProceeds"
+                        class="table"
+                        ng-if="trades.selected">
+                        <thead>
+                            <tr>
+                                <th st-ratio="17">COST OF FUNDED</th>
+                                <th st-ratio="17">BENEFIT OF UNFUNDED</th>
+                                <th st-ratio="16">DELAYED COMPENSATION</th>
+                                <th st-ratio="16">COST OF CARRY</th>
+                                <th st-ratio="17">ECONOMIC BENEFIT</th>
+                                <th st-ratio="17">TOTAL REMITTANCE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td st-ratio="17">{{trades.selected.tradeProceeds.costOfFunded.value | currency :
+                                    "" : 2}}</td>
+                                <td st-ratio="17">{{trades.selected.tradeProceeds.benefitOfUnfunded.value |
+                                    currency : "" : 2}}</td>
+                                <td st-ratio="16">{{trades.selected.tradeProceeds.delayedCompensation.value |
+                                    currency : "" : 2}}</td>
+                                <td st-ratio="16">{{trades.selected.tradeProceeds.costOfCarry.value | currency : ""
+                                    : 2}}</td>
+                                <td st-ratio="17">{{trades.selected.tradeProceeds.economicBenefit.value | currency
+                                    : "" : 2}}</td>
+                                <td st-ratio="17">{{trades.selected.tradeProceeds.totalRemittance.value | currency
+                                    : "" : 2}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div
+                        id="displayError"
+                        ng-if="trades.error">{{trades.error}}</div>
+                </div>
 
-			<div ng-controller="CashflowsController as cashflows"
-				ng-show="tabs.getActiveTab() == 'cash flows'">
-				<table id="cashflows" st-safe-src="cashflows.data"
-					st-table="cashflows.displayed" class="table">
-					<thead>
-						<tr>
-							<th st-ratio="11"><span st-sort="paymentDate">PAY
-									DATE</span></th>
-							<th st-ratio="11"><span st-sort="type">PAY TYPE</span></th>
-							<th st-ratio="11"><span st-sort="sourceType">SOURCE
-									TYPE</span></th>
-							<th st-ratio="11"><span st-sort="sourceId">SOURCE ID</span></th>
-							<th st-ratio="11"><span st-sort="payingCounterparty">PAYER</span></th>
-							<th st-ratio="11"><span st-sort="receivingCounterparty">RECEIVER</span></th>
-							<th st-ratio="11"><span st-sort="uncertain">UNCERTAIN</span></th>
-							<th st-ratio="12"><span st-sort="amount">AMOUNT</span></th>
-							<th st-ratio="11"><span st-sort="currency">CURRENCY</span></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-click="cashflows.setSelected(cashflow)"
-							st-select-row="cashflow" st-select-mode="single"
-							ng-repeat="cashflow in cashflows.displayed">
-							<td st-ratio="11">{{cashflow.paymentDate | date : "M/d/yy"}}</td>
-							<td st-ratio="11">{{cashflow.type}}</td>
-							<td st-ratio="11">{{cashflow.sourceType}}</td>
-							<td st-ratio="11">{{cashflow.sourceId}}</td>
-							<td st-ratio="11">{{cashflow.payingCounterparty}}</td>
-							<td st-ratio="11">{{cashflow.receivingCounterparty}}</td>
-							<td st-ratio="11">{{cashflow.uncertain}}</td>
-							<td st-ratio="12">{{cashflow.amount | currency : "" : 2}}</td>
-							<td st-ratio="11">{{cashflow.currency}}</td>
-						</tr>
-					</tbody>
-				</table>
-				<br>
-				<div id="displayFormula" ng-if="cashflows.selected.formula">
-					formula: <span class="selected">{{cashflows.selected.formula}}</span>
-				</div>
-				<table ng-show="cashflows.isAccrualSelected()" id="interestExplain"
-					st-safe-src="cashflows.selected.explains"
-					st-table="cashflows.selected.displayed" class="table">
-					<thead>
-						<tr>
-							<th st-ratio="12"><span st-sort="shareNotional">SHARE
-									NOT</span></th>
-							<th st-ratio="12"><span st-sort="startDate">START
-									DATE</span></th>
-							<th st-ratio="12"><span st-sort="endDate">END DATE</span></th>
-							<th st-ratio="12"><span st-sort="dayCount">DAY COUNT</span></th>
-							<th st-ratio="12"><span st-sort="days">DAYS</span></th>
-							<th st-ratio="12"><span st-sort="daysInYear">DIY</span></th>
-							<th st-ratio="12"><span st-sort="allInRate">RATE</span></th>
-							<th st-ratio="16"><span st-sort="shareAmount">SHARE
-									AMT</span></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="explain in cashflows.selected.displayed">
-							<td st-ratio="12">{{explain.shareNotional | number : 2}}</td>
-							<td st-ratio="12">{{explain.startDate | date : "M/d/yy"}}</td>
-							<td st-ratio="12">{{explain.endDate | date : "M/d/yy"}}</td>
-							<td st-ratio="12">{{explain.dayCount}}</td>
-							<td st-ratio="12">{{explain.days}}</td>
-							<td st-ratio="12">{{explain.daysInYear | number : 0}}</td>
-							<td st-ratio="12">{{explain.allInRate * 100.0 | number : 6}}</td>
-							<td st-ratio="16">{{explain.shareAmount | number : 2}}</td>
-						</tr>
-					</tbody>
-				</table>
-				<table ng-show="cashflows.isCostOfFundedSelected()"
-					id="costOfFundedExplain" st-safe-src="cashflows.selected.explains"
-					st-table="cashflows.selected.displayed" class="table">
-					<thead>
-						<tr>
-							<th st-ratio="25"><span st-sort="shareNotional">SHARE
-									NOT</span></th>
-							<th st-ratio="25"><span st-sort="price">PRICE</span></th>
-							<th st-ratio="25"><span st-sort="settPerPik">SETTLEMENT
-									PERIOD PIK</span></th>
-							<th st-ratio="25"><span st-sort="shareAmount">COST OF
-									FUNDED</span></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="explain in cashflows.selected.displayed">
-							<td st-ratio="25">{{explain.shareNotional | number : 2}}</td>
-							<td st-ratio="25">{{explain.price * 100.0 | number : 5}}</td>
-							<td st-ratio="25">{{explain.settPerPik | number : 2}}</td>
-							<td st-ratio="25">{{explain.shareAmount | number : 2}}</td>
-						</tr>
-					</tbody>
-				</table>
-				<table ng-show="cashflows.isBenefitOfUnfundedSelected()"
-					id="benefitOfUnfundedExplain"
-					st-safe-src="cashflows.selected.explains"
-					st-table="cashflows.selected.displayed" class="table">
-					<thead>
-						<tr>
-							<th st-ratio="33"><span st-sort="unfundedAmt">UNFUNDED
-									AMOUNT</span></th>
-							<th st-ratio="34"><span st-sort="price">PRICE</span></th>
-							<th st-ratio="33"><span st-sort="shareAmount">BENEFIT
-									OF UNFUNDED</span></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="explain in cashflows.selected.displayed">
-							<td st-ratio="33">{{explain.unfundedAmt | number : 2}}</td>
-							<td st-ratio="34">{{explain.price * 100.0 | number : 5}}</td>
-							<td st-ratio="33">{{explain.shareAmount | number : 2}}</td>
-						</tr>
-					</tbody>
-				</table>
-				<table ng-show="cashflows.isCostOfCarrySelected()"
-					id="costOfCarryExplain" st-safe-src="cashflows.selected.explains"
-					st-table="cashflows.selected.displayed" class="table">
-					<thead>
-						<tr>
-							<th st-ratio="15"><span st-sort="expSettPx">EXP SETT
-									PX</span></th>
-							<th st-ratio="14"><span st-sort="startDate">START
-									DATE</span></th>
-							<th st-ratio="14"><span st-sort="endDate">END DATE</span></th>
-							<th st-ratio="14"><span st-sort="days">DAYS</span></th>
-							<th st-ratio="14"><span st-sort="daysInYear">DIY</span></th>
-							<th st-ratio="14"><span st-sort="avgLibor">AVG LIBOR</span></th>
-							<th st-ratio="15"><span st-sort="shareAmount">SHARE
-									AMT</span></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="explain in cashflows.selected.displayed">
-							<td st-ratio="15">{{explain.expSettPx | number : 2}}</td>
-							<td st-ratio="14">{{explain.startDate | date : "M/d/yy"}}</td>
-							<td st-ratio="14">{{explain.endDate | date : "M/d/yy"}}</td>
-							<td st-ratio="14">{{explain.days}}</td>
-							<td st-ratio="14">{{explain.daysInYear | number : 0}}</td>
-							<td st-ratio="14">{{explain.avgLibor * 100.0 | number : 6}}</td>
-							<td st-ratio="15">{{explain.shareAmount | number : 2}}</td>
-						</tr>
-					</tbody>
-				</table>
-				<table ng-show="cashflows.isEconomicBenefitSelected()"
-					id="economicBenefitExplain"
-					st-safe-src="cashflows.selected.explains"
-					st-table="cashflows.selected.displayed" class="table">
-					<thead>
-						<tr>
-							<th st-ratio="20"><span st-sort="trdDtFunded">TRD DT
-									FUNDED</span></th>
-							<th st-ratio="20"><span st-sort="settDtFunded">SETT
-									DT FUNDED</span></th>
-							<th st-ratio="20"><span st-sort="trdDtRepay">TRD DT
-									REPAY</span></th>
-							<th st-ratio="20"><span st-sort="price">PRICE</span></th>
-							<th st-ratio="20"><span st-sort="shareAmount">ECON
-									BENEFIT</span></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="explain in cashflows.selected.displayed">
-							<td st-ratio="20">{{explain.trdDtFunded | number : 2}}</td>
-							<td st-ratio="20">{{explain.settDtFunded | number : 2}}</td>
-							<td st-ratio="20">{{explain.trdDtRepay | number : 2}}</td>
-							<td st-ratio="20">{{explain.price * 100.0 | number : 5}}</td>
-							<td st-ratio="20">{{explain.shareAmount | number : 2}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+                <div
+                    ng-controller="CashflowsController as cashflows"
+                    ng-show="tabs.getActiveTab() == 'cash flows'">
+                    <table
+                        id="cashflows"
+                        st-safe-src="cashflows.data"
+                        st-table="cashflows.displayed"
+                        class="table">
+                        <thead>
+                            <tr>
+                                <th st-ratio="11"><span st-sort="paymentDate">PAY DATE</span></th>
+                                <th st-ratio="11"><span st-sort="type">PAY TYPE</span></th>
+                                <th st-ratio="11"><span st-sort="sourceType">SOURCE TYPE</span></th>
+                                <th st-ratio="11"><span st-sort="sourceId">SOURCE ID</span></th>
+                                <th st-ratio="11"><span st-sort="payingCounterparty">PAYER</span></th>
+                                <th st-ratio="11"><span st-sort="receivingCounterparty">RECEIVER</span></th>
+                                <th st-ratio="11"><span st-sort="uncertain">UNCERTAIN</span></th>
+                                <th st-ratio="12"><span st-sort="amount">AMOUNT</span></th>
+                                <th st-ratio="11"><span st-sort="currency">CURRENCY</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                ng-click="cashflows.setSelected(cashflow)"
+                                st-select-row="cashflow"
+                                st-select-mode="single"
+                                ng-repeat="cashflow in cashflows.displayed">
+                                <td st-ratio="11">{{cashflow.paymentDate | date : "M/d/yy"}}</td>
+                                <td st-ratio="11">{{cashflow.type}}</td>
+                                <td st-ratio="11">{{cashflow.sourceType}}</td>
+                                <td st-ratio="11">{{cashflow.sourceId}}</td>
+                                <td st-ratio="11">{{cashflow.payingCounterparty}}</td>
+                                <td st-ratio="11">{{cashflow.receivingCounterparty}}</td>
+                                <td st-ratio="11">{{cashflow.uncertain}}</td>
+                                <td st-ratio="12">{{cashflow.amount | currency : "" : 2}}</td>
+                                <td st-ratio="11">{{cashflow.currency}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <div
+                        id="displayFormula"
+                        ng-if="cashflows.selected.formula">
+                        formula: <span class="selected">{{cashflows.selected.formula}}</span>
+                    </div>
+                    <table
+                        ng-show="cashflows.isAccrualSelected()"
+                        id="interestExplain"
+                        st-safe-src="cashflows.selected.explains"
+                        st-table="cashflows.selected.displayed"
+                        class="table">
+                        <thead>
+                            <tr>
+                                <th st-ratio="12"><span st-sort="shareNotional">SHARE NOT</span></th>
+                                <th st-ratio="12"><span st-sort="startDate">START DATE</span></th>
+                                <th st-ratio="12"><span st-sort="endDate">END DATE</span></th>
+                                <th st-ratio="12"><span st-sort="dayCount">DAY COUNT</span></th>
+                                <th st-ratio="12"><span st-sort="days">DAYS</span></th>
+                                <th st-ratio="12"><span st-sort="daysInYear">DIY</span></th>
+                                <th st-ratio="12"><span st-sort="allInRate">RATE</span></th>
+                                <th st-ratio="16"><span st-sort="shareAmount">SHARE AMT</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="explain in cashflows.selected.displayed">
+                                <td st-ratio="12">{{explain.shareNotional | number : 2}}</td>
+                                <td st-ratio="12">{{explain.startDate | date : "M/d/yy"}}</td>
+                                <td st-ratio="12">{{explain.endDate | date : "M/d/yy"}}</td>
+                                <td st-ratio="12">{{explain.dayCount}}</td>
+                                <td st-ratio="12">{{explain.days}}</td>
+                                <td st-ratio="12">{{explain.daysInYear | number : 0}}</td>
+                                <td st-ratio="12">{{explain.allInRate * 100.0 | number : 6}}</td>
+                                <td st-ratio="16">{{explain.shareAmount | number : 2}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table
+                        ng-show="cashflows.isCostOfFundedSelected()"
+                        id="costOfFundedExplain"
+                        st-safe-src="cashflows.selected.explains"
+                        st-table="cashflows.selected.displayed"
+                        class="table">
+                        <thead>
+                            <tr>
+                                <th st-ratio="25"><span st-sort="shareNotional">SHARE NOT</span></th>
+                                <th st-ratio="25"><span st-sort="price">PRICE</span></th>
+                                <th st-ratio="25"><span st-sort="settPerPik">SETTLEMENT PERIOD PIK</span></th>
+                                <th st-ratio="25"><span st-sort="shareAmount">COST OF FUNDED</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="explain in cashflows.selected.displayed">
+                                <td st-ratio="25">{{explain.shareNotional | number : 2}}</td>
+                                <td st-ratio="25">{{explain.price * 100.0 | number : 5}}</td>
+                                <td st-ratio="25">{{explain.settPerPik | number : 2}}</td>
+                                <td st-ratio="25">{{explain.shareAmount | number : 2}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table
+                        ng-show="cashflows.isBenefitOfUnfundedSelected()"
+                        id="benefitOfUnfundedExplain"
+                        st-safe-src="cashflows.selected.explains"
+                        st-table="cashflows.selected.displayed"
+                        class="table">
+                        <thead>
+                            <tr>
+                                <th st-ratio="33"><span st-sort="unfundedAmt">UNFUNDED AMOUNT</span></th>
+                                <th st-ratio="34"><span st-sort="price">PRICE</span></th>
+                                <th st-ratio="33"><span st-sort="shareAmount">BENEFIT OF UNFUNDED</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="explain in cashflows.selected.displayed">
+                                <td st-ratio="33">{{explain.unfundedAmt | number : 2}}</td>
+                                <td st-ratio="34">{{explain.price * 100.0 | number : 5}}</td>
+                                <td st-ratio="33">{{explain.shareAmount | number : 2}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table
+                        ng-show="cashflows.isCostOfCarrySelected()"
+                        id="costOfCarryExplain"
+                        st-safe-src="cashflows.selected.explains"
+                        st-table="cashflows.selected.displayed"
+                        class="table">
+                        <thead>
+                            <tr>
+                                <th st-ratio="15"><span st-sort="expSettPx">EXP SETT PX</span></th>
+                                <th st-ratio="14"><span st-sort="startDate">START DATE</span></th>
+                                <th st-ratio="14"><span st-sort="endDate">END DATE</span></th>
+                                <th st-ratio="14"><span st-sort="days">DAYS</span></th>
+                                <th st-ratio="14"><span st-sort="daysInYear">DIY</span></th>
+                                <th st-ratio="14"><span st-sort="avgLibor">AVG LIBOR</span></th>
+                                <th st-ratio="15"><span st-sort="shareAmount">SHARE AMT</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="explain in cashflows.selected.displayed">
+                                <td st-ratio="15">{{explain.expSettPx | number : 2}}</td>
+                                <td st-ratio="14">{{explain.startDate | date : "M/d/yy"}}</td>
+                                <td st-ratio="14">{{explain.endDate | date : "M/d/yy"}}</td>
+                                <td st-ratio="14">{{explain.days}}</td>
+                                <td st-ratio="14">{{explain.daysInYear | number : 0}}</td>
+                                <td st-ratio="14">{{explain.avgLibor * 100.0 | number : 6}}</td>
+                                <td st-ratio="15">{{explain.shareAmount | number : 2}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table
+                        ng-show="cashflows.isEconomicBenefitSelected()"
+                        id="economicBenefitExplain"
+                        st-safe-src="cashflows.selected.explains"
+                        st-table="cashflows.selected.displayed"
+                        class="table">
+                        <thead>
+                            <tr>
+                                <th st-ratio="20"><span st-sort="trdDtFunded">TRD DT FUNDED</span></th>
+                                <th st-ratio="20"><span st-sort="settDtFunded">SETT DT FUNDED</span></th>
+                                <th st-ratio="20"><span st-sort="trdDtRepay">TRD DT REPAY</span></th>
+                                <th st-ratio="20"><span st-sort="price">PRICE</span></th>
+                                <th st-ratio="20"><span st-sort="shareAmount">ECON BENEFIT</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="explain in cashflows.selected.displayed">
+                                <td st-ratio="20">{{explain.trdDtFunded | number : 2}}</td>
+                                <td st-ratio="20">{{explain.settDtFunded | number : 2}}</td>
+                                <td st-ratio="20">{{explain.trdDtRepay | number : 2}}</td>
+                                <td st-ratio="20">{{explain.price * 100.0 | number : 5}}</td>
+                                <td st-ratio="20">{{explain.shareAmount | number : 2}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-			<div ng-controller="TextModelController as textmodel"
-				ng-show="tabs.getActiveTab() == 'model'">
-				<div>
-					<button type="button" ng-click="textmodel.download()">
-						Download model to file:
-					</button>
-					<input class="formInput" type="text" ng-model="textmodel.modelfile">
-					<br> <input type="file" id="modelfile">
-					<button type="button" ng-click="textmodel.upload()">Upload file to model</button>
-				</div>
-				<textarea rows=25 ng-model="textmodel.prettymodel"
-					ng-focus="textmodel.refresh()" ng-blur="textmodel.update()">{{textmodel.prettymodel}}</textarea>
-			</div>
-		</div>
-	</div>
-</div>
+                <div
+                    ng-controller="TextModelController as textmodel"
+                    ng-show="tabs.getActiveTab() == 'model'">
+                    <div>
+                        <button
+                            type="button"
+                            ng-click="textmodel.download()">Download model to file:</button>
+                        <input
+                            class="formInput"
+                            type="text"
+                            ng-model="textmodel.modelfile"> <br> <input
+                            type="file"
+                            id="modelfile">
+                        <button
+                            type="button"
+                            ng-click="textmodel.upload()">Upload file to model</button>
+                    </div>
+                    <textarea
+                        rows=25
+                        ng-model="textmodel.prettymodel"
+                        ng-focus="textmodel.refresh()"
+                        ng-blur="textmodel.update()">{{textmodel.prettymodel}}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
