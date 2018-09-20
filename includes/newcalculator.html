@@ -73,6 +73,10 @@
 						ng-if="loans.selected" class="btn btn-sm btn-danger">
 						<i class="glyphicon glyphicon-remove-circle"></i>-
 					</button>
+					<button type="button" ng-mousedown="copy()" ng-mouseup="" 
+		                ng-if="loans.selected" class="btn btn-sm btn-success faIcon">
+			            <i class="fa fa-clone"></i>
+			        </button>
 				</section>
 
 				<div id="loanStaticInfo" class="alignleft" ng-if="loans.selected">
@@ -650,7 +654,7 @@
 					<br> <input type="file" id="modelfile">
 					<button type="button" ng-click="textmodel.upload()">Upload file to model</button>
 				</div>
-				<textarea rows=25 ng-model="textmodel.prettymodel"
+				<textarea rows="25" ng-model="textmodel.prettymodel"
 					ng-focus="textmodel.refresh()" ng-blur="textmodel.update()">{{textmodel.prettymodel}}</textarea>
 			</div>
 		</div>
