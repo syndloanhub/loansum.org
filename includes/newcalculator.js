@@ -106,7 +106,6 @@
     });
 
     events.remove = function(event) {
-      console.log("removing event");
       service.removeEvent(event);
     };
 
@@ -292,8 +291,6 @@
     }
 
     textmodel.download = function() {
-      console.log("Downloading model to: " + textmodel.modelfile);
-
       var blob = new Blob([ textmodel.prettymodel ], {
         type : "text/plain"
       });
@@ -315,8 +312,6 @@
     textmodel.upload = function() {
       var modelfile = document.getElementById("modelfile").files[0];
       var reader = new FileReader();
-
-      console.log("Uploading model from: " + modelfile);
 
       reader.onload = function(event) {
         textmodel.prettymodel = event.target.result;
@@ -406,19 +401,19 @@
 
     service.calculateProceeds = function() {
       var deferred = $q.defer();
-      var filter = [ {
-      loan : service.selectedLoan.id,
-      trades : [ service.selectedTrade.info.id ]
-      } ];
-      var model = ui2model(filterui(service.uimodel, filter));
-      var trade = model[0];
+      var loan = angular.copy(service.selectedLoan);
 
-      $http.post("loansum-service/loansum/calculateProceeds", trade).then(function(response) {
+      loan.trades = [ service.selectedTrade ];
+
+      var trades = ui2model([ loan ]);
+
+      $http.post("loansum-service/loansum/calculateProceeds", trades[0]).then(function(response) {
         var proceeds = response.data;
+
         if (proceeds.message) {
           deferred.reject(proceeds.message);
         } else {
-          service.selectedTrade.tradeProceeds = new TradeProceeds(proceeds);
+          service.selectedTrade.tradeProceeds = new TradeProceeds(service.selectedTrade, proceeds);
           deferred.resolve(service.selectedTrade.tradeProceeds);
         }
       });
@@ -432,26 +427,21 @@
       if (!service.selectedLoan) {
         deferred.resolve([]);
       } else {
-        var filter = [ {
-        loan : service.selectedLoan.id,
-        trades : []
-        } ];
+        var trades = ui2model([ service.selectedLoan ]);
+        var tradeList = new LoanTradeList(trades);
 
-        for ( var i in service.selectedLoan.trades) {
-          filter[0].trades.push(service.selectedLoan.trades[i].info.id);
-        }
-
-        var model = ui2model(filterui(service.uimodel, filter));
-
-        $http.post("loansum-service/loansum/calculateCashflows", model[0]).then(function(response) {
+        $http.post("loansum-service/loansum/calculateCashflows", tradeList).then(function(response) {
           var cashflows = response.data;
+
           if (cashflows.message) {
             deferred.reject(cashflows.message);
           } else {
             var cashFlows = [];
+
             for ( var i in cashflows.cashFlows) {
               cashFlows.push(new TradeCashflow(cashflows.cashFlows[i]));
             }
+
             service.selectedLoan.cashflows = cashFlows;
             deferred.resolve(cashFlows);
           }
@@ -480,7 +470,6 @@
     };
 
     service.refresh = function() {
-      console.log("uimodel=" + pretty(service.uimodel));
       service.model = ui2model(service.uimodel)
       service.prettymodel = pretty(service.model);
     };
@@ -763,16 +752,38 @@
       }
     }
 
-    function TradeProceeds(proceeds) {
-      for ( var i in proceeds.cashFlows) {
-        var s = proceeds.cashFlows[i].cashFlow.forecastValue;
+    function LoanTradeList(trades) {
+      this["@bean"] = modelPackage + "LoanTradeList";
+      this.trades = trades;
+    }
 
-        if (currencyAmountRegex.test(s)) {
-          var type = proceeds.cashFlows[i].annotation.type;
-          type = type.substring(0, 1).toLowerCase() + type.substring(1);
-          this[type] = new CurrencyAmount(s.substring(0, 3), parseFloat(s.substring(4)));
+    function TradeProceeds(trade, proceeds) {
+      var total = 0.0;
+      var cpty = trade.buyer;
+
+      if (trade.buySell == "Sell") {
+        cpty = trade.seller;
+      }
+
+      for ( var i in proceeds.cashFlows) {
+        var cashFlow = new TradeCashflow(proceeds.cashFlows[i]);
+        var type = cashFlow.type;
+        var currency = cashFlow.currency;
+        var amount = cashFlow.amount;
+
+        if (cashFlow.receivingCounterparty != cpty.value)
+          amount = -amount;
+
+        total = total + amount;
+
+        if (this[type]) {
+          this[type] = new CurrencyAmount(currency, amount + this[type].value);
+        } else {
+          this[type] = new CurrencyAmount(currency, amount);
         }
       }
+
+      this.total = total;
     }
 
     function TradeCashflow(cashflow) {
@@ -931,7 +942,6 @@
             ui[i] = "com.opengamma.strata.basics.index.IborIndex";
           }
         } else if (i == "@bean" && !ui[i].startsWith(modelPackage)) {
-          console.log("changing @bean from " + ui[i] + " to " + modelPackage + ui[i]);
           ui[i] = modelPackage + ui[i];
         }
       }
@@ -1022,37 +1032,6 @@
       }
 
       return trades;
-    }
-
-    // Given a loan/trade filter, return filtered UI model object. This
-    // is generally a precursor to converting filtered UI model into loansum
-    // model prior to posting to the server to get proceeds, cash flows, etc.
-
-    function filterui(uimodel, filter) {
-      var loans = [];
-
-      for ( var i in uimodel) {
-        for ( var j in filter) {
-          if (uimodel[i].id.value == filter[j].loan.value) {
-            var loan = angular.copy(uimodel[i]);
-            var trades = []
-
-            loans.push(loan);
-
-            for ( var k in loan.trades) {
-              for ( var l in filter[j].trades) {
-                if (loan.trades[k].info.id.value == filter[j].trades[l].value) {
-                  trades.push(loan.trades[k]);
-                }
-              }
-            }
-
-            loans.trades = trades;
-          }
-        }
-      }
-
-      return loans;
     }
   }
 

@@ -419,7 +419,7 @@
                                 <td st-ratio="14">{{trade.seller.value}}</td>
                                 <td st-ratio="14">{{trade.amount | currency : "" : 2}}</td>
                                 <td st-ratio="10">{{trade.currency}}</td>
-                                <td st-ratio="14">{{trade.price | currency : "" : 2}}</td>
+                                <td st-ratio="14">{{trade.price * 100.0 | currency : "" : 5}}</td>
                                 <td st-ratio="16">{{trade.expectedSettlementDate | date : "M/d/yy" }}</td>
                             </tr>
                         </tbody>
@@ -550,17 +550,17 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td st-ratio="17">{{trades.selected.tradeProceeds.costOfFunded.value | currency :
+                                <td st-ratio="17">{{trades.selected.tradeProceeds.CostOfFunded.value | currency :
                                     "" : 2}}</td>
-                                <td st-ratio="17">{{trades.selected.tradeProceeds.benefitOfUnfunded.value |
+                                <td st-ratio="17">{{trades.selected.tradeProceeds.BenefitOfUnfunded.value |
                                     currency : "" : 2}}</td>
-                                <td st-ratio="16">{{trades.selected.tradeProceeds.delayedCompensation.value |
+                                <td st-ratio="16">{{trades.selected.tradeProceeds.DelayedCompensation.value |
                                     currency : "" : 2}}</td>
-                                <td st-ratio="16">{{trades.selected.tradeProceeds.costOfCarry.value | currency : ""
+                                <td st-ratio="16">{{trades.selected.tradeProceeds.CostOfCarry.value | currency : ""
                                     : 2}}</td>
-                                <td st-ratio="17">{{trades.selected.tradeProceeds.economicBenefit.value | currency
+                                <td st-ratio="17">{{trades.selected.tradeProceeds.EconomicBenefit.value | currency
                                     : "" : 2}}</td>
-                                <td st-ratio="17">{{trades.selected.tradeProceeds.totalRemittance.value | currency
+                                <td st-ratio="17">{{trades.selected.tradeProceeds.total | currency
                                     : "" : 2}}</td>
                             </tr>
                         </tbody>
