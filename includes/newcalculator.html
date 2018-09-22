@@ -82,17 +82,23 @@
                         <button
                             type="button"
                             ng-mousedown="loans.add()"
-                            ng-mouseup="loans.scroll()"
-                            class="btn btn-sm btn-success">
+                            ng-mouseup="loans.scroll()">
                             <i class="glyphicon glyphicon-plus"></i>+
                         </button>
                         <button
                             type="button"
                             ng-click="loans.remove()"
-                            ng-if="loans.selected"
-                            class="btn btn-sm btn-danger">
+                            ng-if="loans.selected">
                             <i class="glyphicon glyphicon-remove-circle"></i>-
                         </button>
+                        <button 
+                            type="button" 
+                            ng-mousedown="loans.copy()"
+                            ng-mouseup="" 
+		                    ng-if="loans.selected"
+		                    class="faIcon">
+			                <i class="fa fa-clone"></i>
+			            </button>
                     </section>
 
                     <div
@@ -154,7 +160,7 @@
                                         <button
                                             type="button"
                                             ng-click="events.remove(event)"
-                                            class="btn btn-sm btn-danger inTableDelete">
+                                            class="inTableDelete">
                                             <i class="glyphicon glyphicon-remove-circle"></i>-
                                         </button> <select
                                         ng-model="event['@bean']"
@@ -183,8 +189,7 @@
                             <button
                                 type="button"
                                 ng-mousedown="events.add()"
-                                ng-mouseup="events.scroll()"
-                                class="btn btn-sm btn-success">
+                                ng-mouseup="events.scroll()">
                                 <i class="glyphicon glyphicon-plus"></i>+
                             </button>
                         </section>
@@ -240,14 +245,12 @@
                         <button
                             type="button"
                             ng-mousedown="contracts.add()"
-                            ng-mouseup="contracts.scroll()"
-                            class="btn btn-sm btn-success">
+                            ng-mouseup="contracts.scroll()">
                             <i class="glyphicon glyphicon-plus"></i>+
                         </button>
                         <button
                             type="button"
                             ng-click="contracts.remove()"
-                            class="btn btn-sm btn-danger"
                             ng-if="contracts.selected">
                             <i class="glyphicon glyphicon-remove-circle"></i>-
                         </button>
@@ -341,7 +344,7 @@
                                         <button
                                             type="button"
                                             ng-click="contractEvents.remove(contractEvent)"
-                                            class="btn btn-sm btn-danger inTableDelete">
+                                            class="inTableDelete">
                                             <i class="glyphicon glyphicon-remove-circle"></i>-
                                         </button> <select
                                         ng-model="contractEvent['@bean']"
@@ -378,8 +381,7 @@
                             <button
                                 type="button"
                                 ng-mousedown="contractEvents.add()"
-                                ng-mouseup="contractEvents.scroll()"
-                                class="btn btn-sm btn-success">
+                                ng-mouseup="contractEvents.scroll()">
                                 <i class="glyphicon glyphicon-plus"></i>+
                             </button>
                         </section>
@@ -429,14 +431,12 @@
                         <button
                             type="button"
                             ng-mousedown="trades.add()"
-                            ng-mouseup="trades.scroll()"
-                            class="btn btn-sm btn-success">
+                            ng-mouseup="trades.scroll()">
                             <i class="glyphicon glyphicon-plus"></i>+
                         </button>
                         <button
                             type="button"
                             ng-click="trades.remove()"
-                            class="btn btn-sm btn-danger"
                             ng-if="trades.selected">
                             <i class="glyphicon glyphicon-remove-circle"></i>-
                         </button>
@@ -528,7 +528,6 @@
                             id="calculateButton"
                             type="button"
                             ng-click="trades.calculateProceeds()"
-                            class="btn btn-sm btn-success"
                             ng-if="trades.selected">
                             <i class="fa fa-calculator"></i>
                         </button>
@@ -745,26 +744,30 @@
                         </tbody>
                     </table>
                 </div>
-
                 <div
                     ng-controller="TextModelController as textmodel"
                     ng-show="tabs.getActiveTab() == 'model'">
-                    <div>
-                        <button
+                    <div id="fileOptions">                         
+                       <button 
                             type="button"
-                            ng-click="textmodel.download()">Download model to file:</button>
+                            ng-click="textmodel.download()">
+		                     <i class="fa fa-download"></i> Download model to file
+			            </button>
                         <input
                             class="formInput"
                             type="text"
-                            ng-model="textmodel.modelfile"> <br> <input
-                            type="file"
-                            id="modelfile">
+                            ng-model="textmodel.modelfile"> <br> 
                         <button
                             type="button"
-                            ng-click="textmodel.upload()">Upload file to model</button>
+                            ng-click="textmodel.upload()">
+                            <i class="fa fa-upload"></i> Upload file to model 
+                        </button>
+                        <input
+                            type="file"
+                            id="modelfile"> <br>            
                     </div>
                     <textarea
-                        rows=25
+                        rows="25"
                         ng-model="textmodel.prettymodel"
                         ng-focus="textmodel.refresh()"
                         ng-blur="textmodel.update()">{{textmodel.prettymodel}}</textarea>

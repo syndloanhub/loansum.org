@@ -520,7 +520,22 @@ input.formInput {
 	padding-left:4px;
 	width: 200px;
 }
-
+#fileOptions{
+    float: right;
+    text-align: left;
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+#fileOptions button{
+    width:160px;
+    text-align: left;
+    margin-right: 5px;
+}
+#fileOptions input{
+    width:200px;
+    color:#fff;
+    background-color:#292929;
+}
 input.formInput:focus {
 	outline-color: transparent;
     outline-style: none;
@@ -598,7 +613,8 @@ option {
 	}
 input.ng-invalid {
 	color:#D51B1B;
-}	
+}
+
 
 /* for desktop*/
 @-webkit-keyframes fadeEffect {
