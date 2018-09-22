@@ -80,8 +80,7 @@
     };
 
     loans.add = function() {
-      var loan = service.addNewLoan();
-      loans.setSelected(loan);
+      service.addNewLoan();
     };
 
     loans.scroll = function() {
@@ -156,8 +155,7 @@
     };
 
     contracts.add = function() {
-      var contract = service.addNewContract();
-      contracts.setSelected(contract);
+      service.addNewContract();
     };
 
     contracts.scroll = function() {
@@ -248,8 +246,7 @@
     };
 
     trades.add = function() {
-      var trade = service.addNewTrade();
-      trades.setSelected(trade);
+      service.addNewTrade();
     };
 
     trades.scroll = function() {
@@ -540,8 +537,6 @@
       service.uimodel.push(newLoan);
       service.model = ui2model(service.uimodel);
       service.prettymodel = pretty(service.model);
-
-      return newLoan;
     };
 
     service.getEvents = function() {
@@ -621,8 +616,6 @@
       service.selectedLoan.contracts.push(newContract);
       service.model = ui2model(service.uimodel);
       service.prettymodel = pretty(service.model);
-
-      return newContract;
     };
 
     service.removeContractEvent = function(event) {
@@ -718,8 +711,6 @@
       service.selectedLoan.trades.push(newTrade);
       service.model = ui2model(service.uimodel);
       service.prettymodel = pretty(service.model);
-
-      return newTrade;
     };
 
     // Private content.
