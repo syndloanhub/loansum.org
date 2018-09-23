@@ -204,7 +204,7 @@ button {
 	background-color: #292929;
 	color:green;
 	border-radius: none;
-	border: none;	
+	border: none;
 }
 #calculateButton {
 	padding-left:7px;
@@ -305,14 +305,14 @@ table {
 	min-width: 863px;
 }
 #cashflows {
-	height: 162px;
+	height: 150px;
 }
 #eventTable {	
 	height: 65px;
 	margin-top: 10px;
 }
 #events {	
-	height: 75px;
+	height: 77px;
 	margin-top: 10px;
 }
 #calculateTradeTable {		
