@@ -5,8 +5,9 @@
       .controller('LoansController', LoansController).controller('ContractsController', ContractsController)
       .controller("TradesController", TradesController).controller("EventsController", EventsController)
       .controller("ContractEventsController", ContractEventsController)
-      .controller("TextModelController", TextModelController).controller("CashflowsController", CashflowsController)
-      .service("CalculatorService", CalculatorService).directive('stRatio', stRatio);
+      .controller("CommitmentController", CommitmentController).controller("TextModelController", TextModelController)
+      .controller("CashflowsController", CashflowsController).service("CalculatorService", CalculatorService)
+      .directive('stRatio', stRatio);
 
   TabController.$inject = [ '$scope' ];
 
@@ -197,6 +198,21 @@
         delete event.price;
       }
     }
+  }
+
+  CommitmentController.$inject = [ 'CalculatorService', '$scope' ];
+
+  function CommitmentController(CalculatorService, $scope) {
+    var commitment = this;
+    var service = CalculatorService;
+
+    $scope.$on('calculator:tabSelected', function(event, tab) {
+      if (tab == 'commitment') {
+        service.calculateCommitment().then(function(data) {
+          commitment.data = data.commitment;
+        });
+      }
+    });
   }
 
   TradesController.$inject = [ 'CalculatorService', '$scope' ];
@@ -394,6 +410,32 @@
       service.model = JSON.parse(data);
       service.prettymodel = JSON.stringify(service.model, undefined, 2);
       service.uimodel = model2ui(service.model);
+    };
+
+    service.calculateCommitment = function() {
+      var deferred = $q.defer();
+      var loan = angular.copy(service.selectedLoan);
+
+      loan.trades = [ service.selectedTrade ];
+
+      var trades = ui2model([ loan ]);
+
+      loan = new Facility(trades[0].product);
+
+      $http.post("loansum-service/loansum/calculateCommitment", loan).then(function(response) {
+        var commitment = response.data;
+
+        if (commitment.message) {
+          deferred.reject(commitment.message);
+        } else {
+          for (var i = 0; i < commitment.commitment.length; i++) {
+            commitment.commitment[i].effectiveDate = parseDate(commitment.commitment[i].effectiveDate);
+          }
+          deferred.resolve(commitment);
+        }
+      });
+
+      return deferred.promise;
     };
 
     service.calculateProceeds = function() {
@@ -746,6 +788,14 @@
     function LoanTradeList(trades) {
       this["@bean"] = modelPackage + "LoanTradeList";
       this.trades = trades;
+    }
+
+    function Facility(product) {
+      this['@bean'] = modelPackage + 'Facility';
+
+      for ( var k in product) {
+        this[k] = product[k];
+      }
     }
 
     function TradeProceeds(trade, proceeds) {
