@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta
+    charset="UTF-8"
+    http-equiv="X-UA-Compatible"
+    content="IE=edge"
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+    name="description"
+    content=" ">
+<title>loansum</title>
+<link
+    href="loansum.css"
+    rel="stylesheet">
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="calculator.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="jquery.scrollintoview.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.11/smart-table.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $('#introductionButton').click(function() {
+      $('#introduction').slideToggle(500);
+      $('#calculator').slideUp(0);
+      $('#tagline').hide(0);
+    });
+    $('#calculatorButton').click(function() {
+      $('#calculator').slideToggle(500);
+      $('#introduction').slideUp(0);
+      $('#tagline').hide(0);
+    });
+  });
+
+  function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
+    }
+  }
+</script>
+</head>
+
+<body ng-app='LoansumApp'>
+
+    <main> <a href="index.html"><img
+        id="logo"
+        src="images/loansumLogo.png"
+        width="125px"></a>
+
+    <nav
+        class="topnav"
+        id="myTopnav">
+        <a
+            class="icon"
+            href="javascript:void(0);"
+            onclick="myFunction()"> <i class="fa fa-bars"></i><br>
+        </a> <a
+            id="introductionButton"
+            href="#">Introduction</a> <a
+            id="calculatorButton"
+            href="#">Loan Calculator</a> <a href="#">Community</a> <a
+            href="https://github.com/syndloanhub/loansum"
+            title="GitHub"><span><i class="fa fa-github fa-fw"></i> GitHub</span></a>
+    </nav>
+
+    <div
+        id="introduction"
+        ng-include="'introduction.html'"></div>
+
+    <div
+        id="calculator"
+        ng-include="'calculator.html'"></div>
+
+    <div id="tagline">
+        welcome to <span id="taglineLS">loansum</span>
+    </div>
+
+    </main>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('CalculatorApp', [ 'smart-table' ]).controller('TabController', TabController)
+  angular.module('LoansumApp', [ 'smart-table' ]).controller('TabController', TabController)
       .controller('LoansController', LoansController).controller('ContractsController', ContractsController)
       .controller("TradesController", TradesController).controller("EventsController", EventsController)
       .controller("ContractEventsController", ContractEventsController)
@@ -395,7 +395,7 @@
       if (service.uimodel != undefined) {
         deferred.resolve(service.uimodel);
       } else {
-        $http.get("includes/model.json").then(function(response) {
+        $http.get("model.json").then(function(response) {
           service.model = response.data;
           service.prettymodel = pretty(service.model);
           service.uimodel = model2ui(service.model);
