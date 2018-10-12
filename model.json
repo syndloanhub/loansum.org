@@ -6682,6 +6682,136 @@
 				"fees": [],
 				"events": []
 			}
+		},
+		{
+			"@bean": "com.syndloanhub.loansum.product.facility.LoanTrade",
+			"buySell": "Buy",
+			"buyer": "cpty~CLO Investors",
+			"seller": "cpty~Bank",
+			"amount": "496201.28",
+			"currency": "USD",
+			"price": "1.0018",
+			"expectedSettlementDate": "2018-08-16",
+			"delayedCompensationFlag": true,
+			"association": "LSTA",
+			"formOfPurchase": "Assignment",
+			"documentationType": "Par",
+			"tradeType": "Secondary",
+			"whenIssuedFlag": false,
+			"commitmentReductionCreditFlag": false,
+			"paydownOnTradeDate": false,
+			"adjustmentOnTradeDate": true,
+			"accrualSettlementType": "SettledWithoutAccrued",
+			"averageLibor": "0.020635",
+			"info": {
+				"id": "trade~34951",
+				"tradeDate": "2018-07-08",
+				"settlementDate": "2018-08-17",
+				"attributes": {
+					
+				}
+			},
+			"product": {
+				"id": "lid~CBM TL",
+				"borrower": "cpty~CBM",
+				"agent": "cpty~Ortland",
+				"facilityType": "Term",
+				"identifiers": [],
+				"originalCommitmentAmount": "USD 2469894397.01",
+				"startDate": "2017-11-27",
+				"maturityDate": "2022-09-10",
+				"contracts": [
+					{
+						"id": "contract~5",
+						"accrual": {
+							"@bean": "com.syndloanhub.loansum.product.facility.FloatingRateAccrual",
+							"startDate": "2018-07-30",
+							"endDate": "2018-08-31",
+							"allInRate": "0.0532675",
+							"pikSpread": 0,
+							"accrualAmount": "USD 2463688632.19",
+							"dayCount": "Act/360",
+							"paymentFrequency": "P1M",
+							"index": {
+								"@type": "com.opengamma.strata.basics.index.IborIndex",
+								"value": "USD-LIBOR-1M"
+							},
+							"spread": "0.0325",
+							"baseRate": "0.0207675"
+						},
+						"paymentDate": "2018-08-31",
+						"events": []
+					},
+					{
+						"id": "contract~6",
+						"accrual": {
+							"@bean": "com.syndloanhub.loansum.product.facility.FloatingRateAccrual",
+							"startDate": "2018-08-31",
+							"endDate": "2018-09-28",
+							"allInRate": "0.0532588",
+							"pikSpread": 0,
+							"accrualAmount": "USD 2463688632.19",
+							"dayCount": "Act/360",
+							"paymentFrequency": "P1M",
+							"index": {
+								"@type": "com.opengamma.strata.basics.index.IborIndex",
+								"value": "USD-LIBOR-1M"
+							},
+							"spread": "0.0325",
+							"baseRate": "0.0207588"
+						},
+						"paymentDate": "2018-09-28",
+						"events": [
+							{
+								"@bean": "com.syndloanhub.loansum.product.facility.Repayment",
+								"effectiveDate": "2018-09-28",
+								"amount": "USD 6205764.82",
+								"interestOnPaydown": false,
+								"price": 1
+							}
+						]
+					},
+					{
+						"id": "contract~7",
+						"accrual": {
+							"@bean": "com.syndloanhub.loansum.product.facility.FloatingRateAccrual",
+							"startDate": "2018-09-28",
+							"endDate": "2018-10-31",
+							"allInRate": "0.0549219",
+							"pikSpread": 0,
+							"accrualAmount": "USD 2457482867.37",
+							"dayCount": "Act/360",
+							"paymentFrequency": "P1M",
+							"index": {
+								"@type": "com.opengamma.strata.basics.index.IborIndex",
+								"value": "USD-LIBOR-1M"
+							},
+							"spread": "0.0325",
+							"baseRate": "0.0224219"
+						},
+						"paymentDate": "2018-10-31",
+						"events": [
+							{
+								"@bean": "com.syndloanhub.loansum.product.facility.Repayment",
+								"effectiveDate": "2018-10-02",
+								"amount": "USD 2457482867.37",
+								"interestOnPaydown": true,
+								"price": 1
+							}
+						]
+					}
+				],
+				"fees": [],
+				"events": [
+					{
+						"@bean": "com.syndloanhub.loansum.product.facility.CommitmentAdjustment",
+						"effectiveDate": "2018-07-30",
+						"amount": "USD -6205764.82",
+						"pik": false,
+						"refusalAllowed": true
+					}
+				]
+			}
 		}
 	]
 }
