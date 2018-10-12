@@ -84,6 +84,10 @@
       service.addNewLoan();
     };
 
+    loans.copy = function() {
+      service.copyLoan();
+    };
+
     loans.scroll = function() {
       var index = loans.displayed.indexOf(loans.data[(loans.data.length) - 1]) + 1;
       // $("#loans tr:eq("+index+")").scrollintoview();
@@ -157,6 +161,10 @@
 
     contracts.add = function() {
       service.addNewContract();
+    };
+
+    contracts.copy = function() {
+      service.copyContract();
     };
 
     contracts.scroll = function() {
@@ -263,6 +271,10 @@
 
     trades.add = function() {
       service.addNewTrade();
+    };
+
+    trades.copy = function() {
+      service.copyTrade();
     };
 
     trades.scroll = function() {
@@ -513,6 +525,14 @@
       service.prettymodel = pretty(service.model);
     };
 
+    service.copyLoan = function() {
+      var copy = angular.copy(service.selectedLoan);
+      copy.isSelected = false;
+      service.uimodel.push(copy);
+      service.model = ui2model(service.uimodel);
+      service.prettymodel = pretty(service.model);
+    }
+
     service.addNewLoan = function() {
       var tid = Math.floor(Math.random() * (100000 - 10000)) + 10000;
       var start = new Date();
@@ -632,6 +652,14 @@
       }
     };
 
+    service.copyContract = function() {
+      var copy = angular.copy(service.selectedContract);
+      copy.isSelected = false;
+      service.selectedLoan.contracts.push(copy);
+      service.model = ui2model(service.uimodel);
+      service.prettymodel = pretty(service.model);
+    }
+
     service.addNewContract = function() {
       var cid = Math.floor(Math.random() * (100000 - 10000)) + 10000;
       var start = new Date();
@@ -718,6 +746,14 @@
         }
       }
     };
+
+    service.copyTrade = function() {
+      var copy = angular.copy(service.selectedTrade);
+      copy.isSelected = false;
+      service.selectedLoan.trades.push(copy);
+      service.model = ui2model(service.uimodel);
+      service.prettymodel = pretty(service.model);
+    }
 
     service.addNewTrade = function() {
       var tid = Math.floor(Math.random() * (100000 - 10000)) + 10000;
