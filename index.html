@@ -18,10 +18,14 @@
 
 <body ng-app="LoansumApp">
 
-    <main> <a href="index.html"><img
-        id="logo"
-        src="images/loansumLogo.png"
-        width="125px"></a>
+    <main> 
+        <a href="index.html">
+            <img
+                id="logo"
+                src="images/loansumLogo.png"
+                width="125px"
+            >
+        </a>
 
     <nav
         class="topnav"
@@ -29,12 +33,24 @@
         <a
             class="icon"
             href="javascript:void(0);"
-            onclick="myFunction()"> <i class="fa fa-bars"></i><br>
-        </a> <a
+            onclick="myFunction()"> 
+                <i class="fa fa-bars">
+                </i>
+                <br>
+        </a> 
+        <a
             id="introductionButton"
-            href="#">Introduction</a> <a
+            href="#">Introduction
+        </a>
+         <a
+            id="demosButton"
+            href="#">Demos
+        </a> 
+        <a
             id="calculatorButton"
-            href="#">Loan Calculator</a> <a href="#">Community</a> <a
+            href="#">Loan Calculator
+        </a>
+        <a href="#">Community</a> <a
             href="https://github.com/syndloanhub/loansum"
             title="GitHub"><span><i class="fa fa-github fa-fw"></i> GitHub</span></a>
     </nav>
@@ -42,6 +58,10 @@
     <div
         id="introduction"
         ng-include="'introduction.html'"></div>
+ 
+    <div
+        id="demos"
+        ng-include="'demos.html'"></div>
 
     <div
         id="calculator"
@@ -62,13 +82,21 @@
     <script>
         $(document).ready(function() {
             $('#introductionButton').click(function() {
-            $('#introduction').slideToggle(500);
-            $('#calculator').slideUp(0);
-            $('#tagline').hide(0);
+                $('#introduction').slideToggle(500);
+                $('#calculator').slideUp(0);
+                $('#demos').slideUp(0);
+                $('#tagline').hide(0);
+            });
+            $('#demosButton').click(function() {
+                $('#demos').slideToggle(500);
+                $('#introduction').slideUp(0);
+                $('#calculator').slideUp(0);
+                $('#tagline').hide(0);
             });
         $('#calculatorButton').click(function() {
             $('#calculator').slideToggle(500);
             $('#introduction').slideUp(0);
+            $('#demos').slideUp(0);
             $('#tagline').hide(0);
             });
         });

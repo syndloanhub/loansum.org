@@ -19,7 +19,7 @@
             <li ng-class="{ active: tabs.getActiveTab() == 'cash flows' }"><a
                 href
                 ng-click="tabs.setActiveTab('cash flows')">cash flows</a></li>
-            <li ng-class="{ active: getActiveTab() == 'model' }"><a
+            <li ng-class="{ active: tabs.getActiveTab() == 'model' }"><a
                 href
                 ng-click="tabs.setActiveTab('model')">model</a></li>
         </ul>
@@ -96,20 +96,19 @@
                         type="button"
                         ng-mousedown="loans.add()"
                         ng-mouseup="loans.scroll()">
-                        <i class="glyphicon glyphicon-plus"></i>+
+                        +
                     </button>
                     <button
                         type="button"
                         ng-click="loans.remove()"
                         ng-if="loans.selected">
-                        <i class="glyphicon glyphicon-remove-circle"></i>-
+                        -
                     </button>
                     <button
                         type="button"
                         ng-mousedown="loans.copy()"
                         ng-mouseup="loans.scroll()"
-                        ng-if="loans.selected"
-                        class="faIcon">
+                        ng-if="loans.selected">
                         <i class="fa fa-clone"></i>
                     </button>
                 </section>
@@ -182,7 +181,7 @@
                                         type="button"
                                         ng-click="events.remove(event)"
                                         class="inTableDelete">
-                                        <i class="glyphicon glyphicon-remove-circle"></i>-
+                                        -
                                     </button> <select
                                     ng-model="event['@bean']"
                                     class="tableSelect"
@@ -211,7 +210,7 @@
                             type="button"
                             ng-mousedown="events.add()"
                             ng-mouseup="events.scroll()">
-                            <i class="glyphicon glyphicon-plus"></i>+
+                            +
                         </button>
                     </section>
                 </div>
@@ -224,8 +223,8 @@
                     id="contracts"
                     st-safe-src="contracts.data"
                     st-table="contracts.displayed"
-                    class="table"
-                    ng-show="loans.selected">
+                    class="table">
+                  <!--  ng-show="loans.selected">-->
                     <thead>
                         <tr>
                             <th
@@ -289,20 +288,19 @@
                         type="button"
                         ng-mousedown="contracts.add()"
                         ng-mouseup="contracts.scroll()">
-                        <i class="glyphicon glyphicon-plus"></i>+
+                        +
                     </button>
                     <button
                         type="button"
                         ng-click="contracts.remove()"
                         ng-if="contracts.selected">
-                        <i class="glyphicon glyphicon-remove-circle"></i>-
+                        -
                     </button>
                     <button
                         type="button"
                         ng-mousedown="contracts.copy()"
                         ng-mouseup="contracts.scroll()"
-                        ng-if="contracts.selected"
-                        class="faIcon">
+                        ng-if="contracts.selected">
                         <i class="fa fa-clone"></i>
                     </button>
                 </section>
@@ -404,7 +402,7 @@
                                         type="button"
                                         ng-click="contractEvents.remove(contractEvent)"
                                         class="inTableDelete">
-                                        <i class="glyphicon glyphicon-remove-circle"></i>-
+                                        -
                                     </button> <select
                                     ng-model="contractEvent['@bean']"
                                     class="tableSelect"
@@ -441,7 +439,7 @@
                             type="button"
                             ng-mousedown="contractEvents.add()"
                             ng-mouseup="contractEvents.scroll()">
-                            <i class="glyphicon glyphicon-plus"></i>+
+                            +
                         </button>
                     </section>
                 </div>
@@ -535,20 +533,19 @@
                         type="button"
                         ng-mousedown="trades.add()"
                         ng-mouseup="trades.scroll()">
-                        <i class="glyphicon glyphicon-plus"></i>+
+                        +
                     </button>
                     <button
                         type="button"
                         ng-click="trades.remove()"
                         ng-if="trades.selected">
-                        <i class="glyphicon glyphicon-remove-circle"></i>-
+                        -
                     </button>
                     <button
                         type="button"
                         ng-mousedown="trades.copy()"
                         ng-mouseup="trades.scroll()"
-                        ng-if="trades.selected"
-                        class="faIcon">
+                        ng-if="trades.selected">
                         <i class="fa fa-clone"></i>
                     </button>
                 </section>
@@ -636,7 +633,6 @@
                 </div>
                 <section class="actionButtons">
                     <button
-                        id="calculateButton"
                         type="button"
                         ng-click="trades.calculateProceeds()"
                         ng-if="trades.selected">
