@@ -63,8 +63,8 @@ textArea{
 }
 
 ::-webkit-scrollbar {
-	width: 4px;
-	height: 4px;
+	width: 5px;
+	height: 5px;
 }
 ::-webkit-scrollbar-track {
 	background-color: #000;
@@ -93,15 +93,21 @@ main{
 }		
 		
 #logo{
+	/*
 	padding-left:10%;
 	padding-top:8vh;
+	*/
+	padding-left:5%;
+	padding-top:4vh;
 }
 
 .topnav {
     position: relative;
     float: right;
-    padding-top:9.4vh;
-    padding-right:10%;
+    /* padding-top:9.4vh;
+    padding-right:10%; */
+    padding-top:5.4vh;
+    padding-right:5%;
 }
 .topnav a {
     float: left;
@@ -196,7 +202,8 @@ h1{
 /*end for mobile and tablet*/
 
 button {
-	background-color: #292929;
+	/* background-color: #292929; */
+	background: transparent;
 	color:green;
 	border-radius: none;
 	border: none;
@@ -234,7 +241,8 @@ textarea {
 	margin-left:auto;
 	margin-right:auto;
 	margin-top:30px;
-    height: 80vh; 
+    /* height: 80vh; */
+    height: 84vh;
 	padding:20px;
 	text-align: center;	
 	background-color: rgba(0,0,0,.6); 
@@ -297,6 +305,12 @@ table {
 	border: 1px solid green;
 	min-width: 863px;
 }
+.onerow {
+	height: 45px;
+}
+#loans {
+	height: 208px;
+}
 #cashflows {
 	height: 150px;
 }
@@ -306,7 +320,7 @@ table {
 }
 #events {	
 	height: 77px;
-	margin-top: 10px;
+	margin-top: 20px;
 }
 #calculateTradeTable {		
 	margin-top: 20px;
@@ -382,8 +396,8 @@ th {
 td { 
 	border-left: 0px;
 	border-right: 0px;
-	border-bottom: 1px solid #000;
-	background-color: #292929;
+	/* border-bottom: 1px solid #000;
+	background-color: #292929; */
 }
 		
 thead {
@@ -445,7 +459,7 @@ ul.nav-tabs li.active a {
 	border-style: solid;
 	border-width: 1px;
 	border-color: green;
-	font-size: 12px;
+	font-size: 10px;
 	color:green;
 	min-width: 863px;
 	}	
@@ -474,7 +488,6 @@ label {
     display: inline-block;
     width:120px;
     text-align: left;
-	letter-spacing:-1px;
 }
 .labelLong {	
 	width: 130px;
@@ -483,11 +496,14 @@ input.formInput {
     box-sizing: border-box;	
 	margin-bottom: 5px;	
 	margin-right: 10px;
-	background-color:#292929;
+	background: transparent;
+	/* background-color:#292929; */
+	
 	border: none;
 	color: gold;
 	padding-left:4px;
 	width: 200px;
+	font-size: 10px;
 }
 #fileOptions{
     float: right;
@@ -503,7 +519,8 @@ input.formInput {
 #fileOptions input{
     width:200px;
     color:#fff;
-    background-color:#292929;
+    /*background-color:#292929; */
+    background: transparent;
 }
 input.formInput:focus {
 	outline-color: transparent;
@@ -517,21 +534,25 @@ input.tableInput {
 	padding:0;
 	border:none;
 	margin: 0;
-	background-color:#292929;
+	/* background-color:#292929;*/
+	background: transparent;
 	color:gold;
+	font-size: 10px;
 }
 .selected, tr.st-selected input, tr.st-selected select {
 	color:white;
 }
 
 select {
-	background-color:#292929;
+	/* background-color:#292929; */
+	background: transparent;
 	margin-right: 10px;
 	color:gold;
 	border:none;
 	width:200px;
 	padding-left:1px;
 	margin-bottom: 5px;
+	font-size: 10px;
 }
 
 select:focus {

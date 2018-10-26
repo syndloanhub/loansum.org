@@ -117,34 +117,33 @@
                     id="loanStaticInfo"
                     class="alignleft"
                     ng-if="loans.selected">
-                    <div class="edit">&#x270e;</div>
-                    <label>Loan Id</label> <input
+                    <label>LOAN ID</label> <input
                         class="formInput"
                         type="text"
                         ng-model="loans.selected.id.value"
-                        size="30"> <label>Facility Type</label> <select
+                        size="30"> <label>FACILITY TYPE</label> <select
                         ng-model="loans.selected.facilityType"
                         ng-options="x for x in tabs.FacilityTypes">
-                    </select> <label>Start Date</label> <input
+                    </select> <label>START DATE</label> <input
                         class="formInput"
                         type="date"
-                        ng-model="loans.selected.startDate"> <br> <label>Borrower</label> <input
+                        ng-model="loans.selected.startDate"> <br> <label>BORROWER</label> <input
                         class="formInput"
                         type="text"
                         ng-model="loans.selected.borrower.value"
-                        size="30"> <label>Orig Commitment</label> <input
+                        size="30"> <label>ORIG COMMITMENT</label> <input
                         class="formInput"
                         type="text"
                         ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
                         ng-model="loans.selected.originalCommitmentAmount.value"
-                        size="30"> <label>Maturity Date</label> <input
+                        size="30"> <label>MATURITY DATE</label> <input
                         class="formInput"
                         type="date"
-                        ng-model="loans.selected.maturityDate"><br> <label>Agent</label> <input
+                        ng-model="loans.selected.maturityDate"><br> <label>AGENT</label> <input
                         class="formInput"
                         type="text"
                         ng-model="loans.selected.agent.value"
-                        size="30"> <label>Currency</label> <select
+                        size="30"> <label>CURRENCY</label> <select
                         ng-model="loans.selected.originalCommitmentAmount.currency"
                         ng-options="x for x in tabs.Currencies"></select>
                 </div>
@@ -152,7 +151,6 @@
                 <div
                     ng-controller="EventsController as events"
                     ng-show="loans.selected">
-                    <div class="edit editTable">&#x270e;</div>
                     <table
                         id="events"
                         st-safe-src="events.data"
@@ -642,7 +640,7 @@
 
                 <table
                     id="tradeProceeds"
-                    class="table"
+                    class="table onerow"
                     ng-if="trades.selected">
                     <thead>
                         <tr>
