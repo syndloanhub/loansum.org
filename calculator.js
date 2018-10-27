@@ -88,6 +88,17 @@
       service.copyLoan();
     };
 
+    loans.clear = function() {
+      if (loans.selected) {
+        loans.selected.isSelected = false;
+        loans.setSelected(loans.selected);
+      }
+
+      service.clear();
+      loans.data = service.uimodel;
+      $scope.$broadcast("calculator:modelUpdated", service.uimodel);
+    };
+
     loans.scroll = function() {
       var index = loans.displayed.indexOf(loans.data[(loans.data.length) - 1]) + 1;
       // $("#loans tr:eq("+index+")").scrollintoview();
@@ -214,8 +225,14 @@
     var commitment = this;
     var service = CalculatorService;
 
+    $scope.$on('calculator:loanSelected', function(event, loan) {
+      if (!loan.isSelected) {
+        delete commitment.data;
+      }
+    });
+
     $scope.$on('calculator:tabSelected', function(event, tab) {
-      if (tab == 'commitment') {
+      if (tab == 'commitment' && service.getSelectedLoan()) {
         service.calculateCommitment().then(function(data) {
           commitment.data = data.commitment;
         });
@@ -353,9 +370,17 @@
     var cashflows = this;
     var service = CalculatorService;
 
+    $scope.$on('calculator:loanSelected', function(event, loan) {
+      if (!loan.isSelected) {
+        delete cashflows.selected;
+        delete cashflows.data;
+      }
+    });
+
     $scope.$on('calculator:tabSelected', function(event, tab) {
       if (tab == 'cash flows') {
         service.calculateCashflows().then(function(data) {
+          delete cashflows.selected;
           cashflows.data = data;
         });
       }
@@ -522,6 +547,12 @@
 
     service.refresh = function() {
       service.model = ui2model(service.uimodel)
+      service.prettymodel = pretty(service.model);
+    };
+
+    service.clear = function() {
+      service.uimodel = []
+      service.model = []
       service.prettymodel = pretty(service.model);
     };
 

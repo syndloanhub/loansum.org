@@ -317,6 +317,9 @@ table {
 #cashflows {
 	max-height: 300px;
 }
+#interestExplain {
+	max-height: 110px;
+}
 #eventTable {	
 	height: 65px;
 	margin-top: 10px;
