@@ -294,17 +294,14 @@ table {
 	box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    align-items: stretch;	
-}
-
-.table {	
-	box-sizing: border-box;
-	width:100%;
+    align-items: stretch;
+    width:100%;
 	margin:auto;
 	border: 1px solid green;
 	min-width: 863px;
-    min-height: 47px;
+    min-height: 47px;	
 }
+
 #loans {
 	max-height: /*198px;*/196px;
 }
@@ -327,6 +324,9 @@ table {
 #events {	
 	max-height: 77px;
 	margin-top: 20px;
+}
+#tradeProceeds{
+    margin-top: 20px;
 }
 #calculateTradeTable {		
 	margin-top: 20px;
