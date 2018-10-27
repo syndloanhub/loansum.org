@@ -95,15 +95,11 @@
                     <button
                         type="button"
                         ng-mousedown="loans.add()"
-                        ng-mouseup="loans.scroll()">
-                        +
-                    </button>
+                        ng-mouseup="loans.scroll()">+</button>
                     <button
                         type="button"
                         ng-click="loans.remove()"
-                        ng-if="loans.selected">
-                        -
-                    </button>
+                        ng-if="loans.selected">-</button>
                     <button
                         type="button"
                         ng-mousedown="loans.copy()"
@@ -178,9 +174,7 @@
                                     <button
                                         type="button"
                                         ng-click="events.remove(event)"
-                                        class="inTableDelete">
-                                        -
-                                    </button> <select
+                                        class="inTableDelete">-</button> <select
                                     ng-model="event['@bean']"
                                     class="tableSelect"
                                     ng-options="x for x in tabs.FacilityEventTypes">
@@ -207,9 +201,7 @@
                         <button
                             type="button"
                             ng-mousedown="events.add()"
-                            ng-mouseup="events.scroll()">
-                            +
-                        </button>
+                            ng-mouseup="events.scroll()">+</button>
                     </section>
                 </div>
             </div>
@@ -222,42 +214,36 @@
                     st-safe-src="contracts.data"
                     st-table="contracts.displayed"
                     class="table">
-                  <!--  ng-show="loans.selected">-->
+                    <!--  ng-show="loans.selected">-->
                     <thead>
                         <tr>
                             <th
-                                st-ratio="8"
+                                st-ratio="11"
                                 st-sort="id.value">CONTRACT ID</th>
                             <th
-                                st-ratio="8"
+                                st-ratio="11"
                                 st-sort="accrual.startDate">START DATE</th>
                             <th
-                                st-ratio="8"
+                                st-ratio="11"
                                 st-sort="accrual.endDate">END DATE</th>
                             <th
-                                st-ratio="10"
+                                st-ratio="11"
                                 st-sort="paymentDate">PAYMENT DATE</th>
                             <th
-                                st-ratio="13"
+                                st-ratio="12"
                                 st-sort="accrual.accrualAmount.value">AMOUNT</th>
                             <th
-                                st-ratio="12"
-                                st-sort="accrual['@bean']">TYPE</th>
-                            <th
-                                st-ratio="8"
+                                st-ratio="11"
                                 st-sort="accrual.index.value">INDEX</th>
                             <th
-                                st-ratio="8"
+                                st-ratio="11"
                                 st-sort="accrual.spread">SPREAD</th>
                             <th
-                                st-ratio="9"
+                                st-ratio="11"
                                 st-sort="accrual.allInRate">ALL IN RATE</th>
                             <th
-                                st-ratio="8"
+                                st-ratio="11"
                                 st-sort="accrual.dayCount">DAY COUNT</th>
-                            <th
-                                st-ratio="8"
-                                st-sort="accrual.accrualAmount.currency">CURRENCY</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -266,17 +252,15 @@
                             st-select-row="contract"
                             st-select-mode="single"
                             ng-repeat="contract in contracts.displayed">
-                            <td st-ratio="8">{{contract.id.value}}</td>
-                            <td st-ratio="8">{{contract.accrual.startDate | date : "M/d/yy"}}</td>
-                            <td st-ratio="8">{{contract.accrual.endDate | date : "M/d/yy"}}</td>
-                            <td st-ratio="10">{{contract.paymentDate | date : "M/d/yy"}}</td>
-                            <td st-ratio="13">{{contract.accrual.accrualAmount.value | currency : "" : 2}}</td>
-                            <td st-ratio="12">{{contract.accrual["@bean"]}}</td>
-                            <td st-ratio="8">{{contract.accrual.index.value}}</td>
-                            <td st-ratio="8">{{contract.accrual.spread * 100 | currency : "" : 3}}</td>
-                            <td st-ratio="9">{{contract.accrual.allInRate * 100 | currency : "" : 6}}</td>
-                            <td st-ratio="8">{{contract.accrual.dayCount}}</td>
-                            <td st-ratio="8">{{contract.accrual.accrualAmount.currency}}</td>
+                            <td st-ratio="11">{{contract.id.value}}</td>
+                            <td st-ratio="11">{{contract.accrual.startDate | date : "M/d/yy"}}</td>
+                            <td st-ratio="11">{{contract.accrual.endDate | date : "M/d/yy"}}</td>
+                            <td st-ratio="11">{{contract.paymentDate | date : "M/d/yy"}}</td>
+                            <td st-ratio="12">{{contract.accrual.accrualAmount.value | currency : "" : 2}}</td>
+                            <td st-ratio="11">{{contract.accrual.index.value}}</td>
+                            <td st-ratio="11">{{contract.accrual.spread * 100 | currency : "" : 3}}</td>
+                            <td st-ratio="11">{{contract.accrual.allInRate * 100 | currency : "" : 6}}</td>
+                            <td st-ratio="11">{{contract.accrual.dayCount}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -285,15 +269,11 @@
                     <button
                         type="button"
                         ng-mousedown="contracts.add()"
-                        ng-mouseup="contracts.scroll()">
-                        +
-                    </button>
+                        ng-mouseup="contracts.scroll()">+</button>
                     <button
                         type="button"
                         ng-click="contracts.remove()"
-                        ng-if="contracts.selected">
-                        -
-                    </button>
+                        ng-if="contracts.selected">-</button>
                     <button
                         type="button"
                         ng-mousedown="contracts.copy()"
@@ -307,58 +287,57 @@
                     id="contractDetail"
                     class="alignleft"
                     ng-if="contracts.selected">
-                    <div class="edit">&#x270e;</div>
-                    <label>Contract ID</label> <input
+                    <label>CONTRACT ID</label> <input
                         class="formInput"
                         type="text"
-                        ng-model="contracts.selected.id.value"> <label>Type</label> <select
+                        ng-model="contracts.selected.id.value"> <label>TYPE</label> <select
                         ng-change="accrualTypeChange()"
                         ng-model="contracts.selected.accrual['@bean']"
                         ng-options="x for x in tabs.AccrualTypes">
-                    </select> <label>Currency</label> <select
+                    </select> <label>CURRENCY</label> <select
                         ng-model="contracts.selected.accrual.accrualAmount.currency"
                         ng-options="x for x in tabs.Currencies">
-                    </select> <br> <label>Start Date</label> <input
+                    </select> <br> <label>START DATE</label> <input
                         class="formInput"
                         type="date"
-                        ng-model="contracts.selected.accrual.startDate"> <label>Index</label> <select
+                        ng-model="contracts.selected.accrual.startDate"> <label>INDEX</label> <select
                         ng-model="contracts.selected.accrual.index.value"
                         ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'"
                         ng-options="x for x in tabs.IborTerms">
-                    </select> <label>Payment Freq</label> <select
+                    </select> <label>PAYMEMT FREQ</label> <select
                         ng-model="contracts.selected.accrual.paymentFrequency"
                         ng-options="x for x in tabs.PaymentFrequencies">
-                    </select><br> <label>End Date</label> <input
+                    </select><br> <label>END DATE</label> <input
                         class="formInput"
                         type="date"
-                        ng-model="contracts.selected.accrual.endDate"> <label>Spread</label> <input
+                        ng-model="contracts.selected.accrual.endDate"> <label>SPREAD</label> <input
                         class="formInput"
                         type="text"
                         ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
                         ng-model="contracts.selected.accrual.spread"
-                        ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'"> <label>Base
-                        Rate</label> <input
+                        ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'"> <label>BASE
+                        RATE</label> <input
                         class="formInput"
                         type="text"
                         ng-pattern="/^-?[0-9]+(\.{1}[0-9]*)?$/"
                         ng-model="contracts.selected.accrual.baseRate"
-                        ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'"><br> <label>Payment
-                        Date</label> <input
+                        ng-disabled="contracts.selected.accrual['@bean']=='FixedRateAccrual'"><br> <label>PAYMENT
+                        DATE</label> <input
                         class="formInput"
                         type="date"
-                        ng-model="contracts.selected.paymentDate"> <label>All In Rate</label> <input
+                        ng-model="contracts.selected.paymentDate"> <label>ALL IN RATE</label> <input
                         class="formInput"
                         type="text"
                         ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-                        ng-model="contracts.selected.accrual.allInRate"> <label>Pik Spread</label> <input
+                        ng-model="contracts.selected.accrual.allInRate"> <label>PIK SPREAD</label> <input
                         class="formInput"
                         type="text"
                         ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-                        ng-model="contracts.selected.accrual.pikSpread"><br> <label>Amount (M)</label> <input
+                        ng-model="contracts.selected.accrual.pikSpread"><br> <label>AMOUNT</label> <input
                         class="formInput"
                         type="text"
                         ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
-                        ng-model="contracts.selected.accrual.accrualAmount.value"> <label>Day Count</label> <select
+                        ng-model="contracts.selected.accrual.accrualAmount.value"> <label>DAY COUNT</label> <select
                         ng-model="contracts.selected.accrual.dayCount"
                         ng-options="x for x in tabs.DayCounts">
                     </select>
@@ -367,7 +346,6 @@
                 <div
                     ng-controller="ContractEventsController as contractEvents"
                     ng-show="contracts.selected">
-                    <div class="edit editTable">&#x270e;</div>
 
                     <table
                         id="editContractEvents"
@@ -399,9 +377,7 @@
                                     <button
                                         type="button"
                                         ng-click="contractEvents.remove(contractEvent)"
-                                        class="inTableDelete">
-                                        -
-                                    </button> <select
+                                        class="inTableDelete">-</button> <select
                                     ng-model="contractEvent['@bean']"
                                     class="tableSelect"
                                     ng-options="x for x in tabs.ContractEventTypes"
@@ -436,9 +412,7 @@
                         <button
                             type="button"
                             ng-mousedown="contractEvents.add()"
-                            ng-mouseup="contractEvents.scroll()">
-                            +
-                        </button>
+                            ng-mouseup="contractEvents.scroll()">+</button>
                     </section>
                 </div>
             </div>
@@ -505,7 +479,7 @@
                                 st-sort="price">PRICE</th>
                             <th
                                 st-ratio="16"
-                                st-sort="expectedSettlementDate">EXPECTED SETTLEMENT DATE</th>
+                                st-sort="expectedSettlementDate">EXPECTED SETTLEMENT DT</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -530,15 +504,11 @@
                     <button
                         type="button"
                         ng-mousedown="trades.add()"
-                        ng-mouseup="trades.scroll()">
-                        +
-                    </button>
+                        ng-mouseup="trades.scroll()">+</button>
                     <button
                         type="button"
                         ng-click="trades.remove()"
-                        ng-if="trades.selected">
-                        -
-                    </button>
+                        ng-if="trades.selected">-</button>
                     <button
                         type="button"
                         ng-mousedown="trades.copy()"
@@ -552,79 +522,78 @@
                     id="tradeDetail"
                     class="alignleft"
                     ng-if="trades.selected">
-                    <div class="edit">&#x270e;</div>
-                    <br> <label>Trade ID</label> <input
+                    <br> <label>TRADE ID</label> <input
                         class="formInput"
                         type="text"
-                        ng-model="trades.selected.info.id.value"> <label>Association</label> <select
+                        ng-model="trades.selected.info.id.value"> <label>ASSOCIATION</label> <select
                         ng-model="trades.selected.association"
                         ng-options="x for x in tabs.Associations">
-                    </select> <label class="labelLong">Trade Type</label> <select
+                    </select> <label class="labelLong">TRADE TYPE</label> <select
                         ng-model="trades.selected.tradeType"
                         ng-options="x for x in tabs.TradeType">
-                    </select><br> <label>Buy/Sell</label> <select
+                    </select><br> <label>BUY/SELL</label> <select
                         ng-model="trades.selected.buySell"
                         ng-options="x for x in tabs.BuySell">
-                    </select> <label>Form Of Purchase</label> <select
+                    </select> <label>FORM OF PURCHASE</label> <select
                         ng-model="trades.selected.formOfPurchase"
                         ng-options="x for x in tabs.FormOfPurchase">
-                    </select> <label class="labelLong">When Issued</label> <select
+                    </select> <label class="labelLong">WHEN ISSUED</label> <select
                         ng-model="trades.selected.whenIssuedFlag"
                         ng-options="x for x in tabs.Boolean">
-                    </select><br> <label>Buyer</label> <input
+                    </select><br> <label>BUYER</label> <input
                         class="formInput"
                         type="text"
                         ng-model="trades.selected.buyer.value"
-                        size="30"> <label>Documentation Type</label> <select
+                        size="30"> <label>DOC TYPE</label> <select
                         ng-model="trades.selected.documentationType"
                         ng-options="x for x in tabs.DocType">
-                    </select> <label class="labelLong">Commitment Reduction</label> <select
+                    </select> <label class="labelLong">COMM REDUCTION</label> <select
                         ng-model="trades.selected.commitmentReductionCreditFlag"
                         ng-options="x for x in tabs.Boolean">
-                    </select><br> <label>Seller</label> <input
+                    </select><br> <label>SELLER</label> <input
                         class="formInput"
                         type="text"
                         ng-model="trades.selected.seller.value"
-                        size="30"> <label>DC Waived</label> <select
+                        size="30"> <label>DC WAIVED</label> <select
                         ng-model="trades.selected.delayedCompensationFlag"
                         ng-options="x for x in tabs.Boolean">
-                    </select> <label class="labelLong">Accrual Settle Type</label> <select
+                    </select> <label class="labelLong">ACCRUAL SETTLE TYPE</label> <select
                         ng-model="trades.selected.accrualSettlementType"
                         ng-options="x for x in tabs.AccrualSettlementTypes">
-                    </select><br> <label>Amount</label> <input
+                    </select><br> <label>AMOUNT</label> <input
                         class="formInput"
                         type="text"
                         ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
                         ng-model="trades.selected.amount"
-                        size="30"> <label>Trade Date</label> <input
+                        size="30"> <label>TRADE DATE</label> <input
                         class="formInput"
                         type="date"
-                        ng-model="trades.selected.info.tradeDate"> <label class="labelLong">Average
-                        Libor</label> <input
+                        ng-model="trades.selected.info.tradeDate"> <label class="labelLong">AVG
+                        LIBOR</label> <input
                         class="formInput"
                         type="text"
                         ng-pattern="/^-?[0-9]+(\.{1}[0-9]*)?$/"
                         ng-model="trades.selected.averageLibor"
-                        size="30"><br> <label>Currency</label> <select
+                        size="30"><br> <label>CURRENCY</label> <select
                         ng-model="trades.selected.currency"
                         ng-options="x for x in tabs.Currencies">
-                    </select> <label>Exp Settle Date</label> <input
+                    </select> <label>EXP SETTLE DATE</label> <input
                         class="formInput"
                         type="date"
-                        ng-model="trades.selected.expectedSettlementDate"> <label class="labelLong">Paydown
-                        Trade Date</label> <select
+                        ng-model="trades.selected.expectedSettlementDate"> <label class="labelLong">PAYDOWN
+                        TRADE DT</label> <select
                         ng-model="trades.selected.paydownOnTradeDate"
                         ng-options="x for x in tabs.Boolean">
-                    </select><br> <label>Price</label> <input
+                    </select><br> <label>PRICE</label> <input
                         class="formInput"
                         type="text"
                         ng-pattern="/^[0-9]+(\.{1}[0-9]*)?$/"
                         ng-model="trades.selected.price"
-                        size="30"> <label>Act Settle Date</label> <input
+                        size="30"> <label>ACT SETTLE DATE</label> <input
                         class="formInput"
                         type="date"
-                        ng-model="trades.selected.info.settlementDate"> <label class="labelLong">Adjustment
-                        Trade Date</label> <select
+                        ng-model="trades.selected.info.settlementDate"> <label class="labelLong">ADJ
+                        TRADE DT</label> <select
                         ng-model="trades.selected.adjustmentOnTradeDate"
                         ng-options="x for x in tabs.Boolean">
                     </select>
