@@ -353,6 +353,18 @@ th , td {
 	overflow:hidden;      /* text overflowed will be hidden */
 	text-overflow:ellipsis; /* text 0verflowed will be replaced with ... */
 }
+th {
+	border-bottom: solid 1px green;
+	/*border-right: solid 1px green;*/	
+    font-weight: normal;
+	color: green;
+	padding-bottom: 6px;
+	max-height: 26px;
+	overflow-x:hidden;	
+}
+/*th:last-child {
+	border-right: none;
+}*/
 
 #eventTable td {
 	padding-top:2px;
@@ -361,13 +373,6 @@ th , td {
 #facilityEventTable td {
 	padding-top:2px;
 	padding-bottom:2px;
-}
-th {
-	border-bottom: solid 1px green;
-	border-right: solid 1px green;		
-}
-th:last-child {
-	border-right: none;
 }
 
 table * { 
@@ -378,6 +383,7 @@ thead {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    flex-shrink: 0;
 }
 
 tbody {
@@ -396,13 +402,7 @@ tr {
 tr.st-selected {
 	color:white;
 }
-th {	
-	font-weight: normal;
-	color: green;
-	padding-bottom: 6px;
-	max-height: 26px;
-	overflow-x:hidden;
-}
+
 td { 
 	border-left: 0px;
 	border-right: 0px;
@@ -410,9 +410,6 @@ td {
 	background-color: #292929; */
 }
 		
-thead {
-    flex-shrink: 0;
-}
 
 th, tbody td {
     display: inline-block;
@@ -475,6 +472,14 @@ ul.nav-tabs li.active a {
 	
 .alignleft {
 	text-align: left;
+}
+.textalign{
+    text-align: left;
+    padding-left: 20px;
+}
+.numberalign {
+    text-align: right;
+    padding-right: 10px;
 }
 .inTableDelete {
 	float: left;

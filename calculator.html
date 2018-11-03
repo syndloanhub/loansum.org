@@ -46,28 +46,28 @@
                     st-table="loans.displayed">
                     <thead>
                         <tr>
-                            <th
+                            <th class="textalign"
                                 st-ratio="10"
                                 st-sort="id.value">LOAN ID</th>
-                            <th
+                            <th class="textalign"
                                 st-ratio="20"
                                 st-sort="borrower.value">BORROWER</th>
-                            <th
+                            <th class="textalign"
                                 st-ratio="14"
                                 st-sort="agent.value">AGENT</th>
-                            <th
+                            <th class="textalign"
                                 st-ratio="10"
                                 st-sort="facilityType">FACILITY TYPE</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="18"
                                 st-sort="originalCommitmentAmount.value">ORIG COMMITMENT</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="10"
                                 st-sort="startDate">START DATE</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="10"
                                 st-sort="maturityDate">MATURITY DATE</th>
-                            <th
+                            <th 
                                 st-ratio="8"
                                 st-sort="originalCommitmentAmount.currency">CURRENCY</th>
                         </tr>
@@ -78,13 +78,13 @@
                             st-select-row="loan"
                             st-select-mode="single"
                             ng-repeat="loan in loans.displayed">
-                            <td st-ratio="10">{{loan.id.value}}</td>
-                            <td st-ratio="20">{{loan.borrower.value}}</td>
-                            <td st-ratio="14">{{loan.agent.value}}</td>
-                            <td st-ratio="10">{{loan.facilityType}}</td>
-                            <td st-ratio="18">{{loan.originalCommitmentAmount.value | currency : "" : 2}}</td>
-                            <td st-ratio="10">{{loan.startDate | date : "M/d/yy" }}</td>
-                            <td st-ratio="10">{{loan.maturityDate | date : "M/d/yy"}}</td>
+                            <td class="textalign" st-ratio="10">{{loan.id.value}}</td>
+                            <td class="textalign" st-ratio="20">{{loan.borrower.value}}</td>
+                            <td class="textalign" st-ratio="14">{{loan.agent.value}}</td>
+                            <td class="textalign" st-ratio="10">{{loan.facilityType}}</td>
+                            <td class="numberalign" st-ratio="18">{{loan.originalCommitmentAmount.value | currency : "" : 2}}</td>
+                            <td class="numberalign" st-ratio="10">{{loan.startDate | date : "M/d/yy" }}</td>
+                            <td class="numberalign" st-ratio="10">{{loan.maturityDate | date : "M/d/yy"}}</td>
                             <td st-ratio="8">{{loan.originalCommitmentAmount.currency}}</td>
                         </tr>
                     </tbody>
@@ -157,16 +157,16 @@
                         st-table="events.displayed">
                         <thead>
                             <tr>
-                                <th
+                                <th 
                                     st-ratio="25"
                                     st-sort="['@bean']">EVENT TYPE</th>
-                                <th
+                                <th 
                                     st-ratio="25"
                                     st-sort="effectiveDate">EFFECTIVE DATE</th>
-                                <th
+                                <th 
                                     st-ratio="25"
                                     st-sort="amount.value">AMOUNT</th>
-                                <th
+                                <th 
                                     st-ratio="25"
                                     st-sort="refusalAllowed">REFUSAL ALLOWED</th>
                             </tr>
@@ -177,11 +177,12 @@
                                     <button
                                         type="button"
                                         ng-click="events.remove(event)"
-                                        class="inTableDelete">-</button> <select
-                                    ng-model="event['@bean']"
-                                    class="tableSelect"
-                                    ng-options="x for x in tabs.FacilityEventTypes">
-                                </select>
+                                        class="inTableDelete">-</button> 
+                                    <select 
+                                        ng-model="event['@bean']"
+                                        class="tableSelect"
+                                        ng-options="x for x in tabs.FacilityEventTypes">
+                                    </select>
                                 </td>
                                 <td st-ratio="25"><input
                                     class="tableInput"
@@ -219,31 +220,31 @@
                     <!--  ng-show="loans.selected">-->
                     <thead>
                         <tr>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="11"
                                 st-sort="id.value">CONTRACT ID</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="11"
                                 st-sort="accrual.startDate">START DATE</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="11"
                                 st-sort="accrual.endDate">END DATE</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="11"
                                 st-sort="paymentDate">PAYMENT DATE</th>
-                            <th
-                                st-ratio="12"
+                            <th class="numberalign"
+                                st-ratio="17"
                                 st-sort="accrual.accrualAmount.value">AMOUNT</th>
-                            <th
+                            <th class="textalign"
                                 st-ratio="11"
                                 st-sort="accrual.index.value">INDEX</th>
-                            <th
-                                st-ratio="11"
+                            <th class="numberalign"
+                                st-ratio="6"
                                 st-sort="accrual.spread">SPREAD</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="11"
                                 st-sort="accrual.allInRate">ALL IN RATE</th>
-                            <th
+                            <th class="textalign"
                                 st-ratio="11"
                                 st-sort="accrual.dayCount">DAY COUNT</th>
                         </tr>
@@ -254,15 +255,15 @@
                             st-select-row="contract"
                             st-select-mode="single"
                             ng-repeat="contract in contracts.displayed">
-                            <td st-ratio="11">{{contract.id.value}}</td>
-                            <td st-ratio="11">{{contract.accrual.startDate | date : "M/d/yy"}}</td>
-                            <td st-ratio="11">{{contract.accrual.endDate | date : "M/d/yy"}}</td>
-                            <td st-ratio="11">{{contract.paymentDate | date : "M/d/yy"}}</td>
-                            <td st-ratio="12">{{contract.accrual.accrualAmount.value | currency : "" : 2}}</td>
-                            <td st-ratio="11">{{contract.accrual.index.value}}</td>
-                            <td st-ratio="11">{{contract.accrual.spread * 100 | currency : "" : 3}}</td>
-                            <td st-ratio="11">{{contract.accrual.allInRate * 100 | currency : "" : 6}}</td>
-                            <td st-ratio="11">{{contract.accrual.dayCount}}</td>
+                            <td class="numberalign" st-ratio="11">{{contract.id.value}}</td>
+                            <td class="numberalign" st-ratio="11">{{contract.accrual.startDate | date : "M/d/yy"}}</td>
+                            <td class="numberalign" st-ratio="11">{{contract.accrual.endDate | date : "M/d/yy"}}</td>
+                            <td class="numberalign" st-ratio="11">{{contract.paymentDate | date : "M/d/yy"}}</td>
+                            <td class="numberalign" st-ratio="17">{{contract.accrual.accrualAmount.value | currency : "" : 2}}</td>
+                            <td class="textalign" st-ratio="11">{{contract.accrual.index.value}}</td>
+                            <td class="numberalign" st-ratio="6">{{contract.accrual.spread * 100 | currency : "" : 3}}</td>
+                            <td class="numberalign" st-ratio="11">{{contract.accrual.allInRate * 100 | currency : "" : 6}}</td>
+                            <td class="textalign" st-ratio="11">{{contract.accrual.dayCount}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -356,19 +357,19 @@
                         st-table="contractEvents.displayed">
                         <thead>
                             <tr>
-                                <th
+                                <th 
                                     st-ratio="20"
                                     st-sort="['@bean']">EVENT TYPE</th>
-                                <th
+                                <th 
                                     st-ratio="20"
                                     st-sort="effectiveDate">EFFECTIVE DATE</th>
-                                <th
+                                <th 
                                     st-ratio="20"
                                     st-sort="amount.value">AMOUNT</th>
-                                <th
+                                <th 
                                     st-ratio="20"
                                     st-sort="interestOnPaydown">PAYDOWN INTEREST</th>
-                                <th
+                                <th 
                                     st-ratio="20"
                                     st-sort="price">PRICE</th>
                             </tr>
@@ -428,20 +429,20 @@
                     st-table="commitment.displayed">
                     <thead>
                         <tr>
-                            <th st-ratio="20">EFFECTIVE DATE</th>
-                            <th st-ratio="20">FUNDED</th>
-                            <th st-ratio="20">UNFUNDED</th>
-                            <th st-ratio="20">UNDRAWNLC</th>
-                            <th st-ratio="20">TOTAL</th>
+                            <th class="numberalign" st-ratio="20">EFFECTIVE DATE</th>
+                            <th class="numberalign" st-ratio="20">FUNDED</th>
+                            <th class="numberalign" st-ratio="20">UNFUNDED</th>
+                            <th class="numberalign" st-ratio="20">UNDRAWNLC</th>
+                            <th class="numberalign" st-ratio="20">TOTAL</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="crec in commitment.displayed">
-                            <td st-ratio="20">{{crec.effectiveDate | date : "M/d/yy" }}</td>
-                            <td st-ratio="20">{{crec.funded | currency : "" : 2}}</td>
-                            <td st-ratio="20">{{crec.unfunded | currency : "" : 2}}</td>
-                            <td st-ratio="20">{{crec.undrawnlc | currency : "" : 2}}</td>
-                            <td st-ratio="20">{{crec.total | currency : "" : 2}}</td>
+                            <td class="numberalign" st-ratio="20">{{crec.effectiveDate | date : "M/d/yy" }}</td>
+                            <td class="numberalign" st-ratio="20">{{crec.funded | currency : "" : 2}}</td>
+                            <td class="numberalign" st-ratio="20">{{crec.unfunded | currency : "" : 2}}</td>
+                            <td class="numberalign" st-ratio="20">{{crec.undrawnlc | currency : "" : 2}}</td>
+                            <td class="numberalign" st-ratio="20">{{crec.total | currency : "" : 2}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -456,28 +457,28 @@
                     st-table="trades.displayed">
                     <thead>
                         <tr>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="8"
                                 st-sort="info.id.value">TRADE ID</th>
-                            <th
+                            <th class="textalign"
                                 st-ratio="10"
                                 st-sort="buySell">BUY/SELL</th>
-                            <th
+                            <th class="textalign"
                                 st-ratio="14"
                                 st-sort="buyer.value">BUYER</th>
-                            <th
+                            <th class="textalign"
                                 st-ratio="14"
                                 st-sort="seller.value">SELLER</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="14"
                                 st-sort="amount">AMOUNT</th>
-                            <th
+                            <th 
                                 st-ratio="10"
                                 st-sort="currency">CURRENCY</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="14"
                                 st-sort="price">PRICE</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="16"
                                 st-sort="expectedSettlementDate">EXPECTED SETTLEMENT DT</th>
                         </tr>
@@ -488,14 +489,14 @@
                             st-select-row="trade"
                             st-select-mode="single"
                             ng-repeat="trade in trades.displayed">
-                            <td st-ratio="8">{{trade.info.id.value}}</td>
-                            <td st-ratio="10">{{trade.buySell}}</td>
-                            <td st-ratio="14">{{trade.buyer.value}}</td>
-                            <td st-ratio="14">{{trade.seller.value}}</td>
-                            <td st-ratio="14">{{trade.amount | currency : "" : 2}}</td>
+                            <td class="numberalign" st-ratio="8">{{trade.info.id.value}}</td>
+                            <td class="textalign" st-ratio="10">{{trade.buySell}}</td>
+                            <td class="textalign" st-ratio="14">{{trade.buyer.value}}</td>
+                            <td class="textalign" st-ratio="14">{{trade.seller.value}}</td>
+                            <td class="numberalign" st-ratio="14">{{trade.amount | currency : "" : 2}}</td>
                             <td st-ratio="10">{{trade.currency}}</td>
-                            <td st-ratio="14">{{trade.price * 100.0 | currency : "" : 5}}</td>
-                            <td st-ratio="16">{{trade.expectedSettlementDate | date : "M/d/yy" }}</td>
+                            <td class="numberalign" st-ratio="14">{{trade.price * 100.0 | currency : "" : 5}}</td>
+                            <td class="numberalign" st-ratio="16">{{trade.expectedSettlementDate | date : "M/d/yy" }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -612,27 +613,27 @@
                     ng-if="trades.selected">
                     <thead>
                         <tr>
-                            <th st-ratio="17">COST OF FUNDED</th>
-                            <th st-ratio="17">BENEFIT OF UNFUNDED</th>
-                            <th st-ratio="16">DELAYED COMPENSATION</th>
-                            <th st-ratio="16">COST OF CARRY</th>
-                            <th st-ratio="17">ECONOMIC BENEFIT</th>
-                            <th st-ratio="17">TOTAL REMITTANCE</th>
+                            <th class="numberalign" st-ratio="17">COST OF FUNDED</th>
+                            <th class="numberalign" st-ratio="17">BENEFIT OF UNFUNDED</th>
+                            <th class="numberalign" st-ratio="16">DELAYED COMPENSATION</th>
+                            <th class="numberalign" st-ratio="16">COST OF CARRY</th>
+                            <th class="numberalign" st-ratio="17">ECONOMIC BENEFIT</th>
+                            <th class="numberalign" st-ratio="17">TOTAL REMITTANCE</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td st-ratio="17">{{trades.selected.tradeProceeds.CostOfFunded.value | currency : "" :
+                            <td class="numberalign" st-ratio="17">{{trades.selected.tradeProceeds.CostOfFunded.value | currency : "" :
                                 2}}</td>
-                            <td st-ratio="17">{{trades.selected.tradeProceeds.BenefitOfUnfunded.value | currency :
+                            <td class="numberalign" st-ratio="17">{{trades.selected.tradeProceeds.BenefitOfUnfunded.value | currency :
                                 "" : 2}}</td>
-                            <td st-ratio="16">{{trades.selected.tradeProceeds.DelayedCompensation.value | currency
+                            <td class="numberalign" st-ratio="16">{{trades.selected.tradeProceeds.DelayedCompensation.value | currency
                                 : "" : 2}}</td>
-                            <td st-ratio="16">{{trades.selected.tradeProceeds.CostOfCarry.value | currency : "" :
+                            <td class="numberalign" st-ratio="16">{{trades.selected.tradeProceeds.CostOfCarry.value | currency : "" :
                                 2}}</td>
-                            <td st-ratio="17">{{trades.selected.tradeProceeds.EconomicBenefit.value | currency : ""
+                            <td class="numberalign" st-ratio="17">{{trades.selected.tradeProceeds.EconomicBenefit.value | currency : ""
                                 : 2}}</td>
-                            <td st-ratio="17">{{trades.selected.tradeProceeds.total | currency : "" : 2}}</td>
+                            <td class="numberalign" st-ratio="17">{{trades.selected.tradeProceeds.total | currency : "" : 2}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -650,29 +651,29 @@
                     st-table="cashflows.displayed">
                     <thead>
                         <tr>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="11"
                                 st-sort="paymentDate"
                                 st-sort-default="true">PAY DATE</th>
-                            <th
+                            <th class="textalign"
                                 st-ratio="11"
                                 st-sort="type">PAY TYPE</th>
-                            <th
+                            <th class="textalign"
                                 st-ratio="11"
                                 st-sort="sourceType">SOURCE TYPE</th>
-                            <th
+                            <th class="textalign"
                                 st-ratio="11"
                                 st-sort="sourceId">SOURCE ID</th>
-                            <th
+                            <th class="textalign"
                                 st-ratio="11"
                                 st-sort="payingCounterparty">PAYER</th>
-                            <th
+                            <th class="textalign"
                                 st-ratio="11"
                                 st-sort="receivingCounterparty">RECEIVER</th>
-                            <th
+                            <th class="textalign"
                                 st-ratio="11"
                                 st-sort="uncertain">UNCERTAIN</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="12"
                                 st-sort="amount">AMOUNT</th>
                             <th
@@ -686,14 +687,14 @@
                             st-select-row="cashflow"
                             st-select-mode="single"
                             ng-repeat="cashflow in cashflows.displayed">
-                            <td st-ratio="11">{{cashflow.paymentDate | date : "M/d/yy"}}</td>
-                            <td st-ratio="11">{{cashflow.type}}</td>
-                            <td st-ratio="11">{{cashflow.sourceType}}</td>
-                            <td st-ratio="11">{{cashflow.sourceId}}</td>
-                            <td st-ratio="11">{{cashflow.payingCounterparty}}</td>
-                            <td st-ratio="11">{{cashflow.receivingCounterparty}}</td>
-                            <td st-ratio="11">{{cashflow.uncertain}}</td>
-                            <td st-ratio="12">{{cashflow.amount | currency : "" : 2}}</td>
+                            <td class="numberalign" st-ratio="11">{{cashflow.paymentDate | date : "M/d/yy"}}</td>
+                            <td class="textalign" st-ratio="11">{{cashflow.type}}</td>
+                            <td class="textalign" st-ratio="11">{{cashflow.sourceType}}</td>
+                            <td class="textalign" st-ratio="11">{{cashflow.sourceId}}</td>
+                            <td class="textalign" st-ratio="11">{{cashflow.payingCounterparty}}</td>
+                            <td class="textalign" st-ratio="11">{{cashflow.receivingCounterparty}}</td>
+                            <td class="textalign" st-ratio="11">{{cashflow.uncertain}}</td>
+                            <td class="numberalign" st-ratio="12">{{cashflow.amount | currency : "" : 2}}</td>
                             <td st-ratio="11">{{cashflow.currency}}</td>
                         </tr>
                     </tbody>
@@ -711,42 +712,42 @@
                     st-table="cashflows.selected.displayed">
                     <thead>
                         <tr>
-                            <th
-                                st-ratio="12"
+                            <th class="numberalign"
+                                st-ratio="14"
                                 st-sort="shareNotional">SHARE NOT</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="12"
                                 st-sort="startDate">START DATE</th>
-                            <th
-                                st-ratio="12"
+                            <th class="numberalign"
+                                st-ratio="14"
                                 st-sort="endDate">END DATE</th>
-                            <th
-                                st-ratio="12"
+                            <th class="textalign"
+                                st-ratio="10"
                                 st-sort="dayCount">DAY COUNT</th>
-                            <th
-                                st-ratio="12"
+                            <th class="numberalign"
+                                st-ratio="10"
                                 st-sort="days">DAYS</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="12"
                                 st-sort="daysInYear">DIY</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="12"
                                 st-sort="allInRate">RATE</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="16"
                                 st-sort="shareAmount">SHARE AMT</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="explain in cashflows.selected.displayed">
-                            <td st-ratio="12">{{explain.shareNotional | number : 2}}</td>
-                            <td st-ratio="12">{{explain.startDate | date : "M/d/yy"}}</td>
-                            <td st-ratio="12">{{explain.endDate | date : "M/d/yy"}}</td>
-                            <td st-ratio="12">{{explain.dayCount}}</td>
-                            <td st-ratio="12">{{explain.days}}</td>
-                            <td st-ratio="12">{{explain.daysInYear | number : 0}}</td>
-                            <td st-ratio="12">{{explain.allInRate * 100.0 | number : 6}}</td>
-                            <td st-ratio="16">{{explain.shareAmount | number : 2}}</td>
+                            <td class="numberalign" st-ratio="14">{{explain.shareNotional | number : 2}}</td>
+                            <td class="numberalign" st-ratio="12">{{explain.startDate | date : "M/d/yy"}}</td>
+                            <td class="numberalign" st-ratio="14">{{explain.endDate | date : "M/d/yy"}}</td>
+                            <td class="textalign" st-ratio="10">{{explain.dayCount}}</td>
+                            <td class="numberalign" st-ratio="10">{{explain.days}}</td>
+                            <td class="numberalign" st-ratio="12">{{explain.daysInYear | number : 0}}</td>
+                            <td class="numberalign" st-ratio="12">{{explain.allInRate * 100.0 | number : 6}}</td>
+                            <td class="numberalign" st-ratio="16">{{explain.shareAmount | number : 2}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -757,26 +758,26 @@
                     st-table="cashflows.selected.displayed">
                     <thead>
                         <tr>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="25"
                                 st-sort="shareNotional">SHARE NOT</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="25"
                                 st-sort="price">PRICE</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="25"
                                 st-sort="settPerPik">SETTLEMENT PERIOD PIK</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="25"
                                 st-sort="shareAmount">COST OF FUNDED</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="explain in cashflows.selected.displayed">
-                            <td st-ratio="25">{{explain.shareNotional | number : 2}}</td>
-                            <td st-ratio="25">{{explain.price * 100.0 | number : 5}}</td>
-                            <td st-ratio="25">{{explain.settPerPik | number : 2}}</td>
-                            <td st-ratio="25">{{explain.shareAmount | number : 2}}</td>
+                            <td class="numberalign" st-ratio="25">{{explain.shareNotional | number : 2}}</td>
+                            <td class="numberalign" st-ratio="25">{{explain.price * 100.0 | number : 5}}</td>
+                            <td class="numberalign" st-ratio="25">{{explain.settPerPik | number : 2}}</td>
+                            <td class="numberalign" st-ratio="25">{{explain.shareAmount | number : 2}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -787,22 +788,22 @@
                     st-table="cashflows.selected.displayed">
                     <thead>
                         <tr>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="33"
                                 st-sort="unfundedAmt">UNFUNDED AMOUNT</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="34"
                                 st-sort="price">PRICE</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="33"
                                 st-sort="shareAmount">BENEFIT OF UNFUNDED</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="explain in cashflows.selected.displayed">
-                            <td st-ratio="33">{{explain.unfundedAmt | number : 2}}</td>
-                            <td st-ratio="34">{{explain.price * 100.0 | number : 5}}</td>
-                            <td st-ratio="33">{{explain.shareAmount | number : 2}}</td>
+                            <td class="numberalign" st-ratio="33">{{explain.unfundedAmt | number : 2}}</td>
+                            <td class="numberalign" st-ratio="34">{{explain.price * 100.0 | number : 5}}</td>
+                            <td class="numberalign" st-ratio="33">{{explain.shareAmount | number : 2}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -813,38 +814,38 @@
                     st-table="cashflows.selected.displayed">
                     <thead>
                         <tr>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="15"
                                 st-sort="expSettPx">EXP SETT PX</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="14"
                                 st-sort="startDate">START DATE</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="14"
                                 st-sort="endDate">END DATE</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="14"
                                 st-sort="days">DAYS</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="14"
                                 st-sort="daysInYear">DIY</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="14"
                                 st-sort="avgLibor">AVG LIBOR</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="15"
                                 st-sort="shareAmount">SHARE AMT</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="explain in cashflows.selected.displayed">
-                            <td st-ratio="15">{{explain.expSettPx | number : 2}}</td>
-                            <td st-ratio="14">{{explain.startDate | date : "M/d/yy"}}</td>
-                            <td st-ratio="14">{{explain.endDate | date : "M/d/yy"}}</td>
-                            <td st-ratio="14">{{explain.days}}</td>
-                            <td st-ratio="14">{{explain.daysInYear | number : 0}}</td>
-                            <td st-ratio="14">{{explain.avgLibor * 100.0 | number : 6}}</td>
-                            <td st-ratio="15">{{explain.shareAmount | number : 2}}</td>
+                            <td class="numberalign" st-ratio="15">{{explain.expSettPx | number : 2}}</td>
+                            <td class="numberalign" st-ratio="14">{{explain.startDate | date : "M/d/yy"}}</td>
+                            <td class="numberalign" st-ratio="14">{{explain.endDate | date : "M/d/yy"}}</td>
+                            <td calss="numberalign" st-ratio="14">{{explain.days}}</td>
+                            <td class="numberalign" st-ratio="14">{{explain.daysInYear | number : 0}}</td>
+                            <td class="numberalign" st-ratio="14">{{explain.avgLibor * 100.0 | number : 6}}</td>
+                            <td class="numberalign" st-ratio="15">{{explain.shareAmount | number : 2}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -855,30 +856,30 @@
                     st-table="cashflows.selected.displayed">
                     <thead>
                         <tr>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="20"
                                 st-sort="trdDtFunded">TRD DT FUNDED</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="20"
                                 st-sort="settDtFunded">SETT DT FUNDED</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="20"
                                 st-sort="trdDtRepay">TRD DT REPAY</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="20"
                                 st-sort="price">PRICE</th>
-                            <th
+                            <th class="numberalign"
                                 st-ratio="20"
                                 st-sort="shareAmount">ECON BENEFIT</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="explain in cashflows.selected.displayed">
-                            <td st-ratio="20">{{explain.trdDtFunded | number : 2}}</td>
-                            <td st-ratio="20">{{explain.settDtFunded | number : 2}}</td>
-                            <td st-ratio="20">{{explain.trdDtRepay | number : 2}}</td>
-                            <td st-ratio="20">{{explain.price * 100.0 | number : 5}}</td>
-                            <td st-ratio="20">{{explain.shareAmount | number : 2}}</td>
+                            <td class="numberalign" st-ratio="20">{{explain.trdDtFunded | number : 2}}</td>
+                            <td class="numberalign" st-ratio="20">{{explain.settDtFunded | number : 2}}</td>
+                            <td class="numberalign" st-ratio="20">{{explain.trdDtRepay | number : 2}}</td>
+                            <td class="numberalign" st-ratio="20">{{explain.price * 100.0 | number : 5}}</td>
+                            <td class="numberalign" st-ratio="20">{{explain.shareAmount | number : 2}}</td>
                         </tr>
                     </tbody>
                 </table>
