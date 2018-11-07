@@ -282,11 +282,11 @@ textarea {
 	padding-top: 60px;
 }
 #introText {
-	width: 60%;
+	width: 80%;
 	/*float: right;*/
 	text-align: left;
 	/*padding-right: 100px;	*/
-    padding-left:30%;
+    padding-left:10%;
 }
 #introText p {
 	padding-bottom: 1em;
