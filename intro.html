@@ -1,23 +1,53 @@
 
-<div id="introText" >
-    <h1 class="accordion">What is loansum?</h1>
-    <div class="panel">
-        <p>loansum is the soon to be award-winning syndicated loan calculator from syndloanhub.</p>
-        <p>loansum offers users? fast, accurate analytic calculations for syndicated bank loans? blah blah blah.</p>
-        <p>It includes:
-        <ul>
-           <li>blah blah</li>
-           <li>blah blah</li>
-           <li>blah blah</li>
-       </ul>
-       </p>
-       <p>loansum is lightweight and flexible. It does not impose any database, server or middleware requirements</p>
+<div
+    id="introText"
+    ng-controller="AccordionController as accordion">
+
+    <h1
+        class="accordion"
+        ng-class="{ active: accordion.isSelected('intro') }"
+        ng-click="accordion.select('intro')">Introducing loansum!</h1>
+    <div ng-show="accordion.isSelected('intro')">
+        <p>Loansum is the initial open source offering from SyndLoanHub, LLC. Loansum is the first open source
+            library designed from scratch to accurately model syndicated bank loan cash flows and valuation. Financial
+            software developers can leverage loansum software to construct or extend applications with bonafide bank
+            loan support.</p>
     </div>
-    <h1 class="accordion">Who is loansum for?</h1>
-    <div class="panel">
-        <p>these can all be visible or slide up and down when the question is clicked</p>
+
+    <h1
+        class="accordion"
+        ng-class="{ active: accordion.isSelected('open') }"
+        ng-click="accordion.select('open')">Loansum is open source</h1>
+
+    <div ng-show="accordion.isSelected('open')">
+        <p>
+            Native bank loan software is notoriously complex and expensive. Only a handful of software vendors model
+            this product accurately with sufficient support to produce detailed cash flows with accompanying
+            explanations. Many financial software systems, both commercial and proprietary, cobble together inadequate
+            bank loan implementations which fail to accurately model cash flows, valuation, credit, or market risk
+            exposures. Loansum was developed to establish a free and open bank loan software library around which a
+            community of stakeholders could extend and improve over time. Loansum is released as Open Source Software
+            under the <a
+                href="https://www.apache.org/licenses/LICENSE-2.0.html"
+                target="_blank">Apache v2.0 license</a>. This is a widely used, business-friendly, license.
+        </p>
     </div>
-    <h1 class="accordion">View demo</h1>
-    <div class="panel">
+
+    <h1
+        class="accordion"
+        ng-class="{ active: accordion.isSelected('strata') }"
+        ng-click="accordion.select('strata')">Strata foundation</h1>
+
+    <div ng-show="accordion.isSelected('strata')">
+        <p>
+            The design and implementation of loansum is based on <a
+                href="http://strata.opengamma.io"
+                target=_blank">Strata</a>, the award-winning open source analytics and market risk library from <a
+                href="http://opengamma.com"
+                target=_blank">OpenGamma</a>. Loansum’s Strata foundation lays the groundwork for providing future
+            versions of loansum that include sophisticated market risk analytics by projecting future bank loan cash
+            flows and evaluating credit spread and interest rate scenarios.
+        </p>
     </div>
+
 </div>

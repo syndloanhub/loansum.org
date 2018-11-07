@@ -34,7 +34,10 @@ footer, header, hgroup, main, menu, nav, section {
     display: block;
 }
 body {
-    line-height: 1;
+    line-height: 1
+}
+p {
+	line-height: 2
 }
 ol, ul {
     list-style: none;
@@ -79,14 +82,17 @@ textArea{
     transition: 0.4s;
     width: auto;
 }
-.accordion.active/*, .accordion:hover */{
-    color: green;
+.accordion.active, .accordion:hover {
+    color: gold;
 }
 .panel {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
     color: #ada6a6;
+}
+a {
+	color: white
 }
 body {
     box-sizing: border-box;
@@ -155,7 +161,7 @@ a:active{
 h1{
 	color:#0675c2;
 	text-align: left;
-	font-size: 20px;
+	font-size: 25px;
 	padding-bottom: 10px;
 	padding-top: 30px;
 }
