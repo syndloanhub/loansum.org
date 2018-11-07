@@ -39,7 +39,7 @@
                 <br>
         </a> 
         <a
-            id="introductionButton"
+            id="introButton"
             href="#">Introduction
         </a>
          <a
@@ -56,8 +56,8 @@
     </nav>
 
     <div
-        id="introduction"
-        ng-include="'introduction.html'"></div>
+        id="intro"
+        ng-include="'intro.html'"></div>
  
     <div
         id="demos"
@@ -81,24 +81,37 @@
 
     <script>
         $(document).ready(function() {
-            $('#introductionButton').click(function() {
-                $('#introduction').slideToggle(500);
+            $('#introButton').click(function() {
+                $('#intro').slideToggle(500);
                 $('#calculator').slideUp(0);
                 $('#demos').slideUp(0);
                 $('#tagline').hide(0);
             });
             $('#demosButton').click(function() {
                 $('#demos').slideToggle(500);
-                $('#introduction').slideUp(0);
+                $('#intro').slideUp(0);
                 $('#calculator').slideUp(0);
                 $('#tagline').hide(0);
             });
-        $('#calculatorButton').click(function() {
-            $('#calculator').slideToggle(500);
-            $('#introduction').slideUp(0);
-            $('#demos').slideUp(0);
-            $('#tagline').hide(0);
-            });
+            $('#calculatorButton').click(function() {
+                $('#calculator').slideToggle(500);
+                $('#intro').slideUp(0);
+                $('#demos').slideUp(0);
+                $('#tagline').hide(0);
+            });       
+            var acc = document.getElementsByClassName("accordion");
+            var i; 
+            for (i = 0; i < acc.length; i++) { 
+                acc[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var panel = this.nextElementSibling;
+                    if (panel.style.maxHeight){
+                        panel.style.maxHeight = null;
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    } 
+                });
+            }             
         });
 
         function myFunction() {
@@ -109,6 +122,7 @@
                 x.className = "topnav";
             }
           }
+               
     </script>
     
 </body>
