@@ -37,7 +37,7 @@ body {
     line-height: 1
 }
 p {
-	line-height: 2
+	line-height: 1.75;
 }
 ol, ul {
     list-style: none;
@@ -165,9 +165,6 @@ h1{
 	padding-bottom: 10px;
 	padding-top: 30px;
 }
-#intro h1:first-child{
-	padding-top: 0;
-}
 .sideNav{
 	display: block;
 	float: left;
@@ -254,7 +251,7 @@ textarea {
 	border: solid 1px green;
 }
 
-#calculator, #demos, #intro {
+#calculator, #demos, #intro, #start{
     box-sizing: border-box;
 	width: 95%;
 	margin-left:auto;
@@ -277,18 +274,28 @@ textarea {
 	padding-bottom: 20px;
 	overflow:auto;
 }
-#intro {
+#intro, #start{
 	color:#fff;
 	padding-top: 60px;
 }
 #introText {
-	width: 80%;
+	width: 60%;
 	/*float: right;*/
 	text-align: left;
 	/*padding-right: 100px;	*/
     padding-left:10%;
 }
 #introText p {
+	padding-bottom: 1em;
+}
+#startText {
+	width: 60%;
+	/*float: right;*/
+	text-align: left;
+	/*padding-right: 100px;	*/
+    padding-left:10%;
+}
+#startText p {
 	padding-bottom: 1em;
 }
 #demos{

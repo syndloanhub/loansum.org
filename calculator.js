@@ -2,41 +2,25 @@
   'use strict';
 
   angular.module('LoansumApp', [ 'smart-table' ]).controller('TabController', TabController)
-      .controller('AccordionController', AccordionController).controller('LoansController', LoansController)
-      .controller('ContractsController', ContractsController).controller("TradesController", TradesController)
-      .controller("EventsController", EventsController)
+      .controller('ExclusiveAccordionController', ExclusiveAccordionController)
+      .controller('LoansController', LoansController).controller('ContractsController', ContractsController)
+      .controller("TradesController", TradesController).controller("EventsController", EventsController)
       .controller("ContractEventsController", ContractEventsController)
       .controller("CommitmentController", CommitmentController).controller("TextModelController", TextModelController)
       .controller("CashflowsController", CashflowsController).service("CalculatorService", CalculatorService)
       .directive('stRatio', stRatio);
 
-  function AccordionController() {
+  function ExclusiveAccordionController() {
     var accordion = this;
 
-    accordion.single = true;
-    accordion.selected = [ 'intro' ]
+    accordion.selected = 'intro';
 
     accordion.select = function(value) {
-      if (accordion.selected.includes(value)) {
-        for ( var i in accordion.selected) {
-          if (accordion.selected[i] == value) {
-            if (accordion.single) {
-              accordion.selected = [];
-            } else {
-              accordion.selected.splice(i, 1);
-            }
-          }
-        }
-      } else {
-        if (accordion.single) {
-          accordion.selected = [];
-        }
-        accordion.selected.push(value);
-      }
+      accordion.selected = value;
     };
 
     accordion.isSelected = function(value) {
-      return accordion.selected.includes(value);
+      return accordion.selected == value;
     };
   }
 
