@@ -1,5 +1,7 @@
 
-<div id="introText">
+<div
+    id="startText"
+    ng-controller="ExclusiveAccordionController as accordion">
 
     <div>
         <h1
@@ -21,33 +23,58 @@
             ng-click="accordion.select('obtaining')">
             <i class="fab fa-github"></i>&nbsp;Obtaining loansum
         </h1>
-        <p ng-show="accordion.isSelected('obtaining')">
-            Native bank loan software is notoriously complex and expensive. Only a handful of software vendors model
-            this product accurately with sufficient support to produce detailed cash flows with accompanying
-            explanations. Loansum was developed to establish a free and open bank loan software library around which a
-            community of stakeholders could extend and improve over time. Loansum is released as Open Source Software
-            under the <a
-                href="https://www.apache.org/licenses/LICENSE-2.0.html"
-                target="_blank">Apache v2.0 license</a>. This is a widely used, business-friendly, license.
-        </p>
-    </div>
 
-    <div>
-        <h1
-            class="accordion"
-            ng-class="{ active: accordion.isSelected('examples') }"
-            ng-click="accordion.select('examples')">
-            <i class="fab fa-java"></i>&nbsp;Code examples
-        </h1>
-        <p ng-show="accordion.isSelected('examples')">
-            The design and implementation of loansum is based on <a
-                href="http://strata.opengamma.io"
-                target=_blank">Strata</a>, the award-winning open source analytics and market risk library from <a
-                href="http://opengamma.com"
-                target=_blank">OpenGamma</a>. Loansum’s Strata foundation lays the groundwork for providing future
-            versions of loansum that include sophisticated market risk analytics by projecting future bank loan cash
-            flows and evaluating credit spread and interest rate scenarios.
-        </p>
+        <div ng-show="accordion.isSelected('obtaining')">
+            <p>
+                Loansum is available in <a
+                    href="https://search.maven.org/search?q=g:com.opengamma.strata"
+                    target="_blank">Maven Central</a>:
+            </p>
+            <pre>
+&lt;dependency&gt;
+    &lt;groupId&gt;com.syndloanhhub.loansum&lt;/groupId&gt;
+    &lt;artifactId&gt;loansum-pricer&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
+            <br>
+            <p>
+                This dependency on the loansum-pricer module will provide access to all of loansum's cash flow
+                functionality. Loansum is also released to GitHub through the standard <a
+                    href="https://github.com/syndloanhub/loansum/releases"
+                    target="_blank">repository release pages</a>. Source code can be obtained directly from <a
+                    href="https://github.com/syndloanhub/loansum"
+                    target="_blank">GitHub</a>. To do this you will need <a
+                    href="https://git-scm.com/download/"
+                    target="_blank">Git</a>. Simply clone the repository locally:
+            </p>
+            <pre>
+git clone https://github.com/syndloanhub/loansum.git
+                    </pre>
+            <p>
+                Finally, since loansum extends Strata, the OpenGamma <a
+                    href="http://strata.opengamma.io"
+                    target="_blank">Strata</a> site contains a great deal of relevent and useful documentation as well
+                which we do not attempt to replicate here.
+            </p>
+        </div>
+
+        <div>
+            <h1
+                class="accordion"
+                ng-class="{ active: accordion.isSelected('examples') }"
+                ng-click="accordion.select('examples')">
+                <i class="fab fa-java"></i>&nbsp;Code examples
+            </h1>
+            <p ng-show="accordion.isSelected('examples')">
+                The design and implementation of loansum is based on <a
+                    href="http://strata.opengamma.io"
+                    target=_blank">Strata</a>, the award-winning open source analytics and market risk library from <a
+                    href="http://opengamma.com"
+                    target=_blank">OpenGamma</a>. Loansum’s Strata foundation lays the groundwork for providing future
+                versions of loansum that include sophisticated market risk analytics by projecting future bank loan cash
+                flows and evaluating credit spread and interest rate scenarios.
+            </p>
+        </div>
+
     </div>
-    
-</div>

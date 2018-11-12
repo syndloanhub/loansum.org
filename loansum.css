@@ -110,7 +110,12 @@ main{
 	overflow: hidden;
 	padding-bottom: 30px;
 }		
-		
+
+pre {
+   font-family: "courier new", courier, monospace;
+   padding-left: 10%
+}
+
 #logo{
 	/*
 	padding-left:10%;
