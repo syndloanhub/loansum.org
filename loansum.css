@@ -11,7 +11,7 @@ h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
+b, u, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
@@ -35,6 +35,12 @@ footer, header, hgroup, main, menu, nav, section {
 }
 body {
     line-height: 1
+}
+span.nobr { 
+	white-space: nowrap; 
+}
+span.small {
+	font-size: 50%;
 }
 p {
 	line-height: 1.75;
@@ -83,7 +89,7 @@ textArea{
     width: auto;
 }
 .accordion.active, .accordion:hover {
-    color: gold;
+    color: orange;
 }
 .panel {
     max-height: 0;
@@ -256,7 +262,7 @@ textarea {
 	border: solid 1px green;
 }
 
-#calculator, #demos, #intro, #start{
+#calculator, #demos, #intro, #start, #community{
     box-sizing: border-box;
 	width: 95%;
 	margin-left:auto;
@@ -279,7 +285,7 @@ textarea {
 	padding-bottom: 20px;
 	overflow:auto;
 }
-#intro, #start{
+#intro, #start, #community{
 	color:#fff;
 	padding-top: 60px;
 }
@@ -301,6 +307,16 @@ textarea {
     padding-left:10%;
 }
 #startText p {
+	padding-bottom: 1em;
+}
+#communityText {
+	width: 60%;
+	/*float: right;*/
+	text-align: left;
+	/*padding-right: 100px;	*/
+    padding-left:10%;
+}
+#communityText p {
 	padding-bottom: 1em;
 }
 #demos{
@@ -429,7 +445,7 @@ thead > tr, tbody > tr {
     flex-wrap: nowrap;
 }
 tr {
-	color: gold;
+	color: orange;
 }
 tr.st-selected {
 	color:white;
@@ -541,7 +557,7 @@ input.formInput {
 	background: transparent;
 	/* background-color:#292929; */
     border: none;
-	color: gold;
+	color: orange;
 	padding-left:4px;
 	width: 200px;
 	font-size: 11px;
@@ -577,7 +593,7 @@ input.tableInput {
 	margin: 0;
 	/* background-color:#292929;*/
 	background: transparent;
-	color:gold;
+	color:orange;
 	font-size: 11px;
 }
 .selected, tr.st-selected input, tr.st-selected select {
@@ -588,7 +604,7 @@ select {
 	/* background-color:#292929; */
 	background: transparent;
 	margin-right: 10px;
-	color:gold;
+	color:orange;
 	border:none;
 	width:200px;
 	padding-left:1px;

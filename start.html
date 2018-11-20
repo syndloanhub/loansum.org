@@ -10,10 +10,13 @@
             ng-click="accordion.select('calculator')">
             <i class="fab fa-youtube"></i>&nbsp;Running the calculator
         </h1>
-        <p ng-show="accordion.isSelected('calculator')">Loansum is the initial open source offering from
-            SyndLoanHub, LLC. Loansum is the first open source library designed from scratch to accurately model
-            syndicated bank loan cash flows and valuation. Financial software developers can leverage loansum software
-            to construct or extend applications with bona fide bank loan support.</p>
+        <p ng-show="accordion.isSelected('calculator')">
+            The best way to become acquainted with loansum functionality is to play with the calculator application by
+            clicking on <i>Calculator</i>. The calculator contains a variety of example loans that may be selected in
+            order to examine loan data and generate cash flows with accompanying explains. Loans may be edited to
+            observe the effect of changes and new loans and trades may also be created. A set of short videos which
+            demonstrate the basic usage of the calculator application may be accessed by clicking on <i>Demos</i>.
+        </p>
     </div>
 
     <div>
@@ -34,7 +37,7 @@
 &lt;dependency&gt;
     &lt;groupId&gt;com.syndloanhhub.loansum&lt;/groupId&gt;
     &lt;artifactId&gt;loansum-pricer&lt;/artifactId&gt;
-    &lt;version&gt;1.0.0&lt;/version&gt;
+    &lt;version&gt;0.1.0&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
             <br>
@@ -67,13 +70,11 @@ git clone https://github.com/syndloanhub/loansum.git
                 <i class="fab fa-java"></i>&nbsp;Code examples
             </h1>
             <p ng-show="accordion.isSelected('examples')">
-                The design and implementation of loansum is based on <a
-                    href="http://strata.opengamma.io"
-                    target=_blank">Strata</a>, the award-winning open source analytics and market risk library from <a
-                    href="http://opengamma.com"
-                    target=_blank">OpenGamma</a>. Loansum’s Strata foundation lays the groundwork for providing future
-                versions of loansum that include sophisticated market risk analytics by projecting future bank loan cash
-                flows and evaluating credit spread and interest rate scenarios.
+                The best source of example code is the <i>loansum-pricer </i> module unit test code. This code is
+                located in <span class="nobr"><i>loansum-pricer/src/test/java/com/syndloanhub/loansum/pricer/facility/prorated/ProratedLoanTradePricerTest.java</i></span>.
+                The unit test code demonstrates how to construct loan and associated trade objects, generate prorated
+                versions of these objects, and use pricer instances to calculate cash flows, accompanying explains, and
+                present value.
             </p>
         </div>
 

@@ -1,0 +1,60 @@
+
+<div
+    id="communityText"
+    ng-controller="ExclusiveAccordionController as accordion">
+
+    <div>
+        <h1
+            class="accordion"
+            ng-class="{ active: accordion.isSelected('status') }"
+            ng-click="accordion.select('status')">
+            <i class="fas fa-battery-quarter"></i> &nbsp;Current Status
+        </h1>
+        <p ng-show="accordion.isSelected('status')">
+            Loansum is currently at release version 0.1. Pending initial feedback on the library and functionality,
+            version 1.0 will be released. The direction of the library will depend on community priorities and more
+            general SyndLoanHub product requirements. It is likely that a near term priority will be comprehensive
+            import and export of <a
+                href="http://www.fpml.org"
+                target="_blank">Syndicated Loan FpML</a>. Please email any feedback or questions to <a
+                href="mailto:info@syndloanhub.com">info@syndloanhub.com</a>.
+        </p>
+    </div>
+
+    <div>
+        <h1
+            class="accordion"
+            ng-class="{ active: accordion.isSelected('support') }"
+            ng-click="accordion.select('support')">
+            <i class="fas fa-question-circle"></i> &nbsp;Support
+        </h1>
+        <p ng-show="accordion.isSelected('support')">
+            At this time, general loansum support is provided via email only. Please send any questions or issues to <a
+                href="mailto:support@syndloanhub.com">support@syndloanhub.com</a>. In the near future, the loansum.org
+            web site will be extended with a community forum to allow the exchange of information between users and
+            contributors.
+        </p>
+    </div>
+
+    <div>
+        <h1
+            class="accordion"
+            ng-class="{ active: accordion.isSelected('contributing') }"
+            ng-click="accordion.select('contributing')">
+            <i class="fab fa-github-square"></i> &nbsp;Contributing to loansum
+        </h1>
+
+        <div ng-show="accordion.isSelected('contributing')">
+            <p>
+
+                Contributions to loansum are welcome and encouraged. Bug reports should be raised as <a
+                    href="https://github.com/syndloanhub/loansum/issues"
+                    target="_blank">GitHub Issues</a>. Please provide as much detail as possible, in particular sample
+                code that reproduces the reported bug. Feature requests are also welcome. Please email feature requests,
+                comments and questions to <a href="mailto:info@syndloanhub.com">info@syndloanhub.com</a>. If you have a
+                patch to fix a bug or add a feature, please follow standard GitHub protocol: fork loansum and create a
+                pull request against the master repository. If all is well, your patch will be accepted and merged.
+            </p>
+        </div>
+
+    </div>

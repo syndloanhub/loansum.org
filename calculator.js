@@ -439,6 +439,8 @@
   function CalculatorService($http, $q) {
     var service = this;
 
+    const rootapp = 'loansum-service-0.1.0';
+
     // Public functions used by Controllers.
 
     service.getLoans = function() {
@@ -474,7 +476,7 @@
 
       loan = new Facility(trades[0].product);
 
-      $http.post("loansum-service/loansum/calculateCommitment", loan).then(function(response) {
+      $http.post(rootapp + "/loansum/calculateCommitment", loan).then(function(response) {
         var commitment = response.data;
 
         if (commitment.message) {
@@ -498,7 +500,7 @@
 
       var trades = ui2model([ loan ]);
 
-      $http.post("loansum-service/loansum/calculateProceeds", trades[0]).then(function(response) {
+      $http.post(rootapp + "/loansum/calculateProceeds", trades[0]).then(function(response) {
         var proceeds = response.data;
 
         if (proceeds.message) {
@@ -521,7 +523,7 @@
         var trades = ui2model([ service.selectedLoan ]);
         var tradeList = new LoanTradeList(trades);
 
-        $http.post("loansum-service/loansum/calculateCashflows", tradeList).then(function(response) {
+        $http.post(rootapp + "/loansum/calculateCashflows", tradeList).then(function(response) {
           var cashflows = response.data;
 
           if (cashflows.message) {
