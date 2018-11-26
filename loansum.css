@@ -478,6 +478,7 @@ input.formInput {
 	color: #FFC000;
 	width: 200px;
 	font-size: 11px;
+    font-family: Verdana, Geneva, sans-serif;
 }
 #fileOptions{
     float: right;
@@ -523,6 +524,7 @@ select {
 	width:200px;
 	margin-bottom: 5px;
 	font-size: 11px;
+    font-family: Verdana, Geneva, sans-serif;
 }
 
 select:focus {
@@ -539,6 +541,7 @@ select:focus {
 }
 .tableInput {
 	text-align: center;
+    font-family: Verdana, Geneva, sans-serif;
 }
 input:disabled.tableInput {
 	width:90%;
