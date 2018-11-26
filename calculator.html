@@ -480,7 +480,7 @@
                                 st-sort="price">PRICE</th>
                             <th class="numberalign"
                                 st-ratio="16"
-                                st-sort="expectedSettlementDate">EXPECTED SETTLEMENT DT</th>
+                                st-sort="actualSettlementDate">ACT SETTLEMENT DT</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -496,7 +496,7 @@
                             <td class="numberalign" st-ratio="14">{{trade.amount | currency : "" : 2}}</td>
                             <td st-ratio="10">{{trade.currency}}</td>
                             <td class="numberalign" st-ratio="14">{{trade.price * 100.0 | currency : "" : 5}}</td>
-                            <td class="numberalign" st-ratio="16">{{trade.expectedSettlementDate | date : "M/d/yy" }}</td>
+                            <td class="numberalign" st-ratio="16">{{trade.info.settlementDate | date : "M/d/yy" }}</td>
                         </tr>
                     </tbody>
                 </table>

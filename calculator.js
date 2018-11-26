@@ -104,11 +104,6 @@
     };
 
     loans.clear = function() {
-      if (loans.selected) {
-        loans.selected.isSelected = false;
-        loans.setSelected(loans.selected);
-      }
-
       service.clear();
       loans.data = service.uimodel;
       $scope.$broadcast("calculator:modelUpdated", service.uimodel);
@@ -568,9 +563,19 @@
     };
 
     service.clear = function() {
-      service.uimodel = []
-      service.model = []
-      service.prettymodel = pretty(service.model);
+      if (service.selectedLoan) {
+        for ( var i in service.uimodel) {
+          if (service.uimodel[i] == service.selectedLoan) {
+            service.uimodel = service.uimodel.splice(i, 1);
+            service.refresh();
+            return;
+          }
+        }
+      } else {
+        service.uimodel = []
+        service.model = []
+        service.prettymodel = pretty(service.model);
+      }
     };
 
     service.copyLoan = function() {
