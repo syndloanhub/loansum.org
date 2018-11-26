@@ -35,7 +35,7 @@
         <a
             class="icon"
             href="javascript:void(0);"
-            onclick="myFunction()"> <i class="fa fa-bars"> </i> <br>
+            onclick="mobileNavToggle()"> <i class="fa fa-bars"> </i> <br>
         </a> <a
             id="introButton"
             href="#">Introduction </a> <a
@@ -52,23 +52,23 @@
     </nav>
 
     <div
-        id="intro"
+        id="intro" 
         ng-include="'intro.html'"></div>
 
     <div
-        id="start"
+        id="start" 
         ng-include="'start.html'"></div>
 
     <div
-        id="demos"
+        id="demos" 
         ng-include="'demos.html'"></div>
 
     <div
-        id="calculator"
+        id="calculator" 
         ng-include="'calculator.html'"></div>
 
     <div
-        id="community"
+        id="community" 
         ng-include="'community.html'"></div>
 
     <div id="tagline">
@@ -86,7 +86,17 @@
 
     <script>
           $(document).ready(function() {
+            $('#logo').click(function() {
+              mobileNavClose();
+              $('#intro').slideUp(0);
+              $('#start').slideUp(0);
+              $('#calculator').slideUp(0);
+              $('#demos').slideUp(0);
+              $('#community').slideUp(0);
+              $('#tagline').show(0);
+            });
             $('#introButton').click(function() {
+              mobileNavClose();
               $('#intro').slideToggle(500);
               $('#start').slideUp(0);
               $('#calculator').slideUp(0);
@@ -95,6 +105,7 @@
               $('#tagline').hide(0);
             });
             $('#startButton').click(function() {
+              mobileNavClose();
               $('#start').slideToggle(500);
               $('#intro').slideUp(0);
               $('#calculator').slideUp(0);
@@ -103,6 +114,7 @@
               $('#tagline').hide(0);
             });
             $('#demosButton').click(function() {
+              mobileNavClose();
               $('#demos').slideToggle(500);
               $('#start').slideUp(0);
               $('#intro').slideUp(0);
@@ -111,6 +123,7 @@
               $('#tagline').hide(0);
             });
             $('#calculatorButton').click(function() {
+              mobileNavClose();
               $('#calculator').slideToggle(500);
               $('#intro').slideUp(0);
               $('#start').slideUp(0);
@@ -119,6 +132,7 @@
               $('#tagline').hide(0);
             });
             $('#communityButton').click(function() {
+              mobileNavClose();
               $('#community').slideToggle(500);
               $('#intro').slideUp(0);
               $('#start').slideUp(0);
@@ -128,13 +142,19 @@
             });
           });
 
-          function myFunction() {
+          function mobileNavToggle() {
             var x = document.getElementById("myTopnav");
             if (x.className === "topnav") {
               x.className += " responsive";
             } else {
               x.className = "topnav";
             }
+          }
+          function mobileNavClose() {          
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav responsive") {
+              x.className = "topnav";
+            }         
           }
         </script>
 
