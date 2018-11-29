@@ -4649,9 +4649,9 @@
 				}
 			},
 			"product": {
-				"id": "lid~Morehead RC",
-				"borrower": "cpty~Morehead Inc.",
-				"agent": "cpty~Organ Stanley",
+				"id": "lid~Malone RC",
+				"borrower": "cpty~Malone Inc.",
+				"agent": "cpty~Karlin, LLC",
 				"facilityType": "Revolving",
 				"originalCommitmentAmount": "USD 300000000",
 				"startDate": "2016-07-28",
@@ -5463,9 +5463,9 @@
 				}
 			},
 			"product": {
-				"id": "lid~ATM Energy TL A",
-				"borrower": "cpty~ATM Energy, LLC",
-				"agent": "cpty~BONY",
+				"id": "lid~Lindsey Energy TL A",
+				"borrower": "cpty~Lindsey Energy, LLC",
+				"agent": "cpty~ONY",
 				"facilityType": "Term",
 				"originalCommitmentAmount": "USD 500000000",
 				"startDate": "2016-05-23",
@@ -5598,7 +5598,7 @@
 			"product": {
 				"id": "lid~Badvision TL B2",
 				"borrower": "cpty~Badvision, Inc.",
-				"agent": "cpty~Organ Stanley",
+				"agent": "cpty~Karlin, LLC",
 				"facilityType": "Term",
 				"originalCommitmentAmount": "USD 1.20531373368E9",
 				"startDate": "2013-05-29",
@@ -5781,7 +5781,7 @@
 			"product": {
 				"id": "lid~Mayo TL B",
 				"borrower": "cpty~Mayo Group, LLC",
-				"agent": "cpty~Organ Stanley",
+				"agent": "cpty~Karlin, LLC",
 				"facilityType": "Term",
 				"identifiers": [
 					"LXID~LX158900",
@@ -5960,7 +5960,7 @@
 			"@bean": "com.syndloanhub.loansum.product.facility.LoanTrade",
 			"buySell": "Buy",
 			"buyer": "cpty~Myself, Inc.",
-			"seller": "cpty~Reemworks, LLC",
+			"seller": "cpty~Dyer Investments, LLC",
 			"amount": "50000000",
 			"currency": "USD",
 			"price": 1,
@@ -5985,8 +5985,8 @@
 				}
 			},
 			"product": {
-				"id": "lid~Reemworks RC",
-				"borrower": "cpty~Reemworks, LLC",
+				"id": "lid~Dyer RC",
+				"borrower": "cpty~Dyer Investments, LLC",
 				"agent": "cpty~ONY",
 				"facilityType": "Revolving",
 				"identifiers": [],
