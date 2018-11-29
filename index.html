@@ -46,34 +46,36 @@
             id="calculatorButton"
             href="#">Calculator </a> <a
             id="communityButton"
-            href="#">Community </a> <a href="apidocs/index.html">Javadocs </a> <a
+            href="#">Community </a> <a
+            href="apidocs/index.html"
+            target="_blank">Javadocs </a> <a
             href="https://github.com/syndloanhub/loansum"
-            title="GitHub"><span><i class="fab fa-github fa-fw"></i> GitHub</span></a>
+            target="_blank"><span><i class="fab fa-github fa-fw"></i> GitHub</span></a>
     </nav>
 
     <div
-        id="intro" 
+        id="intro"
         ng-include="'intro.html'"></div>
 
     <div
-        id="start" 
+        id="start"
         ng-include="'start.html'"></div>
 
     <div
-        id="demos" 
+        id="demos"
         ng-include="'demos.html'"></div>
 
     <div
-        id="calculator" 
+        id="calculator"
         ng-include="'calculator.html'"></div>
 
     <div
-        id="community" 
+        id="community"
         ng-include="'community.html'"></div>
 
     <div id="tagline">
-        welcome to <span id="taglineLS">loansum</span><br>
-        <span class="small"><i>open source syndicated loan software</i></span>
+        welcome to <span id="taglineLS">loansum</span><br> <span class="small"><i>open source syndicated
+                loan software</i></span>
     </div>
 
     </main>
@@ -150,11 +152,11 @@
               x.className = "topnav";
             }
           }
-          function mobileNavClose() {          
+          function mobileNavClose() {
             var x = document.getElementById("myTopnav");
             if (x.className === "topnav responsive") {
               x.className = "topnav";
-            }         
+            }
           }
         </script>
 
