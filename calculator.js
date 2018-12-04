@@ -434,7 +434,7 @@
   function CalculatorService($http, $q) {
     var service = this;
 
-    const rootapp = 'loansum-service-0.1.0';
+    const rootapp = 'loansum-service-0.2.0-SNAPSHOT';
 
     // Public functions used by Controllers.
 
